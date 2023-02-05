@@ -11,10 +11,13 @@ public class Client : ExtraRole
         List<byte> players = new List<byte>();
         foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
         {
-            if (!player.GetModData()?.role.CanHaveExtraAssignable(this) ?? true) continue;
             players.Add(player.PlayerId);
         }
-        byte playerId = players[NebulaPlugin.rnd.Next(players.Count)];
+        byte playerId;
+        do
+        {
+            playerId = players[NebulaPlugin.rnd.Next(players.Count)];
+        } while (Helpers.playerById(playerId).GetModData().role == Roles.Lawyer);
         assignMap.AssignExtraRole(playerId, id, 0);
     }
 
@@ -30,8 +33,10 @@ public class Client : ExtraRole
             if(Helpers.playerById(playerId).GetModData().role == Roles.Lawyer)
             {
                 EditDisplayNameForcely(playerId, ref displayName);
+                return;
             }
         }
+        return;
     }
 
     public override void EditDisplayNameForcely(byte playerId, ref string displayName)
@@ -43,6 +48,12 @@ public class Client : ExtraRole
     {
         if(PlayerControl.LocalPlayer.GetModData().role == Roles.Lawyer)
         {
+            if (Lawyer.lawyerDieWithClient.getBool())
+            {
+                PlayerControl target = Helpers.playerById(playerId);
+                Helpers.checkMuderAttemptAndKill(target, target, Game.PlayerData.PlayerStatus.Suicide);
+                return;
+            }
             Events.LocalEvent.Activate(new Lawyer.LawyerEvent(PlayerControl.LocalPlayer));
         }
     }

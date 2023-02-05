@@ -1,5 +1,6 @@
 ﻿using Nebula.Events;
 using Nebula.Patches;
+using Nebula.Roles.CrewmateRoles;
 
 namespace Nebula.Roles.NeutralRoles;
 
@@ -13,6 +14,18 @@ public class Lawyer : Role
         {
             RPCEventInvoker.ImmediatelyChangeRole(lawyer,Roles.Plaintiff);
             //绿尸寒警告
+        }
+    }
+    public class PlaintiffEvent : LocalEvent
+    {
+        PlayerControl target;
+        public PlaintiffEvent(PlayerControl target) : base(0.2f)
+        {
+            this.target = target;
+        }
+        public override void OnTerminal()
+        {
+            RPCEventInvoker.UnsetExtraRole(target, Roles.Client, false);
         }
     }
 
@@ -29,6 +42,19 @@ public class Lawyer : Role
         clientCanKnowLawyer = CreateOption(RoleColor, "clientCanKnowLawyer", false);
     }
 
+    public virtual bool PrivateCheckWin(PlayerControl player, Patches.EndCondition winReason)
+    {
+        //Madmateの場合は元陣営の勝利を無効化する
+        if (player.IsMadmate()) return false;
+
+        //単独勝利ロール
+        if (winReason.TriggerRole != null)
+            return winReason.TriggerRole.Winner == player.PlayerId;
+
+
+        return winReasons.Contains(winReason);
+    }
+
     public override bool CheckAdditionalWin(PlayerControl player, EndCondition condition)
     {
         if (condition == EndCondition.NoGame) return false;
@@ -38,37 +64,36 @@ public class Lawyer : Role
         if (condition == EndCondition.NobodyPolusWin) return false;
         if (condition == EndCondition.NobodyAirshipWin) return false;
 
-        if (player.Data.IsDead && player.GetModData().FinalData?.status != Game.PlayerData.PlayerStatus.Burned) return false;
-
         foreach (PlayerControl playerC in PlayerControl.AllPlayerControls.GetFastEnumerator())
         {
             if(!playerC.GetModData().IsAlive) continue;
-            foreach(ExtraRole extraRole in player.GetModData().extraRole)
+            foreach(ExtraRole extraRole in playerC.GetModData().extraRole)
             {
-                if(extraRole == Roles.Client)
+                if(extraRole.id == Roles.Client.id)
                 {
-                    if (playerC.GetModData().role.CheckWin(playerC, condition)) return true;
+                    if (PrivateCheckWin(playerC, condition)) return true;
+                    return false;
                 }
             }
         }
         return false;
     }
 
-    /*
-    foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
-    */
-
-    public override void OnDied(byte playerId)
+    public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
     {
-        foreach(ExtraRole extraRole in PlayerControl.LocalPlayer.GetModData().extraRole)
+        foreach(ExtraRole extraRole in Helpers.playerById(playerId).GetModData().extraRole)
         {
-            if (extraRole == Roles.Client)
+            if (extraRole.id == Roles.Client.id)
             {
-                RPCEventInvoker.UnsetExtraRole(Helpers.playerById(playerId), Roles.Client, false);
-                break;
+                displayColor = RoleColor;
+                return;
             }
         }
     }
+
+    /*
+    foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
+    */
 
     public Lawyer()
         : base("Lawyer", "Lawyer", RoleColor, RoleCategory.Neutral, Side.Lawyer, Side.Lawyer,
@@ -92,11 +117,6 @@ public class Plaintiff : Role
         if (player.Data.IsDead && player.GetModData().FinalData?.status != Game.PlayerData.PlayerStatus.Burned) return false;
 
         return true;
-    }
-
-    public override bool IsSpawnable()
-    {
-        return false;
     }
 
     public Plaintiff()

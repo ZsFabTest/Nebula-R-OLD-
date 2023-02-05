@@ -185,14 +185,14 @@ public class Side
 
     public static Side Palgue = new Side("Palgue", "palgue", IntroDisplayOption.SHOW_ONLY_ME, NeutralRoles.Empiric.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
-        if(statistics.AliveJackals == 0 && statistics.AliveImpostors == 0 && statistics.TotalAlive - statistics.GetAlivePlayers(Palgue) <= 0)
+        if(statistics.AliveJackals == 0 && statistics.AliveImpostors == 0 && statistics.GetAlivePlayers(Palgue) > 0)
         {
             return EndCondition.PlagueWin;
         }
         return null;
     });
 
-    public static Side Lawyer = new Side("Lawyer", "lawyer", IntroDisplayOption.SHOW_ONLY_ME, NeutralRoles.Empiric.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    public static Side Lawyer = new Side("Lawyer", "lawyer", IntroDisplayOption.SHOW_ONLY_ME, NeutralRoles.Lawyer.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
         return null;
     });

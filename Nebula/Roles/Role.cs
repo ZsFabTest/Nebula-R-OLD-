@@ -95,14 +95,27 @@ public abstract class Role : Assignable
     public virtual int AssignmentCost { get => 1; }
 
     public HashSet<Patches.EndCondition> winReasons { get; }
+
+    public bool checkWin()
+    {
+        foreach(PlayerControl target in PlayerControl.AllPlayerControls.GetFastEnumerator())
+        {
+            if (target.GetModData().role.id == Roles.Lawyer.id) return false;
+        }
+        return true;
+    }
+
     public virtual bool CheckWin(PlayerControl player, Patches.EndCondition winReason)
     {
         //Madmateの場合は元陣営の勝利を無効化する
         if (player.IsMadmate()) return false;
 
-        foreach(ExtraRole extraRole in player.GetModData().extraRole)
+        if (!checkWin())
         {
-            if (extraRole == Roles.Client) return false;
+            foreach (ExtraRole extraRole in player.GetModData().extraRole)
+            {
+                if (extraRole == Roles.Client) return false;
+            }
         }
 
         //単独勝利ロール
