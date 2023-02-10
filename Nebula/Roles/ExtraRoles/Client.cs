@@ -46,7 +46,7 @@ public class Client : ExtraRole
 
     public override void OnDied(byte playerId)
     {
-        if(PlayerControl.LocalPlayer.GetModData().role == Roles.Lawyer)
+        if(PlayerControl.LocalPlayer.GetModData().role == Roles.Lawyer && !PlayerControl.LocalPlayer.Data.IsDead)
         {
             if (Lawyer.lawyerDieWithClient.getBool())
             {

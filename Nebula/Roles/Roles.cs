@@ -138,6 +138,8 @@ static public class Roles
     public static ExtraRoles.LastImpostor LastImpostor = new ExtraRoles.LastImpostor();
     public static ExtraRoles.Sick Sick = new ExtraRoles.Sick();
     public static ExtraRoles.Client Client= new ExtraRoles.Client();
+    public static ExtraRoles.Flash Flash = new ExtraRoles.Flash();
+    public static CrewmateRoles.SecondaryBait SecondaryBait = new CrewmateRoles.SecondaryBait();
     // public static ExtraRoles.TeamSanta TeamSanta = new ExtraRoles.TeamSanta();
     public static MetaRoles.MetaRole MetaRole = new MetaRoles.MetaRole();
     public static RitualRoles.PerkHolder PerkHolder = new RitualRoles.PerkHolder();
@@ -166,14 +168,15 @@ static public class Roles
 
     public static List<ExtraRole> AllExtraRoles = new List<ExtraRole>()
         {
-            SecondaryGuesser,SecondarySidekick,SecondaryMadmate,
+            SecondaryGuesser,SecondarySidekick,SecondaryMadmate,SecondaryBait,
             DiamondPossessor,/*TeamSanta,*/
             Bloody,Confused,Drunk,Lover,Trilemma,
             MetaRole,AvengerTarget,
             PerkHolder,
             LastImpostor,
             Sick,
-            Client
+            Client,
+            Flash
         };
 
     public static List<GhostRole> AllGhostRoles = new List<GhostRole>()

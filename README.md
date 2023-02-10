@@ -1,6 +1,5 @@
 # Nebula-R
-本模组是 Nebula on the ship 的分支版本 目前只有中文完全支持
-详细模组信息：见“Nebula-R 更改项目列表.txt”
+本模组是 Nebula on the ship 的分支版本 目前只有中文
 
 模组不盈利，只做单纯兴趣爱好，bug修不修看时间
 主要看齐TheOtherRoles-GM-Haoming Edition的职业转化，新增的职业大多是与职业的交换和变化有关的
@@ -8,12 +7,11 @@
 
 开学以后更新速度会超级慢，勿喷awa
 
-还有，片总不要往我邮箱里扔广告
-
 ## 下载
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
 | 1.0.1.2 | 2022.12.14s | [Download](https://github.com/Dolly1016/Nebula/releases/download/2.1,2022.12.8/Nebula_v2.1.zip)|
+| 全版本 |               | [Download](https://www.aliyundrive.com/s/w6m5DNFkPWx)
 
 ## 参考
 1.Nebula on the ship - Dolly1016
@@ -22,7 +20,7 @@
 
 3.TheOtherRole GM Haoming - haoming37
 
-4.（目前没有，总会用到的）
+4.模组汉化借鉴 - 四个憨批汉化组
 
 ## 联系作者
 [点击这里](https://www.bilibili.com/video/BV1GJ411x7h7/?spm_id_from=333.337.search-card.all.click&vd_source=b92e3eb8c1017c11449afa8236373b01)
