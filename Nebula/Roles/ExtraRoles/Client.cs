@@ -44,6 +44,11 @@ public class Client : ExtraRole
         displayName += Helpers.cs(Color, "@");
     }
 
+    public override void EditSpawnableRoleShower(ref string suffix, Role role)
+    {
+        if (IsSpawnable() && role.CanHaveExtraAssignable(this)) suffix += Helpers.cs(Color, "@");
+    }
+
     public override void OnDied(byte playerId)
     {
         if(PlayerControl.LocalPlayer.GetModData().role == Roles.Lawyer && !PlayerControl.LocalPlayer.Data.IsDead)

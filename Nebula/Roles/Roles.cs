@@ -49,6 +49,7 @@ static public class Roles
     public static ComplexRoles.Tracker NiceTracker = new ComplexRoles.Tracker("NiceTracker", "niceTracker", false);
     public static ComplexRoles.Trapper NiceTrapper = new ComplexRoles.Trapper("NiceTrapper", "niceTrapper", false);
     public static ComplexRoles.Decider NiceDecider = new ComplexRoles.Decider("NiceDecider", "niceDecider", false);
+    public static ComplexRoles.Swapper NiceSwapper = new ComplexRoles.Swapper("NiceSwapper", "niceSwapper", false);
     public static CrewmateRoles.Oracle Oracle = new CrewmateRoles.Oracle();
     public static CrewmateRoles.Provocateur Provocateur = new CrewmateRoles.Provocateur();
     public static CrewmateRoles.Psychic Psychic = new CrewmateRoles.Psychic();
@@ -77,6 +78,7 @@ static public class Roles
     public static ComplexRoles.Tracker EvilTracker = new ComplexRoles.Tracker("EvilTracker", "evilTracker", true);
     public static ComplexRoles.Trapper EvilTrapper = new ComplexRoles.Trapper("EvilTrapper", "evilTrapper", true);
     public static ComplexRoles.Decider EvilDecider = new ComplexRoles.Decider("EvilDecider", "evilDecider", true);
+    public static ComplexRoles.Swapper EvilSwapper = new ComplexRoles.Swapper("EvilSwapper", "evilSwapper", true);
     public static ImpostorRoles.Executioner Executioner = new ImpostorRoles.Executioner();
     public static ImpostorRoles.Jailer Jailer = new ImpostorRoles.Jailer();
     public static ImpostorRoles.Marionette Marionette = new ImpostorRoles.Marionette();
@@ -90,6 +92,7 @@ static public class Roles
     public static ImpostorRoles.Assassin Assassin = new ImpostorRoles.Assassin();
     public static ImpostorRoles.SerialKiller SerialKiller = new ImpostorRoles.SerialKiller();
     public static ImpostorRoles.Demagogue Demagogue = new ImpostorRoles.Demagogue();
+    public static ImpostorRoles.Escapist Escapist = new ImpostorRoles.Escapist();
     public static NeutralRoles.Arsonist Arsonist = new NeutralRoles.Arsonist();
     public static NeutralRoles.Avenger Avenger = new NeutralRoles.Avenger();
     public static NeutralRoles.ChainShifter ChainShifter = new NeutralRoles.ChainShifter();
@@ -127,6 +130,7 @@ static public class Roles
     public static ComplexRoles.FTracker F_Tracker = new ComplexRoles.FTracker();
     public static ComplexRoles.FTrapper F_Trapper = new ComplexRoles.FTrapper();
     public static ComplexRoles.FDecider F_Decider = new ComplexRoles.FDecider();
+    public static ComplexRoles.FSwapper F_Swapper = new ComplexRoles.FSwapper();
 
     public static ComplexRoles.SecondaryGuesser SecondaryGuesser = new ComplexRoles.SecondaryGuesser();
     public static NeutralRoles.SecondarySidekick SecondarySidekick = new NeutralRoles.SecondarySidekick();
@@ -154,11 +158,11 @@ static public class Roles
     public static List<Role> AllRoles = new List<Role>()
         {
             VOID,
-            Impostor,BountyHunter,Camouflager,Cleaner,Damned,Disturber,Eraser,EvilAce,EvilGuesser,EvilTracker,EvilTrapper,Executioner,Jailer,Marionette,Morphing,Painter,Raider,Reaper,Sniper,RedCat,Vampire,Assassin,SerialKiller,Demagogue,EvilDecider,
+            Impostor,BountyHunter,Camouflager,Cleaner,Damned,Disturber,Eraser,EvilAce,EvilGuesser,EvilTracker,EvilTrapper,Executioner,Jailer,Marionette,Morphing,Painter,Raider,Reaper,Sniper,RedCat,Vampire,Assassin,SerialKiller,Demagogue,EvilDecider,EvilSwapper,Escapist,
             /*SantaClaus,BlackSanta,*/Arsonist,Avenger,ChainShifter,Empiric,Jackal,Jester,Opportunist,Sidekick,Vulture,Madman,SchrodingersCat,BlueCat,Plague,Lawyer,Plaintiff,
             F_Crewmate,
-            F_Guesser,F_Tracker,F_Trapper,F_Decider,
-            Crewmate,CrewmateWithoutTasks,Agent,Alien,Bait,Busker,Comet,DamnedCrew,Doctor,Guardian,Mayor,Navvy,Necromancer,NiceGuesser,NiceTracker,NiceTrapper,Oracle,Provocateur,Psychic,Seer,Sheriff,Splicer,Spy,WhiteCat,Holmes,Sanctifier,Observer,OnlineCelebrity,NiceDecider,
+            F_Guesser,F_Tracker,F_Trapper,F_Decider,F_Swapper,
+            Crewmate,CrewmateWithoutTasks,Agent,Alien,Bait,Busker,Comet,DamnedCrew,Doctor,Guardian,Mayor,Navvy,Necromancer,NiceGuesser,NiceTracker,NiceTrapper,Oracle,Provocateur,Psychic,Seer,Sheriff,Splicer,Spy,WhiteCat,Holmes,Sanctifier,Observer,OnlineCelebrity,NiceDecider,NiceSwapper,
             Madmate,
             Player,
             Halley,Biela,

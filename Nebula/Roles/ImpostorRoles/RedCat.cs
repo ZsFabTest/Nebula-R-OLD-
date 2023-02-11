@@ -6,6 +6,11 @@ public class RedCat : Role
 {
     public override bool IsGuessableRole { get => Roles.SchrodingersCat.isGuessable.getBool(); protected set => base.IsGuessableRole = value; }
 
+    public override void GlobalInitialize(PlayerControl __instance)
+    {
+        HideKillButtonEvenImpostor = Roles.SchrodingersCat.canUseKillButtonI.getBool();
+    }
+
     public override void OnMurdered(byte murderId)
     {
         if (!Roles.SchrodingersCat.canChangeTeam.getBool()) return;

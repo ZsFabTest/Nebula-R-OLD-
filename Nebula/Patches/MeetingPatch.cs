@@ -1,4 +1,5 @@
 ﻿namespace Nebula.Patches;
+using UnhollowerBaseLib;
 
 [HarmonyPatch]
 class MeetingHudPatch
@@ -68,6 +69,76 @@ class MeetingHudPatch
         }
     }
 
+    [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.PopulateResults))]
+    class MeetingHudPopulateVotesPatch
+    {
+
+        static bool Prefix(MeetingHud __instance, Il2CppStructArray<MeetingHud.VoterState> states)
+        {
+            // Swapper swap
+            PlayerVoteArea swapped1 = null;
+            PlayerVoteArea swapped2 = null;
+
+            foreach (PlayerVoteArea playerVoteArea in __instance.playerStates)
+            {
+                if (playerVoteArea.TargetPlayerId == Roles.ComplexRoles.SwapSystem.playerId1) swapped1 = playerVoteArea;
+                if (playerVoteArea.TargetPlayerId == Roles.ComplexRoles.SwapSystem.playerId2) swapped2 = playerVoteArea;
+            }
+            bool doSwap = swapped1 != null && swapped2 != null && Roles.ComplexRoles.SwapSystem.isSwapped;
+            if (doSwap)
+            {
+                __instance.StartCoroutine(Effects.Slide3D(swapped1.transform, swapped1.transform.localPosition, swapped2.transform.localPosition, 1.5f));
+                __instance.StartCoroutine(Effects.Slide3D(swapped2.transform, swapped2.transform.localPosition, swapped1.transform.localPosition, 1.5f));
+                Roles.ComplexRoles.SwapSystem.swapDataId--;
+            }
+
+
+            __instance.TitleText.text = FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.MeetingVotingResults, new Il2CppReferenceArray<Il2CppSystem.Object>(0));
+            int num = 0;
+            for (int i = 0; i < __instance.playerStates.Length; i++)
+            {
+                PlayerVoteArea playerVoteArea = __instance.playerStates[i];
+                byte targetPlayerId = playerVoteArea.TargetPlayerId;
+                // Swapper change playerVoteArea that gets the votes
+                if (doSwap && playerVoteArea.TargetPlayerId == swapped1.TargetPlayerId) playerVoteArea = swapped2;
+                else if (doSwap && playerVoteArea.TargetPlayerId == swapped2.TargetPlayerId) playerVoteArea = swapped1;
+
+                playerVoteArea.ClearForResults();
+                int num2 = 0;
+                //bool mayorFirstVoteDisplayed = false;
+                Dictionary<int, int> votesApplied = new();
+                for (int j = 0; j < states.Length; j++)
+                {
+                    MeetingHud.VoterState voterState = states[j];
+                    PlayerControl voter = Helpers.playerById(voterState.VoterId);
+                    if (voter == null) continue;
+
+                    GameData.PlayerInfo playerById = GameData.Instance.GetPlayerById(voterState.VoterId);
+                    if (playerById == null)
+                    {
+                        Debug.LogError(string.Format("Couldn't find player info for voter: {0}", voterState.VoterId));
+                    }
+                    else if (i == 0 && voterState.SkippedVote && !playerById.IsDead)
+                    {
+                        __instance.BloopAVoteIcon(playerById, num, __instance.SkippedVoting.transform);
+                        num++;
+                    }
+                    else if (voterState.VotedForId == targetPlayerId && !playerById.IsDead)
+                    {
+                        __instance.BloopAVoteIcon(playerById, num2, playerVoteArea.transform);
+                        num2++;
+                    }
+
+                    if (!votesApplied.ContainsKey(voter.PlayerId))
+                        votesApplied[voter.PlayerId] = 0;
+
+                    votesApplied[voter.PlayerId]++;
+                }
+            }
+            return false;
+        }
+    }
+
     [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.CheckForEndVoting))]
     class MeetingCalculateVotesPatch
     {
@@ -102,6 +173,24 @@ class MeetingHudPatch
                     dictionary[playerVoteArea.VotedFor]++;
                 }
 
+            }
+
+            if ((PlayerControl.LocalPlayer.GetModData().role == Roles.Roles.EvilSwapper || PlayerControl.LocalPlayer.GetModData().role == Roles.Roles.NiceSwapper) && PlayerControl.LocalPlayer.GetModData().IsAlive)
+            {
+                PlayerVoteArea swapped1 = null;
+                PlayerVoteArea swapped2 = null;
+                foreach (PlayerVoteArea playerVoteArea in __instance.playerStates)
+                {
+                    if (playerVoteArea.TargetPlayerId == Roles.ComplexRoles.SwapSystem.playerId1) swapped1 = playerVoteArea;
+                    if (playerVoteArea.TargetPlayerId == Roles.ComplexRoles.SwapSystem.playerId2) swapped2 = playerVoteArea;
+                }
+
+                if (swapped1 != null && swapped2 != null)
+                {
+                    if (!dictionary.ContainsKey(swapped1.TargetPlayerId)) dictionary[swapped1.TargetPlayerId] = 0;
+                    if (!dictionary.ContainsKey(swapped2.TargetPlayerId)) dictionary[swapped2.TargetPlayerId] = 0;
+                    (dictionary[swapped2.TargetPlayerId], dictionary[swapped1.TargetPlayerId]) = (dictionary[swapped1.TargetPlayerId], dictionary[swapped2.TargetPlayerId]);
+                }
             }
         }
 

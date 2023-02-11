@@ -33,6 +33,11 @@ public class Flash : Template.StandardExtraRole
                 RoleColor, "έ");
     }
 
+    public override void EditSpawnableRoleShower(ref string suffix, Role role)
+    {
+        if (IsSpawnable() && role.CanHaveExtraAssignable(this)) suffix += Helpers.cs(Color, "έ");
+    }
+
     public Flash() : base("Flash", "flash", RoleColor, 0)
     {
     }

@@ -47,8 +47,6 @@ public class Bait : Role
         Helpers.PlayQuickFlash(Color);
     }
 
-
-
     public override void OnRoleRelationSetting()
     {
         RelatedRoles.Add(Roles.Spy);
@@ -62,6 +60,7 @@ public class Bait : Role
 
     public override void LoadOptionData()
     {
+        TopOption.tab = Module.CustomOptionTab.CrewmateRoles | Module.CustomOptionTab.Modifiers;
         killerCanKnowBaitKillByFlash = CreateOption(Color.white, "killerCanKnowBaitKillByFlash", true);
         canBeExtraRole = CreateOption(Color.white, "canBeExtraRole", false);
     }
@@ -138,6 +137,11 @@ public class SecondaryBait : ExtraRole
     {
         displayName += Helpers.cs(
                 Bait.RoleColor, "⚐");
+    }
+
+    public override void EditSpawnableRoleShower(ref string suffix, Role role)
+    {
+        if (IsSpawnable() && role.CanHaveExtraAssignable(this)) suffix += Helpers.cs(Color, "⚐");
     }
 
     public override void OnMurdered(byte murderId)

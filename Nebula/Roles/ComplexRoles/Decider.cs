@@ -38,7 +38,7 @@ static public class DecideSystem
                 targetBox.name = "ShootButton";
                 targetBox.transform.localPosition = new Vector3(-0.95f, 0.03f, -1f);
                 SpriteRenderer renderer = targetBox.GetComponent<SpriteRenderer>();
-                renderer.sprite = ComplexRoles.FGuesser.targetSprite.GetSprite();
+                renderer.sprite = FGuesser.targetSprite.GetSprite();
                 PassiveButton button = targetBox.GetComponent<PassiveButton>();
                 button.OnClick.RemoveAllListeners();
                 int copiedIndex = i;

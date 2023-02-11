@@ -80,6 +80,11 @@ public class LastImpostor : ExtraRole
         if (cmp()) displayName += Helpers.cs(Color, "§");
     }
 
+    public override void EditSpawnableRoleShower(ref string suffix, Role role)
+    {
+        if (IsSpawnable() && role.CanHaveExtraAssignable(this)) suffix += Helpers.cs(Color, "§");
+    }
+
     public LastImpostor()
         : base("LastImpostor","lastImpostor",RoleColor,0)
     {

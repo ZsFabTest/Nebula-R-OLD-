@@ -24,14 +24,14 @@ public class NebulaPlugin : BasePlugin
     public const string AmongUsVersion = "2022.12.14";
     public const string PluginGuid = "jp.dreamingpig.amongus.nebula";
     public const string PluginName = "TheNebula-R";
-    public const string PluginVersion = "1.0.1.3";
+    public const string PluginVersion = "1.0.1.4";
     public const bool IsSnapshot = true;
 
     public static string PluginVisualVersion = PluginVersion + " - R";
     public static string PluginStage = IsSnapshot ? "Snapshot" : "";
     
-    public const string PluginVersionForFetch = "1.0.1.3";
-    public byte[] PluginVersionData = new byte[] { 1, 0, 1, 3 };
+    public const string PluginVersionForFetch = "1.0.1.4";
+    public byte[] PluginVersionData = new byte[] { 1, 0, 1, 4 };
 
     public static NebulaPlugin Instance;
 

@@ -27,6 +27,7 @@ public class SchrodingersCat : Role
     public Module.CustomOption canBeCrewmate;
     public Module.CustomOption canBeImpostor;
     public Module.CustomOption canBeJackal;
+    public Module.CustomOption canUseKillButtonI;
     public Module.CustomOption canUseKillButton;
     public Module.CustomOption killCooldown;
     public Module.CustomOption canChangeTeam;
@@ -37,6 +38,7 @@ public class SchrodingersCat : Role
         canBeCrewmate = CreateOption(Palette.CrewmateBlue, "canBeCrewmate", true);
         canBeImpostor = CreateOption(Palette.ImpostorRed, "canBeImpostor", true);
         canBeJackal = CreateOption(Roles.Jackal.Color, "canBeJackal", true);
+        canUseKillButtonI = CreateOption(Palette.ImpostorRed, "canUseKillButtonI", true).AddPrerequisite(canBeImpostor);
         canUseKillButton = CreateOption(Roles.Jackal.Color, "canUseKillButton", false).AddPrerequisite(canBeJackal);
         killCooldown = CreateOption(Roles.Jackal.Color, "killCooldown", 25f, 10f, 60f, 2.5f).AddPrerequisite(canUseKillButton);
         canChangeTeam = CreateOption(Color.white, "canAlwaysChangeTeam", true);
