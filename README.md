@@ -23,7 +23,7 @@
 
 4.模组汉化借鉴 - 四个憨批汉化组
 
-5.Huier-Huang - 天寸初梦（我忘记挂开源许可证了）
+5.Huier-Huang - 天寸初梦（我忘记挂开源许可证了 6）
 
 ## 联系作者
 [点击这里](https://www.bilibili.com/video/BV1GJ411x7h7/?spm_id_from=333.337.search-card.all.click&vd_source=b92e3eb8c1017c11449afa8236373b01)
