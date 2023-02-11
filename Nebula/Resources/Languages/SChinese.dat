@@ -7,8 +7,7 @@
 "title.button.existNewerNebula" : "已更新适配新版本Among Us\n的新版本星云舰模组"
 "title.button.getStableNebula" : "更新到稳定版"
 "title.button.updateNebulaSnapshot" : "更新到快照版（可能不稳定）"
-"title.button.twitter" : "Twitter"
-"title.button.discord" : "Discord"
+"title.button.github" : "Github发布"
 
 "config.debug.snapshot" : "使用快照版本"
 "config.debug.outputHash" : "输出本地装扮哈希值"
@@ -392,6 +391,7 @@
 "role.bait.description" : "诱骗敌人"
 "role.bait.info" : "一旦诱饵被杀死，击杀诱饵的凶手就会立刻报告。"
 "role.bait.killerCanKnowBaitKillByFlash" : "击杀诱饵的凶手有闪光提醒"
+"role.bait.canBeExtraRole" : "生成为附加职业"
 
 "role.busker.name" : "灵化使"
 "role.busker.short" : "灵化使"
@@ -434,6 +434,8 @@
 "role.guardian.antennaEffectiveRange" : "侦测器有效范围"
 "role.guardian.canIdentifyDeadBody" : "可以侦测到尸体"
 "role.guardian.showGuardFlash" : "保护目标被尝试击杀时特工收到闪光提示"
+"role.guardian.alertMode" : "警觉模式"
+"role.guardian.alertInterval"  : "警觉模式下刷新时间"
 
 "role.mayor.name" : "市长"
 "role.mayor.short" : "市长"
@@ -809,7 +811,7 @@
 "role.empiric.ventDuration" : "管道潜伏时间"
 "role.empiric.canUseVents" : "疫医可使用管道"
 "role.empiric.canBePlague" : "可以成为疫神"
-"role.empiric.palgueKillCooldown" : "疫神击杀冷却"
+"role.empiric.plagueKillCooldown" : "疫神击杀冷却"
 
 "role.jackal.name" : "豺狼"
 "role.jackal.short" : "豺狼"
@@ -968,7 +970,7 @@
 
 "role.lastImpostor.name" : "绝境者"
 "role.lastImpostor.short": "绝境者"
-"role.lastImpostor.info" : "当伪装者阵营只剩下你时，你将获得猜测能力"
+"role.lastImpostor.info" : "抓住最后的机会"
 
 "role.sick.name" : "病人"
 "role.sick.short" : "病人"
@@ -991,6 +993,10 @@
 "role.observer.short" : "观察者"
 "role.observer.description" : "悄悄观察他们"
 "role.observer.info" : "拥有伪装者视野和限制的使用通风管能力。"
+"role.observer.canUseVent" : "可以使用管道"
+"role.observer.hasImpostorLight" : "拥有伪装者视野"
+"role.observer.hideCoolDown" : "隐身冷却时间"
+"role.observer.hideDuringTime" : "隐身持续时间"
 
 "role.onlinecelebrity.name" : "网红"
 "role.onlinecelebrity.short" : "网红"
@@ -1014,6 +1020,54 @@
 "role.plague.short" : "疫神"
 "role.plague.description" : "6 不要卡这种bug啊啊啊啊啊"
 "role.plague.info" : "干翻他们，用你的能力。"
+
+"role.decider.name" : "裁决者"
+"role.decider.short" : "裁决者"
+"role.decider.description" : "现在谁才是赌怪？"
+"role.decider.info" : "由你掌控飞船大权。"
+"role.decider.chanceToSpawnAsSecondarySide" : "生成邪恶裁决者的概率"
+"role.decider.definitiveAssignment" : "多人时公平分配阵营"
+"role.decider.decideCount" : "可裁决次数（全局）"
+
+"role.niceDecider.name" : "正义的裁决者"
+"role.niceDecider.short" : "正义的裁决者"
+"role.niceDecider.description" : "将 <color=#ff1919ff>伪装者</color> 统统裁决掉"
+"role.niceDecider.info" : "将 <color=#ff1919ff>伪装者</color> 统统裁决掉。"
+
+"role.evilDecider.name" : "邪恶的裁决者"
+"role.evilDecider.description" : "让邪恶充斥整个飞船"
+"role.evilDecider.short" : "邪恶的裁决者"
+"role.evilDecider.info" : "击杀目击证人。"
+
+"role.splicer.name" : "穿梭者"
+"role.splicer.short" : "穿梭者"
+"role.splicer.description" : "时空扭曲！"
+"role.splicer.warpCoolDown" : "穿梭冷却时间"
+"role.splicer.maxWarpDistance" : "最大穿梭距离"
+
+"role.executioner.name" : "刽子手"
+"role.executioner.short" : "刽子手"
+"role.executioner.description" : "你被我盯上了"
+
+"role.lawyer.name" : "律师"
+"role.lawyer.short" : "律师"
+"role.lawyer.description" : "绿尸寒警告"
+"role.lawyer.info" : "帮助你的客户。"
+"role.lawyer.lawyerCanChangeToPlaintiff" : "律师可以变为起诉人"
+"role.lawyer.clientCanKnowLawyer" : "客户可以知道律师"
+
+"role.plaintiff.name" : "起诉人"
+"role.plaintiff.short" : "起诉人"
+"role.plaintiff.description" : "随叫随到"
+"role.plaintiff.info" : "看准时机，抓住机会。"
+
+"role.client.name" : "客户"
+"role.client.short" : "客户"
+"role.info" : "你被起诉了"
+
+"role.flash.name" : "闪电侠"
+"role.flash.short" : "闪电侠"
+"role.flash.customSpeed" : "速度倍数"
 
 "role.extra.chanceCategory1" : "分配职业类型"
 "role.extra.chanceCategory2" : "分配职业类型2"
@@ -1279,6 +1333,7 @@
 "button.label.assassinate" : "刺杀"
 "button.label.change" : "更改"
 "button.label.suicide" : "自杀倒计时"
+"button.label.warp" : "时空扭曲"
 
 "help.contents" : "菜单"
 "help.contents.general" : "系统"

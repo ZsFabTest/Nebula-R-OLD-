@@ -96,7 +96,7 @@ public class Lawyer : Role
     */
 
     public Lawyer()
-        : base("Lawyer", "Lawyer", RoleColor, RoleCategory.Neutral, Side.Lawyer, Side.Lawyer,
+        : base("Lawyer", "lawyer", RoleColor, RoleCategory.Neutral, Side.Lawyer, Side.Lawyer,
              new HashSet<Side>() { Side.Lawyer }, new HashSet<Side>() { Side.Lawyer },
              new HashSet<EndCondition>() { },
              true, VentPermission.CanNotUse, false, false, false)

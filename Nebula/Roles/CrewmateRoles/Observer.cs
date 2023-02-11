@@ -38,6 +38,7 @@ public class Observer : Role
             () =>
             {
                 RPCEventInvoker.UpdatePlayerVisibility(PlayerControl.LocalPlayer.PlayerId, false);
+                Game.GameData.data.myData.Vision.Register(new Game.VisionFactor(hideDuringTime.getFloat(), 1.5f));
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return PlayerControl.LocalPlayer.CanMove; },
@@ -58,7 +59,7 @@ public class Observer : Role
                RPCEventInvoker.UpdatePlayerVisibility(PlayerControl.LocalPlayer.PlayerId, true);
            },
             "button.label.hide"
-        ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
+        ).SetTimer(CustomOptionHolder.InitialAbilityCoolDownOption.getFloat());
         hideButton.MaxTimer = hideCoolDown.getFloat();
     }
 
@@ -74,7 +75,7 @@ public class Observer : Role
     public Observer()
         : base("Observer", "observer", RoleColor, RoleCategory.Crewmate, Side.Crewmate, Side.Crewmate,
              Crewmate.crewmateSideSet, Crewmate.crewmateSideSet, Crewmate.crewmateEndSet,
-             true, VentPermission.CanUseLimittedVent, false, true, true)
+             true, VentPermission.CanUseUnlimittedVent, false, true, true)
     {
         hideButton = null;
     }

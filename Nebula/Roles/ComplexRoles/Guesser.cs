@@ -165,19 +165,21 @@ static public class GuesserSystem
         foreach (Role role in Roles.AllRoles)
         {
             //撃てないロールを除外する
-            if (!role.IsGuessableRole || role.category == RoleCategory.Complex || (int)(role.ValidGamemode & Game.GameData.data.GameMode) == 0) continue;
+            if (!role.IsGuessableRole || role.category == RoleCategory.Complex) continue;
             else if (role == Roles.WhiteCat || role == Roles.RedCat || role == Roles.BlueCat) continue;
             else if (role == Roles.CrewmateWithoutTasks || role == Roles.DamnedCrew) continue;
             else if (role == Roles.Plague) continue;
-            else if (role == PlayerControl.LocalPlayer.GetModData().role) continue;
+            else if (role == Roles.Plaintiff) continue;
+            else if (!role.IsSpawnable() && role != Roles.Crewmate && role != Roles.Impostor) continue;
+            else if (role == Roles.Player) break;
             Transform buttonParent = (new GameObject()).transform;
             buttonParent.SetParent(container);
             Transform button = UnityEngine.Object.Instantiate(buttonTemplate, buttonParent);
             Transform buttonMask = UnityEngine.Object.Instantiate(maskTemplate, buttonParent);
             TMPro.TextMeshPro label = UnityEngine.Object.Instantiate(textTemplate, button);
             buttons.Add(button);
-            int row = i / 5, col = i % 6;
-            buttonParent.localPosition = new Vector3(1.75f * col, 1.5f - 0.45f * row, -5);
+            int row = i / 6, col = i % 6;
+            buttonParent.localPosition = new Vector3(-4.35f + 1.75f * col, 1.5f - 0.45f * row, -5);
             buttonParent.localScale = new Vector3(0.55f, 0.55f, 1f);
             label.text = Helpers.cs(role.Color, Language.Language.GetString("role." + role.LocalizeName + ".name"));
             label.alignment = TMPro.TextAlignmentOptions.Center;
@@ -213,6 +215,7 @@ static public class GuesserSystem
                     (actualRole == Roles.Crewmate && role == Roles.CrewmateWithoutTasks || role == Roles.DamnedCrew) ||
                     (actualRole == Roles.SchrodingersCat && role == Roles.SchrodingersCat || role == Roles.RedCat || role == Roles.WhiteCat || role == Roles.BlueCat) ||
                     (actualRole == Roles.Empiric && role == Roles.Plague) ||
+                    (actualRole == Roles.Lawyer && role == Roles.Plaintiff) ||
                     actualRole.GetImplicateRoles().Contains(role) ||
                     actualRole.GetImplicateExtraRoles().Any((role) => focusedTargetData.HasExtraRole(role))
                     )

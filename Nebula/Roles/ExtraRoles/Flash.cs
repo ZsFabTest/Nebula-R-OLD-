@@ -2,13 +2,14 @@ namespace Nebula.Roles.ExtraRoles;
 
 public class Flash : Template.StandardExtraRole
 {
-    public static Color RoleColor = new Color(247f / 255f, 207f / 255f, 19f / 255f);
+    public static Color RoleColor = new Color(239f / 255f, 136f / 255f, 22f / 255f);
 
-    public static Module.CustomOption CustomSpeed;
+    private Module.CustomOption CustomSpeed;
 
     public override void LoadOptionData()
     {
-        CustomSpeed = CreateOption(Color.white, "customSpeed", 2f, 5f, 1f, 0.5f);
+        base.LoadOptionData();
+        CustomSpeed = CreateOption(Color.white, "customSpeed", 2f, 1f, 5f, 0.5f);
         CustomSpeed.suffix = "cross";
     }
 

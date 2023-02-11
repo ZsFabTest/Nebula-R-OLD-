@@ -79,26 +79,27 @@ public class Demagogue : Role
     }
 
     private Role getRole(Role target){
-        if (target == Roles.Mayor) return Roles.EvilAce;
-        else if (target == Roles.Necromancer) return Roles.Reaper;
-        else if (target == Roles.NiceGuesser) return Roles.EvilGuesser;
-        else if (target == Roles.NiceTracker) return Roles.EvilTracker;
-        else if (target == Roles.NiceTrapper) return Roles.EvilTrapper;
-        else if (target == Roles.Guardian) return Roles.Jailer;
-        else if (target == Roles.Observer) return Roles.Assassin;
-        else if (target == Roles.Splicer) return Roles.Executioner;
-        else if (target == Roles.Spy) return Roles.Spy;
-        else if (target == Roles.Sheriff) return Roles.SerialKiller; //记得写好嗜血以后替换awa
-        else if (target == Roles.OnlineCelebrity) return Roles.Morphing;
-        else if (target == Roles.Holmes) return Roles.Painter;
-        else if (target == Roles.Sanctifier) return Roles.Demagogue;
-        else if (target == Roles.Doctor) return Roles.Cleaner;
-        else if (target == Roles.Provocateur) return Roles.Vampire;
-        else if (target == Roles.WhiteCat || target == Roles.BlueCat) return Roles.RedCat;
-        else if (target == Roles.Observer) return Roles.Eraser;
-        else if (target == Roles.OnlineCelebrity) return Roles.Camouflager;
-        else if (target.side == Side.Impostor) return target;
-        return Roles.Impostor;
+        Role targetRole = Roles.Impostor;
+        if (target == Roles.Mayor) targetRole = Roles.EvilAce;
+        else if (target == Roles.Necromancer) targetRole = Roles.Reaper;
+        else if (target == Roles.NiceGuesser) targetRole = Roles.EvilGuesser;
+        else if (target == Roles.NiceTracker) targetRole = Roles.EvilTracker;
+        else if (target == Roles.NiceTrapper) targetRole = Roles.EvilTrapper;
+        else if (target == Roles.Guardian) targetRole = Roles.Jailer;
+        else if (target == Roles.Observer) targetRole = Roles.Assassin;
+        else if (target == Roles.Splicer) targetRole = Roles.Executioner;
+        else if (target == Roles.Spy) targetRole = Roles.Spy;
+        else if (target == Roles.Sheriff) targetRole = Roles.SerialKiller; //记得写好嗜血以后替换awa
+        else if (target == Roles.OnlineCelebrity) targetRole = Roles.Morphing;
+        else if (target == Roles.Holmes) targetRole = Roles.Painter;
+        else if (target == Roles.Sanctifier) targetRole = Roles.Demagogue;
+        else if (target == Roles.Doctor) targetRole = Roles.Cleaner;
+        else if (target == Roles.Provocateur) targetRole = Roles.Vampire;
+        else if (target == Roles.WhiteCat || target == Roles.BlueCat) targetRole = Roles.RedCat;
+        else if (target == Roles.Observer) targetRole = Roles.Eraser;
+        else if (target == Roles.OnlineCelebrity) targetRole = Roles.Camouflager;
+        else if (target.side == Side.Impostor) targetRole = target;
+        return targetRole.IsSpawnable() ? targetRole : Roles.Impostor;
     }
 
     public Demagogue()

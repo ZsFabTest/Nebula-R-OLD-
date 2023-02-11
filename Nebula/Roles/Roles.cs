@@ -48,6 +48,7 @@ static public class Roles
     public static ComplexRoles.Guesser NiceGuesser = new ComplexRoles.Guesser("NiceGuesser", "niceGuesser", false);
     public static ComplexRoles.Tracker NiceTracker = new ComplexRoles.Tracker("NiceTracker", "niceTracker", false);
     public static ComplexRoles.Trapper NiceTrapper = new ComplexRoles.Trapper("NiceTrapper", "niceTrapper", false);
+    public static ComplexRoles.Decider NiceDecider = new ComplexRoles.Decider("NiceDecider", "niceDecider", false);
     public static CrewmateRoles.Oracle Oracle = new CrewmateRoles.Oracle();
     public static CrewmateRoles.Provocateur Provocateur = new CrewmateRoles.Provocateur();
     public static CrewmateRoles.Psychic Psychic = new CrewmateRoles.Psychic();
@@ -75,6 +76,7 @@ static public class Roles
     public static ComplexRoles.Guesser EvilGuesser = new ComplexRoles.Guesser("EvilGuesser", "evilGuesser", true);
     public static ComplexRoles.Tracker EvilTracker = new ComplexRoles.Tracker("EvilTracker", "evilTracker", true);
     public static ComplexRoles.Trapper EvilTrapper = new ComplexRoles.Trapper("EvilTrapper", "evilTrapper", true);
+    public static ComplexRoles.Decider EvilDecider = new ComplexRoles.Decider("EvilDecider", "evilDecider", true);
     public static ImpostorRoles.Executioner Executioner = new ImpostorRoles.Executioner();
     public static ImpostorRoles.Jailer Jailer = new ImpostorRoles.Jailer();
     public static ImpostorRoles.Marionette Marionette = new ImpostorRoles.Marionette();
@@ -124,6 +126,7 @@ static public class Roles
     public static ComplexRoles.FGuesser F_Guesser = new ComplexRoles.FGuesser();
     public static ComplexRoles.FTracker F_Tracker = new ComplexRoles.FTracker();
     public static ComplexRoles.FTrapper F_Trapper = new ComplexRoles.FTrapper();
+    public static ComplexRoles.FDecider F_Decider = new ComplexRoles.FDecider();
 
     public static ComplexRoles.SecondaryGuesser SecondaryGuesser = new ComplexRoles.SecondaryGuesser();
     public static NeutralRoles.SecondarySidekick SecondarySidekick = new NeutralRoles.SecondarySidekick();
@@ -151,11 +154,11 @@ static public class Roles
     public static List<Role> AllRoles = new List<Role>()
         {
             VOID,
-            Impostor,BountyHunter,Camouflager,Cleaner,Damned,Disturber,Eraser,EvilAce,EvilGuesser,EvilTracker,EvilTrapper,Executioner,Jailer,Marionette,Morphing,Painter,Raider,Reaper,Sniper,RedCat,Vampire,Assassin,SerialKiller,Demagogue,
+            Impostor,BountyHunter,Camouflager,Cleaner,Damned,Disturber,Eraser,EvilAce,EvilGuesser,EvilTracker,EvilTrapper,Executioner,Jailer,Marionette,Morphing,Painter,Raider,Reaper,Sniper,RedCat,Vampire,Assassin,SerialKiller,Demagogue,EvilDecider,
             /*SantaClaus,BlackSanta,*/Arsonist,Avenger,ChainShifter,Empiric,Jackal,Jester,Opportunist,Sidekick,Vulture,Madman,SchrodingersCat,BlueCat,Plague,Lawyer,Plaintiff,
             F_Crewmate,
-            F_Guesser,F_Tracker,F_Trapper,
-            Crewmate,CrewmateWithoutTasks,Agent,Alien,Bait,Busker,Comet,DamnedCrew,Doctor,Guardian,Mayor,Navvy,Necromancer,NiceGuesser,NiceTracker,NiceTrapper,Oracle,Provocateur,Psychic,Seer,Sheriff,Splicer,Spy,WhiteCat,Holmes,Sanctifier,Observer,OnlineCelebrity,
+            F_Guesser,F_Tracker,F_Trapper,F_Decider,
+            Crewmate,CrewmateWithoutTasks,Agent,Alien,Bait,Busker,Comet,DamnedCrew,Doctor,Guardian,Mayor,Navvy,Necromancer,NiceGuesser,NiceTracker,NiceTrapper,Oracle,Provocateur,Psychic,Seer,Sheriff,Splicer,Spy,WhiteCat,Holmes,Sanctifier,Observer,OnlineCelebrity,NiceDecider,
             Madmate,
             Player,
             Halley,Biela,
