@@ -11,6 +11,7 @@
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
 | 1.0.1.2 | 2022.12.14s | [Download](https://github.com/Dolly1016/Nebula/releases/download/2.1,2022.12.8/Nebula_v2.1.zip)|
+| 1.0.1.3-2 | 2022.12.14s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/V1.0.1.3Release/Nebula-R.V1.0.1.3.Release.zip) |
 | 全版本 |               | [Download](https://www.aliyundrive.com/s/w6m5DNFkPWx)
 
 ## 参考
@@ -21,6 +22,8 @@
 3.TheOtherRole GM Haoming - haoming37
 
 4.模组汉化借鉴 - 四个憨批汉化组
+
+5.Huier-Huang - 天寸初梦（我忘记挂开源许可证了）
 
 ## 联系作者
 [点击这里](https://www.bilibili.com/video/BV1GJ411x7h7/?spm_id_from=333.337.search-card.all.click&vd_source=b92e3eb8c1017c11449afa8236373b01)
@@ -37,9 +40,8 @@
 ### 网红 （船员 role.onlinecelebrithy）
 二等奖
 #### 特点：可以利用网红套出狼
-### 观察者 （船员 role.observer）
-有伪装者视野，可以使用管道（原地），窥视行凶现场
-#### 特点：没什么用但容易抓狼
+### 观察者（船员 role.observer）
+通过隐身观察现场
 ## 伪装者阵营介绍
 ### 吸血鬼（伪装者 role.vampire）
 延迟击杀
@@ -60,6 +62,13 @@
 ### 薛定谔的猫（中立 role.schrodingersCat）
 与TheOtherRoles-GM-Haoming Edition相似，可以设置蓝猫带刀
 #### 特点：可以连续更换阵营，基本死不了，半个投机者
+### 律师
+和没挂许可证的我一模一样
+#### 和TOR基本相似
+## 双方职业介绍
+### 裁决者（船员/伪装者 role.decider）
+高级杀手
+#### 在会议上处决别人
 ## 附加职业介绍
 ### 病人（附加 role.sick）
 肌无力
@@ -67,11 +76,16 @@
 ### 绝境者（附加 role.lastImpostor）
 最后一个伪装者获得猜测能力
 #### 特点：与伪装者本身职业无关，是单独的附加职业，单纯检测附加职业，可能有bug
-
+### 闪电侠（附加 role.flash）
+#### 没啥特点
 # 旧职业
 ## 模仿者（伪装者 role.imitator）
 击杀后顶替目标（1.0.1版本后删除）
 ### 特点：bug多，能力强
+### 观察者（旧） （船员 role.observer）
+有伪装者视野，可以使用管道（原地），窥视行凶现场
+#### 特点：没什么用但容易抓狼
+
 
 # 多语言样式声明
 ## SChinese
