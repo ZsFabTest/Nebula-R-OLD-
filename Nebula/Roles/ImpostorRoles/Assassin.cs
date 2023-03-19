@@ -9,6 +9,7 @@ public class Assassin : Role
 
     public override void LoadOptionData()
     {
+        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         assassinateCooldownOption = CreateOption(Color.white, "assassinateCooldown", 25f, 15f, 35f, 5f);
         assassinateCooldownOption.suffix = "second";
     }

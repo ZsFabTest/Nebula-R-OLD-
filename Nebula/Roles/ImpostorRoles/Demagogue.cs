@@ -20,6 +20,7 @@ public class Demagogue : Role
 
     public override void LoadOptionData()
     {
+        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         demagogueMaxCreateCountOption = CreateOption(Color.white, "demagogueMaxCreateCount", 1f, 1f, 3f, 1f);
     }
 

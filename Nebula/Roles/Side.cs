@@ -192,11 +192,6 @@ public class Side
         return null;
     });
 
-    public static Side Lawyer = new Side("Lawyer", "lawyer", IntroDisplayOption.SHOW_ONLY_ME, NeutralRoles.Lawyer.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
-    {
-        return null;
-    });
-
     /*
     public static Side SantaClaus = new Side("SantaClaus", "santaClaus", IntroDisplayOption.STANDARD, NeutralRoles.SantaClaus.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {

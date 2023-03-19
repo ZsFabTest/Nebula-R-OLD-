@@ -5,9 +5,10 @@ static public class DecideSystem
     public static int decideDataId { get; private set; } = (int)Roles.F_Decider.decideCountOption.getFloat();
     public static bool decideAble { get; private set; } = true;
 
-    public static void GlobalInitialize(){
+    public static void GlobalInitialize(PlayerControl __instance)
+    {
         decideAble = true;
-        decideDataId = (int)Roles.F_Decider.decideCountOption.getFloat();
+        __instance.GetModData().SetRoleData(decideDataId, (int)Roles.F_Decider.decideCountOption.getFloat());
     }
 
     static void guesserOnClick(int buttonTarget, MeetingHud __instance)
@@ -19,14 +20,16 @@ static public class DecideSystem
         if (target == null || target.Data.IsDead) return;
 
         decideAble = false;
-        decideDataId--;
+        int data = Game.GameData.data.myData.getGlobalData().GetRoleData(decideDataId);
+        data--;
+        RPCEventInvoker.UpdateRoleData(PlayerControl.LocalPlayer.PlayerId, decideDataId, data);
         RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, target.PlayerId, Game.PlayerData.PlayerStatus.Guessed.Id,true);
         RPCEventInvoker.CleanDeadBody(target.PlayerId);
     }
 
     public static void SetupMeetingButton(MeetingHud __instance)
     {
-        if (!PlayerControl.LocalPlayer.Data.IsDead && decideDataId > 0)
+        if (!PlayerControl.LocalPlayer.Data.IsDead && Game.GameData.data.myData.getGlobalData().GetRoleData(decideDataId) > 0)
         {
             for (int i = 0; i < __instance.playerStates.Length; i++)
             {
@@ -53,7 +56,7 @@ static public class DecideSystem
 
     public static void MeetingUpdate(MeetingHud __instance, TMPro.TextMeshPro meetingInfo)
     {
-        ulong left = (ulong)decideDataId;
+        int left = Game.GameData.data.myData.getGlobalData().GetRoleData(decideDataId);
         if (left <= 0) return;
         meetingInfo.text = Language.Language.GetString("role.decider.decideLeft") + ": " + left;
         meetingInfo.gameObject.SetActive(true);
@@ -68,16 +71,21 @@ public class FDecider : Template.HasBilateralness
 
     public override void LoadOptionData()
     {
-        TopOption.tab = Module.CustomOptionTab.CrewmateRoles | Module.CustomOptionTab.ImpostorRoles;
+        TopOption.tab = Module.CustomOptionTab.GhostRoles;
 
         base.LoadOptionData();
         decideCountOption = CreateOption(Color.white, "decideCount", 1f, 1f, 3f, 1f);
+
+        FirstRole = Roles.NiceDecider;
+        SecondaryRole = Roles.EvilDecider;
     }
 
     public FDecider()
             : base("Decider","decider",RoleColor)
     {
     }
+
+    public override List<Role> GetImplicateRoles() { return new List<Role>() { Roles.EvilDecider, Roles.NiceDecider }; }
 }
 
 public class Decider : Template.BilateralnessRole
@@ -102,6 +110,11 @@ public class Decider : Template.BilateralnessRole
     public override Assignable AssignableOnHelp => Roles.F_Decider;
     public override HelpSprite[] helpSprite => Roles.F_Decider.helpSprite;
 
+    public override void GlobalInitialize(PlayerControl __instance)
+    {
+        DecideSystem.GlobalInitialize(__instance);
+    }
+
     public override void SetupMeetingButton(MeetingHud __instance)
     {
         DecideSystem.SetupMeetingButton(__instance);
@@ -116,11 +129,5 @@ public class Decider : Template.BilateralnessRole
     {
         base.OnMeetingStart();
         DecideSystem.OnMeetingStart();
-    }
-
-    public override void OnRoleRelationSetting()
-    {
-        RelatedRoles.Add(Roles.Agent);
-        RelatedRoles.Add(Roles.EvilAce);
     }
 }

@@ -168,8 +168,6 @@ static public class GuesserSystem
             if (!role.IsGuessableRole || role.category == RoleCategory.Complex) continue;
             else if (role == Roles.WhiteCat || role == Roles.RedCat || role == Roles.BlueCat) continue;
             else if (role == Roles.CrewmateWithoutTasks || role == Roles.DamnedCrew) continue;
-            else if (role == Roles.Plague) continue;
-            else if (role == Roles.Plaintiff) continue;
             else if (!role.IsSpawnable() && role != Roles.Crewmate && role != Roles.Impostor) continue;
             else if (role == Roles.Player) break;
             Transform buttonParent = (new GameObject()).transform;
@@ -214,8 +212,7 @@ static public class GuesserSystem
                     actualRole == role ||
                     (actualRole == Roles.Crewmate && role == Roles.CrewmateWithoutTasks || role == Roles.DamnedCrew) ||
                     (actualRole == Roles.SchrodingersCat && role == Roles.SchrodingersCat || role == Roles.RedCat || role == Roles.WhiteCat || role == Roles.BlueCat) ||
-                    (actualRole == Roles.Empiric && role == Roles.Plague) ||
-                    (actualRole == Roles.Lawyer && role == Roles.Plaintiff) ||
+                    (actualRole == Roles.Madmate && focusedTarget.GetModData().extraRole.Contains(Roles.SecondaryMadmate) && Roles.Madmate.canGuessSecondaryOption.getBool()) || 
                     actualRole.GetImplicateRoles().Contains(role) ||
                     actualRole.GetImplicateExtraRoles().Any((role) => focusedTargetData.HasExtraRole(role))
                     )

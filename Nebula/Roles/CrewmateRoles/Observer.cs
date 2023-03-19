@@ -14,6 +14,7 @@ public class Observer : Role
 
     public override void LoadOptionData()
     {
+        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         canUseVent = CreateOption(Color.white, "canUseVent", true);
         hasImpostorLight = CreateOption(Color.white, "hasImpostorLight", true);
         hideCoolDown = CreateOption(Color.white, "hideCoolDown", 15f, 5f, 30f, 2.5f);

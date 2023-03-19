@@ -19,6 +19,7 @@ public class SerialKiller : Role
 
     public override void LoadOptionData()
     {
+        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         killCooldownOption = CreateOption(Color.white, "killCooldown", 20f, 10f, 30f, 2.5f);
         suicideMaxTimeOption = CreateOption(Color.white, "suicideMaxTime", 40f, 20f, 60f, 5f);
     }

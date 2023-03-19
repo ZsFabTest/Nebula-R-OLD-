@@ -10,6 +10,7 @@ public class Madman : Role
 
     public override void LoadOptionData()
     {
+        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         isGuessableOption = CreateOption(Color.white, "isGuessable", false);
         killCooldownOption = CreateOption(Color.white, "killCooldown", 25f, 15f, 60f, 5f);
     }
@@ -56,7 +57,6 @@ public class Madman : Role
         {
             RPCEventInvoker.SwapExtraRole(PlayerControl.LocalPlayer, target, Roles.SecondaryGuesser, true);
             RPCEventInvoker.SwapExtraRole(PlayerControl.LocalPlayer, target, Roles.SecondaryMadmate, true);
-            RPCEventInvoker.SwapExtraRole(PlayerControl.LocalPlayer, target, Roles.LastImpostor, true);
             RPCEventInvoker.SwapRole(PlayerControl.LocalPlayer, target);
 
             target = null;

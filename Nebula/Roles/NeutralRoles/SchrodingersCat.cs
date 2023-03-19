@@ -34,6 +34,7 @@ public class SchrodingersCat : Role
 
     public override void LoadOptionData()
     {
+        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         isGuessable = CreateOption(Color.white, "isGuessable", true);
         canBeCrewmate = CreateOption(Palette.CrewmateBlue, "canBeCrewmate", true);
         canBeImpostor = CreateOption(Palette.ImpostorRed, "canBeImpostor", true);

@@ -7,6 +7,7 @@ public class Vampire : Role
 
     public override void LoadOptionData()
     {
+        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         dieAfterSuckBlondOption = CreateOption(Color.white, "dieAfterSuckBlond", 5f, 5f, 15f, 2.5f);
         dieAfterSuckBlondOption.suffix = "second";
         suckBlondCooldownOption = CreateOption(Color.white, "suckBlondCooldown", 25f, 15f, 35f, 5f);

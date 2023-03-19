@@ -28,6 +28,7 @@ public class Sanctifier : Role
 
     public override void LoadOptionData()
     {
+        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         canUnsetMadmateOption = CreateOption(Palette.ImpostorRed, "canUnsetMadmate", true);
         canUnsetGuesserOption = CreateOption(Roles.NiceGuesser.Color, "canUnsetGuesser", true).AddPrerequisite(Roles.F_Guesser.secondoryRoleOption);
         canUnsetSidesickOption = CreateOption(Roles.Jackal.Color, "canUnsetSidekick", true).AddPrerequisite(NeutralRoles.Sidekick.SidekickTakeOverOriginalRoleOption);

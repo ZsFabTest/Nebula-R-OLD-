@@ -1,4 +1,7 @@
-﻿using static Nebula.Roles.CrewmateRoles.Bait;
+﻿using BepInEx.Logging;
+using LibCpp2IL.Logging;
+using Nebula.Logger;
+using static Nebula.Roles.CrewmateRoles.Bait;
 
 namespace Nebula.Roles.CrewmateRoles;
 
@@ -60,7 +63,7 @@ public class Bait : Role
 
     public override void LoadOptionData()
     {
-        TopOption.tab = Module.CustomOptionTab.CrewmateRoles | Module.CustomOptionTab.Modifiers;
+        TopOption.tab = Module.CustomOptionTab.CrewmateRoles | Module.CustomOptionTab.Modifiers | Module.CustomOptionTab.GhostRoles;
         killerCanKnowBaitKillByFlash = CreateOption(Color.white, "killerCanKnowBaitKillByFlash", true);
         canBeExtraRole = CreateOption(Color.white, "canBeExtraRole", false);
     }
@@ -68,7 +71,13 @@ public class Bait : Role
     public override bool IsSpawnable()
     {
         if(canBeExtraRole.getBool()) return false;
-        return true;
+        return base.IsSpawnable();
+    }
+
+    public override void SpawnableTest(ref Dictionary<Role, int> DefinitiveRoles, ref HashSet<Role> SpawnableRoles)
+    {
+        if (canBeExtraRole.getBool()) return;
+        base.SpawnableTest(ref DefinitiveRoles, ref SpawnableRoles);
     }
 
     public Bait()
@@ -81,7 +90,7 @@ public class Bait : Role
 
 public class SecondaryBait : ExtraRole
 {
-    public SecondaryBait() : base("Bait", "bait", Bait.RoleColor, 0)
+    public SecondaryBait() : base("Bait", "bait", RoleColor, 0)
     {
         IsHideRole = true;
     }
@@ -125,6 +134,11 @@ public class SecondaryBait : ExtraRole
         _sub_Assignment(assignMap, crewmates, (int)Roles.Bait.RoleCountOption.getFloat());
     }
 
+    public override void EditDescriptionString(ref string description)
+    {
+        description += "\n" + Language.Language.GetString("role.bait.description");
+    }
+
     public override void EditDisplayName(byte playerId, ref string displayName, bool hideFlag)
     {
         bool showFlag = false;
@@ -136,12 +150,12 @@ public class SecondaryBait : ExtraRole
     public override void EditDisplayNameForcely(byte playerId, ref string displayName)
     {
         displayName += Helpers.cs(
-                Bait.RoleColor, "⚐");
+                Bait.RoleColor, "®");
     }
 
     public override void EditSpawnableRoleShower(ref string suffix, Role role)
     {
-        if (IsSpawnable() && role.CanHaveExtraAssignable(this)) suffix += Helpers.cs(Color, "⚐");
+        if (IsSpawnable() && role.CanHaveExtraAssignable(this)) suffix += Helpers.cs(Color, "®");
     }
 
     public override void OnMurdered(byte murderId)
@@ -166,5 +180,20 @@ public class SecondaryBait : ExtraRole
         if (Helpers.playerById(playerId).IsMadmate() && PlayerControl.LocalPlayer.Data.Role.Role == RoleTypes.Impostor) return;
 
         Helpers.PlayQuickFlash(Color);
+    }
+
+    public override bool IsSpawnable()
+    {
+        return Roles.Bait.canBeExtraRole.getBool();
+    }
+
+    public override Module.CustomOption? RegisterAssignableOption(Role role)
+    {
+        Module.CustomOption option = role.CreateOption(new Color(0.8f, 0.95f, 1f), "option.canBeBait", role.DefaultExtraAssignableFlag(this), true).HiddenOnDisplay(true).SetIdentifier("role." + role.LocalizeName + ".canBeBait");
+        option.AddPrerequisite(CustomOptionHolder.advanceRoleOptions);
+        option.AddCustomPrerequisite(() => { return Roles.SecondaryBait.IsSpawnable(); });
+        if (role.category == RoleCategory.Impostor || role.category == RoleCategory.Neutral)
+            option.AddCustomPrerequisite(() => { return false; });
+        return option;
     }
 }

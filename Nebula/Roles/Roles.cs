@@ -49,7 +49,6 @@ static public class Roles
     public static ComplexRoles.Tracker NiceTracker = new ComplexRoles.Tracker("NiceTracker", "niceTracker", false);
     public static ComplexRoles.Trapper NiceTrapper = new ComplexRoles.Trapper("NiceTrapper", "niceTrapper", false);
     public static ComplexRoles.Decider NiceDecider = new ComplexRoles.Decider("NiceDecider", "niceDecider", false);
-    public static ComplexRoles.Swapper NiceSwapper = new ComplexRoles.Swapper("NiceSwapper", "niceSwapper", false);
     public static CrewmateRoles.Oracle Oracle = new CrewmateRoles.Oracle();
     public static CrewmateRoles.Provocateur Provocateur = new CrewmateRoles.Provocateur();
     public static CrewmateRoles.Psychic Psychic = new CrewmateRoles.Psychic();
@@ -63,6 +62,8 @@ static public class Roles
     public static CrewmateRoles.Sanctifier Sanctifier = new CrewmateRoles.Sanctifier();
     public static CrewmateRoles.Observer Observer = new CrewmateRoles.Observer();
     public static CrewmateRoles.OnlineCelebrity OnlineCelebrity = new CrewmateRoles.OnlineCelebrity();
+    public static CrewmateRoles.Necrophilic Necrophilic = new CrewmateRoles.Necrophilic();
+    public static CrewmateRoles.Transporter Transporter = new CrewmateRoles.Transporter();
 
     public static CrewmateRoles.Madmate Madmate = new CrewmateRoles.Madmate();
 
@@ -78,7 +79,6 @@ static public class Roles
     public static ComplexRoles.Tracker EvilTracker = new ComplexRoles.Tracker("EvilTracker", "evilTracker", true);
     public static ComplexRoles.Trapper EvilTrapper = new ComplexRoles.Trapper("EvilTrapper", "evilTrapper", true);
     public static ComplexRoles.Decider EvilDecider = new ComplexRoles.Decider("EvilDecider", "evilDecider", true);
-    public static ComplexRoles.Swapper EvilSwapper = new ComplexRoles.Swapper("EvilSwapper", "evilSwapper", true);
     public static ImpostorRoles.Executioner Executioner = new ImpostorRoles.Executioner();
     public static ImpostorRoles.Jailer Jailer = new ImpostorRoles.Jailer();
     public static ImpostorRoles.Marionette Marionette = new ImpostorRoles.Marionette();
@@ -107,9 +107,7 @@ static public class Roles
     public static NeutralRoles.Madman Madman = new NeutralRoles.Madman();
     public static NeutralRoles.SchrodingersCat SchrodingersCat = new NeutralRoles.SchrodingersCat();
     public static NeutralRoles.BlueCat BlueCat = new NeutralRoles.BlueCat();
-    public static NeutralRoles.Plague Plague = new NeutralRoles.Plague();
-    public static NeutralRoles.Lawyer Lawyer = new NeutralRoles.Lawyer();
-    public static NeutralRoles.Plaintiff Plaintiff = new NeutralRoles.Plaintiff();
+    //public static NeutralRoles.Plague Plague = new NeutralRoles.Plague();
 
     public static MinigameRoles.Player Player = new MinigameRoles.Player();
 
@@ -130,7 +128,6 @@ static public class Roles
     public static ComplexRoles.FTracker F_Tracker = new ComplexRoles.FTracker();
     public static ComplexRoles.FTrapper F_Trapper = new ComplexRoles.FTrapper();
     public static ComplexRoles.FDecider F_Decider = new ComplexRoles.FDecider();
-    public static ComplexRoles.FSwapper F_Swapper = new ComplexRoles.FSwapper();
 
     public static ComplexRoles.SecondaryGuesser SecondaryGuesser = new ComplexRoles.SecondaryGuesser();
     public static NeutralRoles.SecondarySidekick SecondarySidekick = new NeutralRoles.SecondarySidekick();
@@ -142,9 +139,7 @@ static public class Roles
     public static ExtraRoles.Lover Lover = new ExtraRoles.Lover();
     public static ExtraRoles.Trilemma Trilemma = new ExtraRoles.Trilemma();
     public static ExtraRoles.AvengerTarget AvengerTarget = new ExtraRoles.AvengerTarget();
-    public static ExtraRoles.LastImpostor LastImpostor = new ExtraRoles.LastImpostor();
     public static ExtraRoles.Sick Sick = new ExtraRoles.Sick();
-    public static ExtraRoles.Client Client= new ExtraRoles.Client();
     public static ExtraRoles.Flash Flash = new ExtraRoles.Flash();
     public static CrewmateRoles.SecondaryBait SecondaryBait = new CrewmateRoles.SecondaryBait();
     // public static ExtraRoles.TeamSanta TeamSanta = new ExtraRoles.TeamSanta();
@@ -158,11 +153,11 @@ static public class Roles
     public static List<Role> AllRoles = new List<Role>()
         {
             VOID,
-            Impostor,BountyHunter,Camouflager,Cleaner,Damned,Disturber,Eraser,EvilAce,EvilGuesser,EvilTracker,EvilTrapper,Executioner,Jailer,Marionette,Morphing,Painter,Raider,Reaper,Sniper,RedCat,Vampire,Assassin,SerialKiller,Demagogue,EvilDecider,EvilSwapper,Escapist,
-            /*SantaClaus,BlackSanta,*/Arsonist,Avenger,ChainShifter,Empiric,Jackal,Jester,Opportunist,Sidekick,Vulture,Madman,SchrodingersCat,BlueCat,Plague,Lawyer,Plaintiff,
+            Impostor,BountyHunter,Camouflager,Cleaner,Damned,Disturber,Eraser,EvilAce,EvilGuesser,EvilTracker,EvilTrapper,Executioner,Jailer,Marionette,Morphing,Painter,Raider,Reaper,Sniper,RedCat,Vampire,Assassin,SerialKiller,Demagogue,EvilDecider,Escapist,
+            /*SantaClaus,BlackSanta,*/Arsonist,Avenger,ChainShifter,Empiric,Jackal,Jester,Opportunist,Sidekick,Vulture,Madman,SchrodingersCat,BlueCat,
             F_Crewmate,
-            F_Guesser,F_Tracker,F_Trapper,F_Decider,F_Swapper,
-            Crewmate,CrewmateWithoutTasks,Agent,Alien,Bait,Busker,Comet,DamnedCrew,Doctor,Guardian,Mayor,Navvy,Necromancer,NiceGuesser,NiceTracker,NiceTrapper,Oracle,Provocateur,Psychic,Seer,Sheriff,Splicer,Spy,WhiteCat,Holmes,Sanctifier,Observer,OnlineCelebrity,NiceDecider,NiceSwapper,
+            F_Guesser,F_Tracker,F_Trapper,F_Decider,
+            Crewmate,CrewmateWithoutTasks,Agent,Alien,Bait,Busker,Comet,DamnedCrew,Doctor,Guardian,Mayor,Navvy,Necromancer,NiceGuesser,NiceTracker,NiceTrapper,Oracle,Provocateur,Psychic,Seer,Sheriff,Splicer,Spy,WhiteCat,Holmes,Sanctifier,Observer,OnlineCelebrity,NiceDecider,Necrophilic,Transporter,
             Madmate,
             Player,
             Halley,Biela,
@@ -180,9 +175,7 @@ static public class Roles
             Bloody,Confused,Drunk,Lover,Trilemma,
             MetaRole,AvengerTarget,
             PerkHolder,
-            LastImpostor,
             Sick,
-            Client,
             Flash
         };
 

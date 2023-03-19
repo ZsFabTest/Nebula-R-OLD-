@@ -1,20 +1,7 @@
-﻿using Nebula.Events;
-
-namespace Nebula.Roles.NeutralRoles;
+﻿namespace Nebula.Roles.NeutralRoles;
 
 public class Empiric : Template.HasAlignedHologram, Template.HasWinTrigger
 {
-    public class EmpiricEvent : LocalEvent
-    {
-        public EmpiricEvent() : base(0.2f) { }
-        public override void OnTerminal()
-        {
-            PlayerControl player = PlayerControl.LocalPlayer;
-            Role target = Roles.Plague;
-            RPCEventInvoker.ImmediatelyChangeRole(player,target);
-        }
-    }
-
     static public Color RoleColor = new Color(183f / 255f, 233f / 255f, 0f / 255f);
 
     static private CustomButton infectButton;
@@ -27,8 +14,6 @@ public class Empiric : Template.HasAlignedHologram, Template.HasWinTrigger
     private Module.CustomOption canUseVentsOption;
     private Module.CustomOption ventCoolDownOption;
     private Module.CustomOption ventDurationOption;
-    public Module.CustomOption canBePlague;
-    public Module.CustomOption plagueKillCooldown;
 
     private int leftInfect;
     private Dictionary<byte, float> infectProgress;
@@ -58,9 +43,6 @@ public class Empiric : Template.HasAlignedHologram, Template.HasWinTrigger
         ventCoolDownOption.suffix = "second";
         ventDurationOption = CreateOption(Color.white, "ventDuration", 10f, 5f, 60f, 2.5f).AddPrerequisite(canUseVentsOption);
         ventDurationOption.suffix = "second";
-
-        canBePlague = CreateOption(RoleColor, "canBePlague", true);
-        plagueKillCooldown = CreateOption(RoleColor, "plagueKillCooldown", 5f, 1f, 15f, 1f).AddPrerequisite(canBePlague); 
     }
 
     SpriteLoader infectSprite = new SpriteLoader("Nebula.Resources.InfectButton.png", 115f);
@@ -223,11 +205,7 @@ public class Empiric : Template.HasAlignedHologram, Template.HasWinTrigger
             }
         }
 
-        if (allPlayerInfected)
-        {
-            if (canBePlague.getBool()) LocalEvent.Activate(new EmpiricEvent());
-            else RPCEventInvoker.WinTrigger(this);
-        }
+        if (allPlayerInfected) RPCEventInvoker.WinTrigger(this);
 
         foreach (KeyValuePair<byte, PoolablePlayer> player in PlayerIcons)
         {
@@ -290,61 +268,5 @@ public class Empiric : Template.HasAlignedHologram, Template.HasWinTrigger
         coasting = 0f;
 
         Patches.EndCondition.EmpiricWin.TriggerRole = this;
-    }
-}
-
-public class Plague : Role
-{
-    private CustomButton killButton;
-
-    public override void ButtonInitialize(HudManager __instance)
-    {
-        if (killButton != null)
-        {
-            killButton.Destroy();
-        }
-        killButton = new CustomButton(
-            () =>
-            {
-                var r = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead, true);
-                if (r == Helpers.MurderAttemptResult.SuppressKill) Game.GameData.data.myData.currentTarget.ShowFailedMurder();
-                killButton.Timer = killButton.MaxTimer;
-                Game.GameData.data.myData.currentTarget = null;
-            },
-            () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
-            () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
-            () => { killButton.Timer = killButton.MaxTimer; },
-            __instance.KillButton.graphic.sprite,
-            Expansion.GridArrangeExpansion.GridArrangeParameter.AlternativeKillButtonContent,
-            __instance,
-            Module.NebulaInputManager.modKillInput.keyCode
-        ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
-        killButton.MaxTimer = Roles.Empiric.plagueKillCooldown.getFloat();
-        killButton.SetButtonCoolDownOption(true);
-    }
-
-    public override void MyPlayerControlUpdate()
-    {
-        Game.MyPlayerData data = Game.GameData.data.myData;
-        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget();
-        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
-    }
-
-    public override void CleanUp()
-    {
-        if(killButton != null)
-        {
-            killButton.Destroy();
-            killButton = null;
-        }
-    }
-
-    public Plague()
-    : base("Plague", "plague", Roles.Empiric.Color, RoleCategory.Neutral, Side.Palgue, Side.Palgue,
-         new HashSet<Side>() { Side.Palgue }, new HashSet<Side>() { Side.Palgue },
-         new HashSet<Patches.EndCondition>() { Patches.EndCondition.PlagueWin },
-         true, VentPermission.CanUseUnlimittedVent, true, true, true)
-    {
-        IsHideRole = true;
     }
 }

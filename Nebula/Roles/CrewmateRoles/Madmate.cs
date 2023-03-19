@@ -15,6 +15,7 @@ public class Madmate : Role
     private Module.CustomOption[] NumOfTasksRequiredToKnowImpostorsOption;
     public Module.CustomOption SecondoryRoleOption;
     public Module.CustomOption SecondaryMadmateKnowImpostorsTasksPercentOption;
+    public Module.CustomOption canGuessSecondaryOption;
 
     //Local
     private HashSet<byte> knownImpostors = new HashSet<byte>();
@@ -44,6 +45,7 @@ public class Madmate : Role
 
         SecondaryMadmateKnowImpostorsTasksPercentOption = CreateOption(Color.white, "taskPercent", 60f, 10f, 100f, 10f).AddPrerequisite(SecondoryRoleOption);
         SecondaryMadmateKnowImpostorsTasksPercentOption.suffix = "percent";
+        canGuessSecondaryOption = CreateOption(Color.white, "canGuessSecondary", false).AddPrerequisite(SecondoryRoleOption);
 
         CanKnowImpostorsByTasksOption = CreateOption(Color.white, "canKnowImpostorsByTasks", true).AddInvPrerequisite(SecondoryRoleOption);
         CanKnowImpostorsByTasksOption.postOptionScreenBuilder = (refresher) =>
@@ -236,7 +238,7 @@ public class Madmate : Role
 public class SecondaryMadmate : ExtraRole
 {
     //インポスターはModで操作するFakeTaskは所持していない
-    List<byte> knowImpostors;
+    bool knowImpostors;
 
     public SecondaryMadmate()
             : base("Madmate", "madmate", Palette.ImpostorRed, 0)
@@ -327,17 +329,13 @@ public class SecondaryMadmate : ExtraRole
 
         if (completedTasks >= Game.GameData.data.myData.getGlobalData().Tasks.AllTasks * Roles.Madmate.SecondaryMadmateKnowImpostorsTasksPercentOption.getFloat() * 0.01f) ;
         {
-            knowImpostors.Clear();
-            foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
-            {
-                if (player.GetModData().role.side == Side.Impostor) knowImpostors.Add(player.PlayerId);
-            }
+            knowImpostors = true;
         }
     }
 
     public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
     {
-        if (knowImpostors.Contains(playerId)) displayColor = Palette.ImpostorRed;
+        if (knowImpostors && Helpers.playerById(playerId).GetModData().role.side == Side.Impostor) displayColor = Palette.ImpostorRed;
     }
 
     public override bool CanFixSabotage => Roles.Madmate.CanFixSabotage;

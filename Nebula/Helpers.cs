@@ -443,11 +443,6 @@ public static class Helpers
                 break;
             }
         }
-        if(target.GetModData().role == Roles.Roles.Plague)
-        {
-            RPCEventInvoker.UncheckedMurderPlayer(killer.PlayerId, killer.PlayerId, Game.PlayerData.PlayerStatus.Embroiled.Id, showAnimation);
-            return MurderAttemptResult.SuppressKill;
-        }
         switch (murder)
         {
             case MurderAttemptResult.PerformKill:

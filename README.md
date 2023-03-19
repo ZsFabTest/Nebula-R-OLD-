@@ -14,7 +14,8 @@
 ## 下载
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
-| 1.0.1.4 | 2022.12.14s | [Download](https://github.com/ZsFabTest/Nebula-R/release/download/V1.0.1.4Release.Nebula-R)
+| 1.0.1.5 | 2022.12.14s | [Download](httos://github.com/ZsFabTest/Nebula-R/release/download/V1.0.1.5-Release/Nebula-R_V1.0.1.5.Release.zip)
+| 1.0.1.4 | 2022.12.14s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/V1.0.1.4-Release/Nebula-R_V1.0.1.4.Release.zip)
 | 1.0.1.3-2 | 2022.12.14s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/V1.0.1.3Release/Nebula-R.V1.0.1.3.Release.zip) |
 | 1.0.1.2 | 2022.12.14s | [Download](https://github.com/Dolly1016/Nebula/releases/download/2.1,2022.12.8/Nebula_v2.1.zip)|
 | 全版本 |               | [Download](https://www.aliyundrive.com/s/w6m5DNFkPWx)
@@ -47,6 +48,9 @@
 #### 特点：可以利用网红套出狼
 ### 观察者（船员 role.observer）
 通过隐身观察现场
+### 恋尸者（船员 role.necrophilic）
+传送到尸体旁边
+#### 没有尸体的时候不会传送
 ## 伪装者阵营介绍
 ### 吸血鬼（伪装者 role.vampire）
 延迟击杀

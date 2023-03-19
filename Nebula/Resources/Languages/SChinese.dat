@@ -71,7 +71,7 @@
 "option.tab.crewmateRoles" : "船员<color=#ffffffff>职业</color>"
 "option.tab.impostorRoles" : "伪装者<color=#ffffffff>职业</color>"
 "option.tab.neutralRoles" : "中立<color=#ffffffff>职业</color>"
-"option.tab.ghostRoles" : "亡灵<color=#ffffffff>职业</color>"
+"option.tab.ghostRoles" : "亡灵<color=#ffffffff>与</color><color=#87ff8cff>更多</color><color=#ffffffff>职业</color>"
 "option.tab.modifiers" : "附加职业"
 "option.tab.escapeRoles" : "躲猫猫<color=#ffffffff>职业</color>"
 "option.tab.advancedSettings" : "进阶<color=#ffffffff>设置</color>"
@@ -295,6 +295,9 @@
 "option.canBeSecretImpostor" : "可以成为隐藏职业 (伪装者)"
 "option.canBeConfused" : "可以成为幻视者"
 "option.canBeSick" : "可以成为病人"
+"option.canBeBait" : "可以成为诱饵"
+"option.canBeFlash" : "可以成为闪电侠"
+"option.canBeClient" : "可以成为客户"
 
 "option.suffix.cross" : "x"
 "option.suffix.second" : "s"
@@ -392,6 +395,7 @@
 "role.bait.info" : "一旦诱饵被杀死，击杀诱饵的凶手就会立刻报告。"
 "role.bait.killerCanKnowBaitKillByFlash" : "击杀诱饵的凶手有闪光提醒"
 "role.bait.canBeExtraRole" : "生成为附加职业"
+"role.bait.canGuessSecondary" : "附加诱饵可以被猜测"
 
 "role.busker.name" : "灵化使"
 "role.busker.short" : "灵化使"
@@ -615,6 +619,7 @@
 "role.madmate.canKnowImpostorsByTasks" : "叛徒可以通过完成任务得知伪装者"
 "role.madmate.numOfTasksRequired" : "得知伪装者所需任务数"
 "role.madmate.taskPercent" : "得知伪装者所需任务百分比"
+"role.madmate.canGuessSecondary" : "附加叛徒可以被猜测"
 
 "role.impostor.name" : "伪装者"
 "role.impostor.short" : "伪装者"
@@ -682,7 +687,7 @@
 
 "role.evilAce.name" : "密命王牌"
 "role.evilAce.short" : "密命王牌"
-"role.evilAce.description" : "♪秘密隐藏的ability 让我来向你证明它的意义♪"
+"role.evilAce.description" : "秘密隐藏的ability 让我来向你证明它的意义"
 "role.evilAce.info" : "当密命王牌孤军奋战时，其击杀冷却会大幅减少。"
 "role.evilAce.killCoolDown" : "冷却减少"
 "role.evilAce.canKnowDeadNonImpostorsRoles" : "密命王牌得知非伪装者死亡玩家的职业"
@@ -753,7 +758,7 @@
 "role.raider.name" : "强盗"
 "role.raider.short" : "强盗"
 "role.raider.info" : "强盗无法正常击杀，但可以掷出一把可以穿透人体的斧头击杀他人"
-"role.raider.description" : "一斧制敌♪"
+"role.raider.description" : "一斧制敌"
 "role.raider.help.equip" : "拿出/隐匿斧头"
 "role.raider.throwCoolDown" : "投掷斧头冷却"
 "role.raider.axeSize" : "斧头大小"
@@ -762,7 +767,7 @@
 
 "role.sniper.name" : "狙击手"
 "role.reaper.short" : "狙击手"
-"role.sniper.description" : "一枪制敌♪"
+"role.sniper.description" : "一枪制敌"
 "role.sniper.info" : "狙击手可以远距离狙杀其他玩家。墙壁不能阻挡狙击手的狙杀。\n狙击手的狙杀有最大有效射程，并会在狙击手所在地点周围用狙击图标向其他玩家示意"
 "role.sniper.help.equip" : "拿出/隐匿狙击枪"
 "role.sniper.snipeCoolDown" : "狙击冷却"
@@ -973,6 +978,7 @@
 "role.lastImpostor.name" : "绝境者"
 "role.lastImpostor.short": "绝境者"
 "role.lastImpostor.info" : "抓住最后的机会"
+"role.lastImpostor.description" : "这是伪装者最后的疯狂。"
 
 "role.sick.name" : "病人"
 "role.sick.short" : "病人"
@@ -1051,6 +1057,7 @@
 "role.executioner.name" : "刽子手"
 "role.executioner.short" : "刽子手"
 "role.executioner.description" : "你被我盯上了"
+"role.executioner.info" : "短距离远程击杀的快感。"
 
 "role.lawyer.name" : "律师"
 "role.lawyer.short" : "律师"
@@ -1066,10 +1073,13 @@
 
 "role.client.name" : "客户"
 "role.client.short" : "客户"
-"role.info" : "你被起诉了"
+"role.client.description" : "你被起诉了"
+"role.client.info" : "打赢这场官司，顺便杀了律师。"
 
 "role.flash.name" : "闪电侠"
 "role.flash.short" : "闪电侠"
+"role.flash.description" : "你超速了"
+"role.flash.info" : "时速180迈，交警直呼666。"
 "role.flash.customSpeed" : "速度倍数"
 
 "role.swapper.name" : "换票师"
@@ -1101,6 +1111,19 @@
 "role.escapist.description" : "肇事逃逸"
 "role.escapist.info" : "击杀后直接跑路，不拖泥带水的。"
 "role.escapist.escapeCoolDown" : "逃逸冷却时间"
+
+"role.necrophilic.name" : "恋尸者"
+"role.necrophilic.short" : "恋尸者"
+"role.necrophilic.description" : "鸡腿我来啦~"
+"role.necrophilic.info" : "你只是喜欢尸体，不是坏批啊喂！"
+"role.necrophilic.snapCoolDown" : "寻尸冷却时间"
+"role.necrophilic.canKnowBody" : "可以得知尸体位置"
+
+"role.transporter.name" : "传送师"
+"role.transporter.short" : "传送师"
+"role.transporter.description" : "全体目光向我看齐"
+"role.transporter.info" : "我宣布个事"
+"role.transporter.teleportCooldown" : "传送冷却时间"
 
 "role.extra.chanceCategory1" : "分配职业类型"
 "role.extra.chanceCategory2" : "分配职业类型2"
@@ -1369,6 +1392,7 @@
 "button.label.warp" : "时空扭曲"
 "button.label.escape" : "逃逸"
 "button.label.hide" : "观察"
+"button.label.snap" : "寻尸"
 
 "help.contents" : "菜单"
 "help.contents.general" : "系统"

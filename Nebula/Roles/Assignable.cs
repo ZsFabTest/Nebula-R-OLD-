@@ -707,6 +707,8 @@ public class Assignable
         }
         catch (Exception e) { return false; }
 
+        if (!TopOption.enabled) return false;
+
         return true;
     }
 

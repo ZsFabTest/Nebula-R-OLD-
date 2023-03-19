@@ -107,7 +107,6 @@ public class Lover : ExtraRole
                     if (murderId != PlayerControl.LocalPlayer.PlayerId)
                     {
                         RPCEventInvoker.ImmediatelyChangeRole(player, Roles.Avenger);
-                        RPCEventInvoker.UnsetExtraRole(player, Roles.LastImpostor, true);
                         RPCEventInvoker.SetExtraRole(Helpers.playerById(murderId), Roles.AvengerTarget, Game.GameData.data.myData.getGlobalData().GetExtraRoleData(this));
                         return;
                     }

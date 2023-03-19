@@ -1378,7 +1378,6 @@ static class RPCEvents
             RPCEvents.UnsetExtraRole(Roles.ExtraRole.GetRoleById(Roles.Roles.SecondaryMadmate.id), playerId, false);
             RPCEvents.SetExtraRole(playerId, Roles.Roles.SecondarySidekick, (ulong)jackalId);
         }
-        RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer, Roles.Roles.LastImpostor, false);
     }
 
     public static void CreateMadmate(byte playerId)

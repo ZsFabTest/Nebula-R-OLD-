@@ -78,7 +78,6 @@ public class ChainShifter : Role
                     RPCEventInvoker.SwapExtraRole(PlayerControl.LocalPlayer, shiftPlayer, Roles.SecondaryGuesser, true);
                     break;
             }
-            RPCEventInvoker.SwapExtraRole(PlayerControl.LocalPlayer, shiftPlayer, Roles.LastImpostor, true);
             RPCEventInvoker.SwapExtraRole(PlayerControl.LocalPlayer, shiftPlayer, Roles.SecondaryMadmate, true);
             RPCEventInvoker.SwapRole(PlayerControl.LocalPlayer, shiftPlayer);
 

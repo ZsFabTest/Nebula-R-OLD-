@@ -11,6 +11,7 @@ public class Escapist : Role
 
     public override void LoadOptionData()
     {
+        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         escapeCoolDown = CreateOption(Color.white, "escapeCoolDown", 15f, 5f, 45f, 5f);
         escapeCoolDown.suffix = "second";
     }

@@ -6,17 +6,10 @@ public class Flash : Template.StandardExtraRole
 
     private Module.CustomOption CustomSpeed;
 
-    public override void LoadOptionData()
-    {
-        base.LoadOptionData();
-        CustomSpeed = CreateOption(Color.white, "customSpeed", 2f, 1f, 5f, 0.5f);
-        CustomSpeed.suffix = "cross";
-    }
-
     public override void GlobalInitialize(PlayerControl __instance)
     {
         base.GlobalInitialize(__instance);
-        RPCEvents.EmitSpeedFactor(__instance.PlayerId, new Game.SpeedFactor(0, 114514f, CustomSpeed.getFloat(), true));
+        RPCEvents.EmitSpeedFactor(__instance.PlayerId, new Game.SpeedFactor(114, 99999f, 2f, true));
     }
 
     public override void EditDisplayName(byte playerId, ref string displayName, bool hideFlag)
@@ -30,15 +23,28 @@ public class Flash : Template.StandardExtraRole
     public override void EditDisplayNameForcely(byte playerId, ref string displayName)
     {
         displayName += Helpers.cs(
-                RoleColor, "έ");
+                RoleColor, "©");
     }
 
     public override void EditSpawnableRoleShower(ref string suffix, Role role)
     {
-        if (IsSpawnable() && role.CanHaveExtraAssignable(this)) suffix += Helpers.cs(Color, "έ");
+        if (IsSpawnable() && role.CanHaveExtraAssignable(this)) suffix += Helpers.cs(Color, "©");
     }
 
-    public Flash() : base("Flash", "flash", RoleColor, 0)
+    public override void EditDescriptionString(ref string description)
+    {
+        description += "\n" + Language.Language.GetString("role.flash.description");
+    }
+
+    public override Module.CustomOption? RegisterAssignableOption(Role role)
+    {
+        Module.CustomOption option = role.CreateOption(new Color(0.8f, 0.95f, 1f), "option.canBeFlash", role.DefaultExtraAssignableFlag(this), true).HiddenOnDisplay(true).SetIdentifier("role." + role.LocalizeName + ".canBeFlash");
+        option.AddPrerequisite(CustomOptionHolder.advanceRoleOptions);
+        option.AddCustomPrerequisite(() => { return Roles.Flash.IsSpawnable(); });
+        return option;
+    }
+
+    public Flash() : base("Flash", "flash", RoleColor, 1)
     {
     }
 }

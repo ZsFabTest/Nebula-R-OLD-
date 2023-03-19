@@ -21,17 +21,17 @@ public class NebulaPlugin : BasePlugin
 {
     public static Module.Random rnd = new Module.Random();
 
-    public const string AmongUsVersion = "2022.12.14";
+    public const string AmongUsVersion = "2023.2.28";
     public const string PluginGuid = "jp.dreamingpig.amongus.nebula";
     public const string PluginName = "TheNebula-R";
-    public const string PluginVersion = "1.0.1.4";
-    public const bool IsSnapshot = true;
+    public const string PluginVersion = "1.0.1.5";
+    public const bool IsSnapshot = false;
 
     public static string PluginVisualVersion = PluginVersion + " - R";
     public static string PluginStage = IsSnapshot ? "Snapshot" : "";
     
-    public const string PluginVersionForFetch = "1.0.1.4";
-    public byte[] PluginVersionData = new byte[] { 1, 0, 1, 4 };
+    public const string PluginVersionForFetch = "1.0.1.5";
+    public byte[] PluginVersionData = new byte[] { 1, 0, 1, 5 };
 
     public static NebulaPlugin Instance;
 

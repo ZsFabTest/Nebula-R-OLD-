@@ -68,7 +68,7 @@ class MeetingHudPatch
             });
         }
     }
-
+    /*
     [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.PopulateResults))]
     class MeetingHudPopulateVotesPatch
     {
@@ -138,6 +138,7 @@ class MeetingHudPatch
             return false;
         }
     }
+    */
 
     [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.CheckForEndVoting))]
     class MeetingCalculateVotesPatch
@@ -173,24 +174,6 @@ class MeetingHudPatch
                     dictionary[playerVoteArea.VotedFor]++;
                 }
 
-            }
-
-            if ((PlayerControl.LocalPlayer.GetModData().role == Roles.Roles.EvilSwapper || PlayerControl.LocalPlayer.GetModData().role == Roles.Roles.NiceSwapper) && PlayerControl.LocalPlayer.GetModData().IsAlive)
-            {
-                PlayerVoteArea swapped1 = null;
-                PlayerVoteArea swapped2 = null;
-                foreach (PlayerVoteArea playerVoteArea in __instance.playerStates)
-                {
-                    if (playerVoteArea.TargetPlayerId == Roles.ComplexRoles.SwapSystem.playerId1) swapped1 = playerVoteArea;
-                    if (playerVoteArea.TargetPlayerId == Roles.ComplexRoles.SwapSystem.playerId2) swapped2 = playerVoteArea;
-                }
-
-                if (swapped1 != null && swapped2 != null)
-                {
-                    if (!dictionary.ContainsKey(swapped1.TargetPlayerId)) dictionary[swapped1.TargetPlayerId] = 0;
-                    if (!dictionary.ContainsKey(swapped2.TargetPlayerId)) dictionary[swapped2.TargetPlayerId] = 0;
-                    (dictionary[swapped2.TargetPlayerId], dictionary[swapped1.TargetPlayerId]) = (dictionary[swapped1.TargetPlayerId], dictionary[swapped2.TargetPlayerId]);
-                }
             }
         }
 

@@ -11,7 +11,7 @@ public class GameMaster : Role
         public GMEvent(PlayerControl target) : base(0.2f) { this.target = target; }
         public override void OnTerminal()
         {
-            RPCEventInvoker.AddExtraRole(target, Roles.SecondaryBait, 0);            
+            RPCEventInvoker.AddExtraRole(target, Roles.Flash, 0);            
         }
     }
 

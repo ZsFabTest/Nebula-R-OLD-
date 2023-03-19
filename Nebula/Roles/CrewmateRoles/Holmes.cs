@@ -61,6 +61,7 @@ public class Holmes : Role
 
     public override void LoadOptionData()
     {
+        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         isGuessable = CreateOption(Color.white, "isGuessable", true);
         surveyCooldownOption = CreateOption(Color.white, "surveyCooldown", 30f, 15f, 45f, 2.5f);
         maxSurveyNumberOption = CreateOption(Color.white, "maxSurveyNumber", 2f, 1f, 15f, 1f);

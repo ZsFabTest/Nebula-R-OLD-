@@ -1,7 +1,20 @@
-﻿namespace Nebula.Roles.CrewmateRoles;
+﻿using Nebula.Events;
+using Nebula.Roles.ImpostorRoles;
+
+namespace Nebula.Roles.CrewmateRoles;
 
 public class Necromancer : Template.Draggable
 {
+    public class NecromancerEvent : LocalEvent
+    {
+        PlayerControl target;
+        public NecromancerEvent(PlayerControl target) : base(0.1f) { this.target = target; }
+        public override void OnActivate()
+        {
+            RPCEventInvoker.SetExtraRole(target, Roles.SecondaryMadmate, 0);
+        }
+    }
+
     static public Color RoleColor = new Color(110f / 255f, 51f / 255f, 163f / 255f);
 
     private CustomButton reviveButton;
@@ -180,7 +193,7 @@ public class Necromancer : Template.Draggable
                 RPCEventInvoker.RevivePlayer(Helpers.playerById(PlayerControl.LocalPlayer.GetModData().dragPlayerId));
                 if (PlayerControl.LocalPlayer.IsMadmate() && Helpers.playerById(PlayerControl.LocalPlayer.GetModData().dragPlayerId).GetModData().role.side != Side.Impostor)
                 {
-                    RPCEventInvoker.ImmediatelyChangeRole(Helpers.playerById(PlayerControl.LocalPlayer.GetModData().dragPlayerId), Roles.Madmate);
+                    LocalEvent.Activate(new NecromancerEvent(Helpers.playerById(PlayerControl.LocalPlayer.GetModData().dragPlayerId)));
                 }
             },
             "button.label.revive",
