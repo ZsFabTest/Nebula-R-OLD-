@@ -65,6 +65,11 @@ public class Transporter : Role
         }
     }
 
+    public override void GlobalInitialize(PlayerControl __instance)
+    {
+        target = null;
+    }
+
     public override void MyPlayerControlUpdate()
     {
         Game.MyPlayerData data = Game.GameData.data.myData;
@@ -78,5 +83,6 @@ public class Transporter : Role
              false, VentPermission.CanNotUse, false, false, false)
     {
         target = null;
+        teleport = null;
     }
 }

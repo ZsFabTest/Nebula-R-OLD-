@@ -16,6 +16,7 @@ public class Opportunist : Role
     private Module.CustomOption canWinWithVultureOption;
     private Module.CustomOption canWinWithLoversOption;
     private Module.CustomOption canWinWithAvengerOption;
+    private Module.CustomOption canWinWithPavlovTeamOption;
 
     //オポチュタスク割り当て用
     private List<int> stayingTaskOrder;
@@ -60,6 +61,7 @@ public class Opportunist : Role
         canWinWithVultureOption = CreateOption(Color.white, "canWinWithVulture", true);
         canWinWithLoversOption = CreateOption(Color.white, "canWinWithLovers", true);
         canWinWithAvengerOption = CreateOption(Color.white, "canWinWithAvenger", true);
+        canWinWithPavlovTeamOption = CreateOption(Color.white, "canWinWithPavlov", true);
     }
 
     public override void Initialize(PlayerControl __instance)
@@ -77,12 +79,13 @@ public class Opportunist : Role
 
         if (player.Data.IsDead && player.GetModData().FinalData?.status != Game.PlayerData.PlayerStatus.Burned) return false;
         if (condition == EndCondition.ArsonistWin && !canWinWithArsonistOption.getBool()) return false;
-        if ((condition == EndCondition.EmpiricWin || condition == EndCondition.PlagueWin) && !canWinWithEmpiricOption.getBool()) return false;
+        if (condition == EndCondition.EmpiricWin && !canWinWithEmpiricOption.getBool()) return false;
         if (condition == EndCondition.JesterWin && !canWinWithJesterOption.getBool()) return false;
         if (condition == EndCondition.VultureWin && !canWinWithVultureOption.getBool()) return false;
         if (condition == EndCondition.AvengerWin && !canWinWithAvengerOption.getBool()) return false;
         if (condition == EndCondition.LoversWin && !canWinWithLoversOption.getBool()) return false;
         if (condition == EndCondition.TrilemmaWin && !canWinWithLoversOption.getBool()) return false;
+        if (condition == EndCondition.PavlovWin && !canWinWithPavlovTeamOption.getBool()) return false;
 
 
         if (player.GetModData().Tasks.AllTasks <= player.GetModData().Tasks.Completed)

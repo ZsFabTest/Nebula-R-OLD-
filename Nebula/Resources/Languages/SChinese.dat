@@ -816,8 +816,6 @@
 "role.empiric.ventCoolDown" : "管道冷却"
 "role.empiric.ventDuration" : "管道潜伏时间"
 "role.empiric.canUseVents" : "疫医可使用管道"
-"role.empiric.canBePlague" : "可以成为疫神"
-"role.empiric.plagueKillCooldown" : "疫神击杀冷却"
 
 "role.jackal.name" : "豺狼"
 "role.jackal.short" : "豺狼"
@@ -867,6 +865,7 @@
 "role.opportunist.canWinWithVulture" : "可以与秃鹫共同胜利"
 "role.opportunist.canWinWithLovers" : "可以和恋人共同胜利"
 "role.opportunist.canWinWithAvenger" : "可以与复仇者共同胜利"
+"role.opportunist.canWinWithPavlov" : "可以与巴浦洛夫团队共同胜利"
 "role.opportunist.task.staying" : "待在%OBJ%"
 "role.opportunist.task.staying.weaponsConsole" : "武器操纵台"
 "role.opportunist.task.staying.steering" : "船舵"
@@ -1024,11 +1023,6 @@
 "role.demagogue.info" : "你没有使用风管和击杀能力，但你可以招募玩家成为伪装者。\n大部分船员职业有特殊对应职业。"
 "role.demagogue.demagogueMaxCreateCount" : "最大招募个数"
 
-"role.plague.name" : "疫神"
-"role.plague.short" : "疫神"
-"role.plague.description" : "6 不要卡这种bug啊啊啊啊啊"
-"role.plague.info" : "干翻他们，用你的能力。"
-
 "role.decider.name" : "裁决者"
 "role.decider.short" : "裁决者"
 "role.decider.description" : "现在谁才是赌怪？"
@@ -1058,23 +1052,6 @@
 "role.executioner.short" : "刽子手"
 "role.executioner.description" : "你被我盯上了"
 "role.executioner.info" : "短距离远程击杀的快感。"
-
-"role.lawyer.name" : "律师"
-"role.lawyer.short" : "律师"
-"role.lawyer.description" : "绿尸寒警告"
-"role.lawyer.info" : "帮助你的客户。"
-"role.lawyer.lawyerCanChangeToPlaintiff" : "律师可以变为起诉人"
-"role.lawyer.clientCanKnowLawyer" : "客户可以知道律师"
-
-"role.plaintiff.name" : "起诉人"
-"role.plaintiff.short" : "起诉人"
-"role.plaintiff.description" : "随叫随到"
-"role.plaintiff.info" : "看准时机，抓住机会。"
-
-"role.client.name" : "客户"
-"role.client.short" : "客户"
-"role.client.description" : "你被起诉了"
-"role.client.info" : "打赢这场官司，顺便杀了律师。"
 
 "role.flash.name" : "闪电侠"
 "role.flash.short" : "闪电侠"
@@ -1124,6 +1101,24 @@
 "role.transporter.description" : "全体目光向我看齐"
 "role.transporter.info" : "我宣布个事"
 "role.transporter.teleportCooldown" : "传送冷却时间"
+
+"role.kotwal.name" : "警察局长"
+"role.kotwal.short" : "警察局长"
+"role.kotwal.description" : "好好干~"
+"role.kotwal.info" : "来♂"
+"role.kotwal.createSheriffCooldown" : "任命冷却时间"
+
+"role.pavlov.name" : "巴浦洛夫之主"
+"role.pavlov.short" : "巴浦洛夫之主"
+"role.pavlov.description" : "狗子是个好东西"
+"role.pavlov.info" : "舔 狗 之 王"
+"role.pavlov.createDogsCooldown" : "喂食冷却时间"
+"role.pavlov.dogKillCooldown" : "巴浦洛夫的狗的击杀冷却"
+
+"role.dog.name" : "巴浦洛夫的狗"
+"role.dog.short" : "巴浦洛夫的狗"
+"role.dog.description" : "来个鸡腿"
+"role.dog.info" : "来个鸡腿~"
 
 "role.extra.chanceCategory1" : "分配职业类型"
 "role.extra.chanceCategory2" : "分配职业类型2"
@@ -1249,6 +1244,9 @@
 "side.gamePlayer.name" : "玩家"
 "side.killer.name" : "杀手"
 "side.void.name" : "超管"
+"side.pavlov.name" : "巴普洛夫团队"
+"side.schrodingersCat.name" : "薛定谔的猫"
+"side.madman.name" : "疯子"
 
 "roles.category.default" : "标准"
 "roles.category.crewmate" : "船员"
@@ -1301,6 +1299,7 @@
 "game.endText.players" : "玩家胜利"
 "game.endText.hunter" : "追捕者胜利"
 "game.endText.escapees" : "逃亡者胜利"
+"game.endText.pavlov" : "汪汪队胜利"
 
 "game.endScreen.detail" : "更多"
 "game.endScreen.close" : "关闭"
@@ -1393,6 +1392,9 @@
 "button.label.escape" : "逃逸"
 "button.label.hide" : "观察"
 "button.label.snap" : "寻尸"
+"button.lable.teleport" : "传送"
+"button.label.appoint" : "任命"
+"button.label.feed" : "喂养"
 
 "help.contents" : "菜单"
 "help.contents.general" : "系统"

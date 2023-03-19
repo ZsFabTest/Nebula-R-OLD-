@@ -68,11 +68,7 @@ public class Bait : Role
         canBeExtraRole = CreateOption(Color.white, "canBeExtraRole", false);
     }
 
-    public override bool IsSpawnable()
-    {
-        if(canBeExtraRole.getBool()) return false;
-        return base.IsSpawnable();
-    }
+    public override bool IsUnsuitable { get { return canBeExtraRole.getBool(); } }
 
     public override void SpawnableTest(ref Dictionary<Role, int> DefinitiveRoles, ref HashSet<Role> SpawnableRoles)
     {

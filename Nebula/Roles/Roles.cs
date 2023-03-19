@@ -64,6 +64,7 @@ static public class Roles
     public static CrewmateRoles.OnlineCelebrity OnlineCelebrity = new CrewmateRoles.OnlineCelebrity();
     public static CrewmateRoles.Necrophilic Necrophilic = new CrewmateRoles.Necrophilic();
     public static CrewmateRoles.Transporter Transporter = new CrewmateRoles.Transporter();
+    public static CrewmateRoles.Kotwal Kotwal = new CrewmateRoles.Kotwal();
 
     public static CrewmateRoles.Madmate Madmate = new CrewmateRoles.Madmate();
 
@@ -107,6 +108,8 @@ static public class Roles
     public static NeutralRoles.Madman Madman = new NeutralRoles.Madman();
     public static NeutralRoles.SchrodingersCat SchrodingersCat = new NeutralRoles.SchrodingersCat();
     public static NeutralRoles.BlueCat BlueCat = new NeutralRoles.BlueCat();
+    public static NeutralRoles.Pavlov Pavlov = new NeutralRoles.Pavlov();
+    public static NeutralRoles.Dog Dog = new NeutralRoles.Dog();
     //public static NeutralRoles.Plague Plague = new NeutralRoles.Plague();
 
     public static MinigameRoles.Player Player = new MinigameRoles.Player();
@@ -154,10 +157,10 @@ static public class Roles
         {
             VOID,
             Impostor,BountyHunter,Camouflager,Cleaner,Damned,Disturber,Eraser,EvilAce,EvilGuesser,EvilTracker,EvilTrapper,Executioner,Jailer,Marionette,Morphing,Painter,Raider,Reaper,Sniper,RedCat,Vampire,Assassin,SerialKiller,Demagogue,EvilDecider,Escapist,
-            /*SantaClaus,BlackSanta,*/Arsonist,Avenger,ChainShifter,Empiric,Jackal,Jester,Opportunist,Sidekick,Vulture,Madman,SchrodingersCat,BlueCat,
+            /*SantaClaus,BlackSanta,*/Arsonist,Avenger,ChainShifter,Empiric,Jackal,Jester,Opportunist,Sidekick,Vulture,Madman,SchrodingersCat,BlueCat,Pavlov,Dog,
             F_Crewmate,
             F_Guesser,F_Tracker,F_Trapper,F_Decider,
-            Crewmate,CrewmateWithoutTasks,Agent,Alien,Bait,Busker,Comet,DamnedCrew,Doctor,Guardian,Mayor,Navvy,Necromancer,NiceGuesser,NiceTracker,NiceTrapper,Oracle,Provocateur,Psychic,Seer,Sheriff,Splicer,Spy,WhiteCat,Holmes,Sanctifier,Observer,OnlineCelebrity,NiceDecider,Necrophilic,Transporter,
+            Crewmate,CrewmateWithoutTasks,Agent,Alien,Bait,Busker,Comet,DamnedCrew,Doctor,Guardian,Mayor,Navvy,Necromancer,NiceGuesser,NiceTracker,NiceTrapper,Oracle,Provocateur,Psychic,Seer,Sheriff,Splicer,Spy,WhiteCat,Holmes,Sanctifier,Observer,OnlineCelebrity,NiceDecider,Necrophilic,Transporter,Kotwal,
             Madmate,
             Player,
             Halley,Biela,

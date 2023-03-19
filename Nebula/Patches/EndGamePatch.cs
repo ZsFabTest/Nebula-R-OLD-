@@ -23,7 +23,7 @@ public class EndCondition
     public static EndCondition VultureWin = new EndCondition(20, Roles.NeutralRoles.Vulture.RoleColor, "vulture", 1, Module.CustomGameMode.Standard);
     public static EndCondition AvengerWin = new EndCondition(21, Roles.NeutralRoles.Avenger.RoleColor, "avenger", 0, Module.CustomGameMode.Standard);
     public static EndCondition LoversWin = new EndCondition(24, Roles.ExtraRoles.Lover.iconColor[0], "lovers", 0, Module.CustomGameMode.Standard);
-    public static EndCondition PlagueWin = new EndCondition(27, Roles.NeutralRoles.Empiric.RoleColor, "plague", 1, Module.CustomGameMode.Standard);
+    public static EndCondition PavlovWin = new EndCondition(27, Roles.NeutralRoles.Pavlov.RoleColor, "pavlov", 0, Module.CustomGameMode.Standard);
     public static EndCondition TrilemmaWin = new EndCondition(25, new Color(209f / 255f, 63f / 255f, 138f / 255f), "trilemma", 0, Module.CustomGameMode.Standard);
     //public static EndCondition SantaWin = new EndCondition(26, Roles.NeutralRoles.SantaClaus.RoleColor, "santa", 4, Module.CustomGameMode.Standard);
 
@@ -59,7 +59,7 @@ public class EndCondition
             CrewmateWinByVote ,CrewmateWinByTask,CrewmateWinDisconnect,
             ImpostorWinByKill,ImpostorWinBySabotage,ImpostorWinByVote,ImpostorWinDisconnect,
             CrewmateWinHnS,ImpostorWinHnS,
-            JesterWin,JackalWin,ArsonistWin,EmpiricWin,VultureWin,PlagueWin,/*SantaWin,*/
+            JesterWin,JackalWin,ArsonistWin,EmpiricWin,VultureWin,PavlovWin,/*SantaWin,*/
             LoversWin,TrilemmaWin,AvengerWin,
             NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
             MinigamePlayersWin,MinigameEscapeesWin,MinigameHunterWin,
@@ -700,6 +700,11 @@ public class PlayerStatistics
     public int AliveInLoveImpostors;
     public int AliveInLoveJackals;
 
+    public int AlivePavlov;
+    public int AlivePavlovCouple;
+    public int AlivePavlovTrilemma;
+    public int AliveInLovePavlov;
+
     public bool IsValid;
 
     //
@@ -728,6 +733,9 @@ public class PlayerStatistics
         AliveInLoveJackals = 0;
         AliveInLoveImpostors = 0;
         AliveImpostorsWithSidekick = 0;
+        AlivePavlovCouple = 0;
+        AlivePavlovTrilemma = 0;
+        AliveInLovePavlov = 0;
 
         Roles.Side side;
         
@@ -797,6 +805,20 @@ public class PlayerStatistics
                             AliveInLoveImpostors++;
                             if (!flag) AliveImpostorCouple++;
                         }
+
+                        flag = false;
+                        if (data.role.side == Roles.Side.Pavlov)
+                        {
+                            AliveInLovePavlov++;
+                            AlivePavlovCouple++;
+                            flag = true;
+                        }
+
+                        if (data.role.side == Roles.Side.Pavlov)
+                        {
+                            AliveInLovePavlov++;
+                            if (!flag) AlivePavlovCouple++;
+                        }
                     }
                 }
 
@@ -807,7 +829,7 @@ public class PlayerStatistics
                     {
                         AliveTrilemma++;
 
-                        bool jackalFlag = false, impostorFlag = false;
+                        bool jackalFlag = false, impostorFlag = false, pavlovFlag = false;
 
                         foreach (var d in lData)
                         {
@@ -821,9 +843,15 @@ public class PlayerStatistics
                                 impostorFlag = true;
                                 AliveInLoveImpostors++;
                             }
+                            if ((d.role.side == Roles.Side.Pavlov))
+                            {
+                                pavlovFlag = true;
+                                AliveInLovePavlov++;
+                            }
                         }
                         if (jackalFlag) AliveJackalTrilemma++;
                         if (impostorFlag) AliveImpostorTrilemma++;
+                        if (pavlovFlag) AlivePavlovTrilemma++;
                     }
                 }
 
@@ -846,11 +874,13 @@ public class PlayerStatistics
         AliveCrewmates = GetAlivePlayers(Roles.Side.Crewmate);
         AliveImpostors = GetAlivePlayers(Roles.Side.Impostor);
         AliveJackals = GetAlivePlayers(Roles.Side.Jackal);
+        AlivePavlov = GetAlivePlayers(Roles.Side.Pavlov);
 
         if (!Roles.Roles.Lover.loversAsIndependentSideOption.getBool())
         {
             AliveInLoveImpostors = 0;
             AliveInLoveJackals = 0;
+            AliveInLovePavlov = 0;
         }
     }
 }

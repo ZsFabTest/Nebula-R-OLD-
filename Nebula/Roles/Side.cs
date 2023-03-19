@@ -1,5 +1,4 @@
-﻿using AmongUs.Data.Player;
-using Nebula.Patches;
+﻿using Nebula.Patches;
 
 namespace Nebula.Roles;
 
@@ -18,7 +17,7 @@ public class Side
         {
             if (statistics.GetAlivePlayers(Impostor) == 0 &&
             statistics.GetAlivePlayers(Jackal) == 0 &&
-            statistics.GetAlivePlayers(Palgue) == 0 &&
+            statistics.GetAlivePlayers(Pavlov) == 0 &&
             !Game.GameData.data.AllPlayers.Values.Any((p) => p.IsAlive && p.extraRole.Contains(Roles.SecondarySidekick)))
             {
                 return EndCondition.CrewmateWinByVote;
@@ -72,11 +71,11 @@ public class Side
 
             if (statistics.AliveImpostors > 0 &&
             statistics.AliveJackals == 0 &&
+            statistics.AlivePavlov == 0 &&
             !Game.GameData.data.AllPlayers.Values.Any((p) => p.IsAlive && p.extraRole.Contains(Roles.SecondarySidekick)) &&
             statistics.TotalAlive <= (statistics.AliveImpostors - statistics.AliveInLoveImpostors) * 2 &&
             (statistics.AliveImpostorCouple + statistics.AliveImpostorTrilemma == 0 ||
-            statistics.AliveImpostorCouple * 2 + statistics.AliveImpostorTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3)
-             && statistics.GetAlivePlayers(Palgue) == 0)
+            statistics.AliveImpostorCouple * 2 + statistics.AliveImpostorTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3))
             {
                 if (TempData.LastDeathReason == DeathReason.Kill)
                 {
@@ -100,8 +99,8 @@ public class Side
     {
         if ((statistics.AliveJackals - statistics.AliveInLoveJackals) * 2 >= statistics.TotalAlive && statistics.GetAlivePlayers(Impostor) - statistics.AliveImpostorsWithSidekick <= 0 &&
         (statistics.AliveJackalCouple + statistics.AliveJackalTrilemma == 0 ||
-        statistics.AliveJackalCouple * 2 + statistics.AliveJackalTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3
-        ) && statistics.GetAlivePlayers(Palgue) == 0)
+        statistics.AliveJackalCouple * 2 + statistics.AliveJackalTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3) &&
+        statistics.AlivePavlov == 0)
         {
             return EndCondition.JackalWin;
         }
@@ -173,7 +172,7 @@ public class Side
         return null;
     });
 
-    public static Side Madman = new Side("Madman", "Madman", IntroDisplayOption.SHOW_ONLY_ME, NeutralRoles.Madman.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    public static Side Madman = new Side("Madman", "madman", IntroDisplayOption.SHOW_ONLY_ME, NeutralRoles.Madman.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
         return null;
     });
@@ -183,11 +182,14 @@ public class Side
         return null;
     });
 
-    public static Side Palgue = new Side("Palgue", "palgue", IntroDisplayOption.SHOW_ONLY_ME, NeutralRoles.Empiric.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    public static Side Pavlov = new Side("Pavlov", "pavlov", IntroDisplayOption.STANDARD, NeutralRoles.Pavlov.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
-        if(statistics.AliveJackals == 0 && statistics.AliveImpostors == 0 && statistics.GetAlivePlayers(Palgue) > 0)
+        if ((statistics.AlivePavlov - statistics.AliveInLovePavlov) * 2 >= statistics.TotalAlive && statistics.AliveImpostors == 0 &&
+        (statistics.AlivePavlovCouple + statistics.AlivePavlovTrilemma == 0 ||
+        statistics.AlivePavlovCouple * 2 + statistics.AlivePavlovTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3) &&
+        statistics.AliveJackals == 0)
         {
-            return EndCondition.PlagueWin;
+            return EndCondition.PavlovWin;
         }
         return null;
     });
@@ -315,7 +317,7 @@ public class Side
     public static List<Side> AllSides = new List<Side>()
         {
             Crewmate, Impostor,
-            Jackal, Jester, Vulture, Empiric, Arsonist, Avenger,ChainShifter,/*SantaClaus,*/
+            Jackal, Jester, Vulture, Empiric, Arsonist, Avenger, ChainShifter, Pavlov,/*SantaClaus,*/
             Investigator,
             GamePlayer,
             Extra,VOID,

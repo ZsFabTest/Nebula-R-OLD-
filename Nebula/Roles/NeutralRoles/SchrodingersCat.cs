@@ -16,7 +16,7 @@ public class SchrodingersCat : Role
             this.targetRole = targetRole;
         }
 
-        public override void OnTerminal()
+        public override void OnActivate()
         {
             RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer);
             RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer, this.targetRole);
