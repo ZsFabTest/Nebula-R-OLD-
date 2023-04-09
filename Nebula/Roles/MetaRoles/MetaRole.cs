@@ -177,7 +177,7 @@ public class MetaObjectManager
         for (int i = 0; i < multiString.Length; i++) MetaInfoText[i] = multiString[i].text;
         TextInputField = textInput.TextInputField;
         TextInputField.HintText = "freePlay.metaObject";
-        textInput.TextInputField.DecisionAction = (id) => SpawnMetaObject(id);
+        textInput.TextInputField.LoseFocusAction = (id) => SpawnMetaObject(id);
 
         SpawnMetaObject("freePlay.metaObject");   
     }
@@ -256,8 +256,7 @@ public class MetaButtons : Module.Information.UpperInformation
                             r != Roles.DamnedCrew &&
                             r != Roles.CrewmateWithoutTasks &&
                             r != Roles.HnSCrewmate &&
-                            r != Roles.HnSImpostor &&
-                            r != Roles.RitualCrewmate
+                            r != Roles.HnSReaper
                         , 0, 60, (r) =>
                         {
                             RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer, r);

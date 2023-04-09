@@ -160,18 +160,12 @@ class ExileControllerPatch
 
         Helpers.RoleAction(Game.GameData.data.myData.getGlobalData(), (r) => r.OnMeetingEnd());
 
-        if (Game.GameData.data.GameMode == Module.CustomGameMode.Investigators)
-        {
-            Ghost.InvestigatorMeetingUI.EndMeeting();
-        }
-
         //死体はすべて消去される
         foreach (Game.DeadPlayerData deadPlayerData in Game.GameData.data.deadPlayers.Values)
         {
             deadPlayerData.EraseBody();
         }
     }
-
 
     [HarmonyPatch(typeof(TranslationController), nameof(TranslationController.GetString), new Type[] { typeof(StringNames), typeof(Il2CppReferenceArray<Il2CppSystem.Object>) })]
     class ExileControllerMessagePatch
@@ -188,15 +182,21 @@ class ExileControllerPatch
                     if (id is StringNames.ExileTextPN or StringNames.ExileTextSN or StringNames.ExileTextPP or StringNames.ExileTextSP)
                     {
                         __result = player.Data.PlayerName + Language.Language.GetString("text.exile.role") + Language.Language.GetString("role." + player.GetModData().role.GetActualRole(player.GetModData()).LocalizeName + ".name");
-                        if (player.GetModData().extraRole.Contains(Roles.Roles.SecondaryGuesser))
+                        foreach (Roles.ExtraRole extraRole in player.GetModData().extraRole)
                         {
-                            __result += " " + Language.Language.GetString("role.guesser.name");
-                        }
-                        if (player.GetModData().extraRole.Contains(Roles.Roles.Lover))
-                        {
-                            __result += " " + Language.Language.GetString("role.lover.name");
+                            if (extraRole.id == Roles.Roles.SecondaryGuesser.id)
+                            {
+                                __result += " " + Language.Language.GetString("role.guesser.name");
+                                continue;
+                            }
+                            if (extraRole.id == Roles.Roles.Lover.id)
+                            {
+                                __result += " " + Language.Language.GetString("role.lover.name");
+                            }
                         }
                     }
+                    // Hide number of remaining impostors on Jester win
+                    if (player.GetModData().role == Roles.Roles.Jester) __result += "\n" + Language.Language.GetString("text.exile.jesterAddition");
                 }
             }
             catch

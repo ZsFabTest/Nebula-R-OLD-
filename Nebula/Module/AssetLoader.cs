@@ -4,9 +4,24 @@ using UnityEngine;
 
 namespace Nebula.Module;
 
+public class NebulaAssetBundle
+{
+    public AssetBundle assetBundle { get; private set; }
+
+    public NebulaAssetBundle(AssetBundle assetBundle)
+    {
+        this.assetBundle = assetBundle;
+    }
+
+    
+}
+
 public static class AssetLoader
 {
     private static readonly Assembly assembly = Assembly.GetExecutingAssembly();
+
+    public static NebulaAssetBundle NebulaMainAsset;
+
     public static AudioClip HadarDive;
     public static AudioClip HadarReappear;
     public static AudioClip HadarFear;
@@ -22,6 +37,9 @@ public static class AssetLoader
     public static AudioClip Executioner;
 
     public static AudioClip SpectreFried;
+    public static AudioClip SpectreStatueCrush0;
+    public static AudioClip SpectreStatueCrush1;
+    public static AudioClip SpectreStatueBroken;
 
     public static AudioClip Paparazzo;
 
@@ -32,6 +50,7 @@ public static class AssetLoader
 
     public static GameObject SpectreFriedMinigamePrefab;
     public static GameObject SpectreRancorMinigamePrefab;
+    public static GameObject SpectreStatueMinigamePrefab;
 
     public static GameObject CameraFinderPrefab;
     
@@ -41,6 +60,7 @@ public static class AssetLoader
     {
         var resourceStream = assembly.GetManifestResourceStream("Nebula.Resources.Assets.nebula_asset");
         var assetBundleBundle = AssetBundle.LoadFromMemory(resourceStream.ReadFully());
+        NebulaMainAsset = new(assetBundleBundle);
 
         HadarDive = assetBundleBundle.LoadAsset<AudioClip>("HadarDive.wav").DontUnload();
         HadarReappear = assetBundleBundle.LoadAsset<AudioClip>("HadarReappear.wav").DontUnload();
@@ -57,6 +77,9 @@ public static class AssetLoader
         Executioner = assetBundleBundle.LoadAsset<AudioClip>("Executioner.wav").DontUnload();
 
         SpectreFried = assetBundleBundle.LoadAsset<AudioClip>("SpectreFriedSE.ogg").DontUnload();
+        SpectreStatueCrush0 = assetBundleBundle.LoadAsset<AudioClip>("StatueCrush0.ogg").DontUnload();
+        SpectreStatueCrush1 = assetBundleBundle.LoadAsset<AudioClip>("StatueCrush1.ogg").DontUnload();
+        SpectreStatueBroken = assetBundleBundle.LoadAsset<AudioClip>("StatueBroken.ogg").DontUnload();
 
         SkeldDivMap = assetBundleBundle.LoadAsset<GameObject>("SkeldDivMap").DontUnload();
         MIRADivMap = assetBundleBundle.LoadAsset<GameObject>("MIRADivMap").DontUnload();
@@ -65,6 +88,7 @@ public static class AssetLoader
 
         SpectreFriedMinigamePrefab = assetBundleBundle.LoadAsset<GameObject>("SpectreFriedMinigame").DontUnload();
         SpectreRancorMinigamePrefab = assetBundleBundle.LoadAsset<GameObject>("SpectreRancorMinigame").DontUnload();
+        SpectreStatueMinigamePrefab = assetBundleBundle.LoadAsset<GameObject>("SpectreStatueMinigame").DontUnload();
 
         CameraFinderPrefab = assetBundleBundle.LoadAsset<GameObject>("CameraFinder").DontUnload();
 
@@ -190,6 +214,12 @@ public static class AssetLoader
 
             case AudioAsset.SpectreFried:
                 return SpectreFried;
+            case AudioAsset.SpectreStatueCrush0:
+                return SpectreStatueCrush0;
+            case AudioAsset.SpectreStatueCrush1:
+                return SpectreStatueCrush1;
+            case AudioAsset.SpectreStatueBroken:
+                return SpectreStatueBroken;
 
             case AudioAsset.Paparazzo:
                 return Paparazzo;
@@ -212,6 +242,9 @@ public enum AudioAsset
     RaiderThrow,
     Executioner,
     SpectreFried,
+    SpectreStatueCrush0,
+    SpectreStatueCrush1,
+    SpectreStatueBroken,
     Paparazzo
 
 }

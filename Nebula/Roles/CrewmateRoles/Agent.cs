@@ -125,7 +125,7 @@ public class Agent : Template.ExemptTasks
         }
     }
 
-    public override void OnTaskComplete()
+    public override void OnTaskComplete(PlayerTask? task)
     {
         if (!PlayerControl.LocalPlayer.IsMadmate()) return;
 
@@ -155,6 +155,10 @@ public class Agent : Template.ExemptTasks
         else if (Helpers.playerById(playerId).GetModData().role.side == Side.Jackal)
         {
             displayColor = Roles.Jackal.Color;
+        }
+        else if (Helpers.playerById(playerId).GetModData().role.side == Side.Pavlov)
+        {
+            displayColor = Roles.Pavlov.Color;
         }
         else if(Helpers.playerById(playerId).GetModData().role.side != Side.Crewmate)
         {

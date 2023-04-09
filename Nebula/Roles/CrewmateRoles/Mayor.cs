@@ -34,6 +34,10 @@ public class Mayor : Role
     public override void OnMeetingStart()
     {
         RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId, votesId, (int)voteAssignmentOption.getFloat());
+        if (Game.GameData.data.myData.getGlobalData().GetRoleData(votesId) > maxVoteStockOption.getFloat())
+        {
+            RPCEventInvoker.UpdateRoleData(PlayerControl.LocalPlayer.PlayerId, votesId, (int)maxVoteStockOption.getFloat());
+        }
     }
 
     public override void OnVote(byte targetId)

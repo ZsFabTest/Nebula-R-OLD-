@@ -197,7 +197,7 @@ public class Side
         {
             if (!player.IsAlive) continue;
             if (player.role != Roles.Spectre) continue;
-            if(player.Tasks!=null && player.Tasks?.Completed==player.Tasks?.AllTasks){ flag = true;  break; }
+            if(player.Tasks==null || player.Tasks?.Completed==player.Tasks?.AllTasks){ flag = true;  break; }
         }
         if (!flag) return null;
 
@@ -243,7 +243,7 @@ public class Side
 
     public static Side Pavlov = new Side("Pavlov", "pavlov", IntroDisplayOption.STANDARD, NeutralRoles.Pavlov.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
-        if ((statistics.AlivePavlov - statistics.AliveInLovePavlov) * 2 >= (statistics.TotalAlive-statistics.AliveSpectre) && statistics.AliveImpostors == 0 &&
+        if ((statistics.AlivePavlov - statistics.AliveInLovePavlov) * 2 >= (statistics.TotalAlive - statistics.AliveSpectre) && statistics.AliveImpostors == 0 &&
         (statistics.AlivePavlovCouple + statistics.AlivePavlovTrilemma == 0 ||
         statistics.AlivePavlovCouple * 2 + statistics.AlivePavlovTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3) &&
         statistics.AliveJackals == 0)
@@ -269,11 +269,6 @@ public class Side
         return EndCondition.SantaWin;
     });
     */
-
-    public static Side Investigator = new Side("Investigator", "investigator", IntroDisplayOption.SHOW_ALL, Palette.CrewmateBlue, (PlayerStatistics statistics, ShipStatus status) =>
-    {
-        return null;
-    });
 
     public static Side GamePlayer = new Side("GamePlayer", "gamePlayer", IntroDisplayOption.SHOW_ONLY_ME, Palette.CrewmateBlue, (PlayerStatistics statistics, ShipStatus status) =>
     {
@@ -307,15 +302,15 @@ public class Side
             }
         }
 
-        //Lovers単独勝利
-        if (statistics.TotalAlive <= 3)
+            //Lovers単独勝利
+            if (statistics.TotalAlive <= 3)
         {
             if (statistics.AliveCouple == 1 && statistics.AliveTrilemma == 0) return EndCondition.LoversWin;
         }
 
 
-        //Trilemma
-        if (statistics.TotalAlive <= 5)
+            //Trilemma
+            if (statistics.TotalAlive <= 5)
         {
             if (statistics.AliveTrilemma == 1 && statistics.AliveCouple == 0) return EndCondition.TrilemmaWin;
         }
@@ -332,15 +327,6 @@ public class Side
         return null;
     });
 
-    public static Side Killer = new Side("Killer", "killer", IntroDisplayOption.STANDARD, Palette.ImpostorRed, (PlayerStatistics statistics, ShipStatus status) =>
-    {
-        if (statistics.TotalAlive == 1 && statistics.GetAlivePlayers(Killer) == 1)
-        {
-
-        }
-        return null;
-    });
-
     public static Side VOID = new Side("VOID", "void", IntroDisplayOption.SHOW_ONLY_ME, MetaRoles.VOID.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
         return null;
@@ -350,10 +336,9 @@ public class Side
         {
             Crewmate, Impostor,
             Jackal, Jester, Vulture, Empiric, Arsonist, Paparazzo, Avenger,ChainShifter,Spectre,/*SantaClaus,*/
-            Investigator,
             GamePlayer,
             Extra,VOID,
-            RitualCrewmate,Killer
+            RitualCrewmate
         };
 
     public IntroDisplayOption ShowOption { get; }

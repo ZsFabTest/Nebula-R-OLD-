@@ -1,5 +1,15 @@
 ﻿namespace Nebula.Patches;
 
+
+[HarmonyPatch(typeof(CustomNetworkTransform), nameof(CustomNetworkTransform.Awake))]
+public class SyncTransformPatch
+{
+    public static void Postfix(CustomNetworkTransform __instance)
+    {
+        __instance.snapThreshold = 0.5f;
+    }
+}
+
 [HarmonyPatch(typeof(GameData), nameof(GameData.SetTasks))]
 public class PlayerControlSetTaskPatch
 {
@@ -9,13 +19,6 @@ public class PlayerControlSetTaskPatch
 
         GameData.PlayerInfo playerById = __instance.GetPlayerById(playerId);
         if (playerById == null || playerById.Disconnected || !playerById.Object) return false;
-
-        //Ritualモード
-        if (Game.GameData.data.GameMode == Module.CustomGameMode.Ritual)
-        {
-            RitualPatch.SetTasks(__instance, playerById, taskTypeIds);
-            return false;
-        }
 
 
         var initialTasks = new List<GameData.TaskInfo>();
@@ -65,9 +68,29 @@ public class PlayerControlSetAlphaPatch
     }
 }
 
+[HarmonyPatch]
+public class PlayerControlGetUsableComponentsPatch
+{
+    static System.Reflection.MethodBase TargetMethod()
+    {
+        string genericMethodName = nameof(GameObject.GetComponents)!;
+        System.Reflection.MethodBase getComponentsMethod = typeof(GameObject).GetMethods().First((m) => m.Name == genericMethodName && m.IsGenericMethodDefinition && m.GetParameters().Length == 0).MakeGenericMethod(typeof(IUsable));
+        return getComponentsMethod;
+    }
+
+    static public void Postfix(ref Il2CppArrayBase<IUsable> __result)
+    {
+        if (__result.Count > 0)
+        {
+            __result = new Il2CppReferenceArray<IUsable>(__result.Reverse().ToArray());
+        }
+    }
+}
+
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
 public class PlayerControlPatch
 {
+   
     static private bool CheckTargetable(Vector2 position, Vector2 myPosition, ref float distanceCondition)
     {
         Vector2 vector = (Vector2)position - myPosition;
@@ -134,7 +157,7 @@ public class PlayerControlPatch
         float num = range;
         if (!ShipStatus.Instance) return result;
         if (targetingPlayer == null) targetingPlayer = PlayerControl.LocalPlayer;
-        if (targetingPlayer.Data.IsDead && targetingPlayer.Data.GetModData().role != Roles.Roles.EvilBusker) return result;
+        if (targetingPlayer.Data.IsDead) return result;
 
         Vector2 truePosition = targetingPlayer.GetTruePosition();
         Il2CppSystem.Collections.Generic.List<GameData.PlayerInfo> allPlayers = GameData.Instance.AllPlayers;
@@ -184,7 +207,7 @@ public class PlayerControlPatch
         bool invalidFlag;
         foreach (DeadBody deadBody in Helpers.AllDeadBodies())
         {
-            if (!deadBody.bodyRenderer.enabled)
+            if (!deadBody.bodyRenderers[0].enabled)
             {
                 continue;
             }
@@ -207,10 +230,10 @@ public class PlayerControlPatch
 
     static public void SetDeadBodyOutline(DeadBody target, Color color)
     {
-        if (target == null || target.bodyRenderer == null) return;
+        if (target == null) return;
 
-        target.bodyRenderer.material.SetFloat("_Outline", 1f);
-        target.bodyRenderer.material.SetColor("_OutlineColor", color);
+        target.bodyRenderers[0].material.SetFloat("_Outline", 1f);
+        target.bodyRenderers[0].material.SetColor("_OutlineColor", color);
     }
 
 
@@ -228,9 +251,9 @@ public class PlayerControlPatch
     {
         foreach (DeadBody deadBody in Helpers.AllDeadBodies())
         {
-            if (deadBody == null || deadBody.bodyRenderer == null) continue;
+            if (deadBody == null) continue;
 
-            deadBody.bodyRenderer.material.SetFloat("_Outline", 0f);
+            foreach (var r in deadBody.bodyRenderers) r.material.SetFloat("_Outline", 0f);
         }
     }
 
@@ -398,10 +421,14 @@ public class PlayerControlPatch
 
     public static void Prefix(PlayerControl __instance)
     {
-        if (__instance.PlayerId == PlayerControl.LocalPlayer.PlayerId)
+        try
         {
-            ResetPlayerOutlines();
+            if (__instance.PlayerId == PlayerControl.LocalPlayer.PlayerId)
+            {
+                ResetPlayerOutlines();
+            }
         }
+        catch { }
     }
 
     public static void Postfix(PlayerControl __instance)
@@ -434,6 +461,28 @@ public class PlayerControlPatch
         pData.Attribute.Update();
     }
 
+}
+
+[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSetRole))]
+class BlockRPCSetRolePatch
+{
+    public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)]RoleTypes roleType)
+    {
+        if (roleType is RoleTypes.CrewmateGhost or RoleTypes.ImpostorGhost) return false;
+
+        if (roleType == RoleTypes.Engineer) roleType = RoleTypes.Crewmate;
+        RoleManager.Instance.SetRole(__instance, roleType);
+        return false;
+    }
+}
+
+[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.SetRole))]
+class BlockSetRolePatch
+{
+    public static bool Prefix(PlayerControl __instance)
+    {
+        return false;
+    }
 }
 
 [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.HandleAnimation))]
@@ -518,11 +567,51 @@ class PlayerControlSetCoolDownPatch
 class KillAnimationCoPerformKillPatch
 {
     public static bool hideNextAnimation = true;
-    public static void Prefix(KillAnimation __instance, [HarmonyArgument(0)] ref PlayerControl source, [HarmonyArgument(1)] ref PlayerControl target)
+    public static bool Prefix(KillAnimation __instance, ref Il2CppSystem.Collections.IEnumerator __result , [HarmonyArgument(0)] PlayerControl source, [HarmonyArgument(1)] PlayerControl target)
     {
-        if (hideNextAnimation)
-            source = target;
+        bool hideAnimation = hideNextAnimation;
+        IEnumerator GetEnumerator()
+        {
+            FollowerCamera cam = Camera.main.GetComponent<FollowerCamera>();
+            bool isParticipant = PlayerControl.LocalPlayer == source || PlayerControl.LocalPlayer == target;
+            PlayerPhysics sourcePhys = source.MyPhysics;
+            KillAnimation.SetMovement(source, false);
+            KillAnimation.SetMovement(target, false);
+            DeadBody deadBody = GameObject.Instantiate<DeadBody>(GameManager.Instance.DeadBodyPrefab);
+            deadBody.enabled = false;
+            deadBody.ParentId = target.PlayerId;
+            foreach (var r in deadBody.bodyRenderers) target.SetPlayerMaterialColors(r);
+            target.SetPlayerMaterialColors(deadBody.bloodSplatter);
+            Vector3 vector = target.transform.position + __instance.BodyOffset;
+            vector.z = vector.y / 1000f;
+            deadBody.transform.position = vector;
+            if (isParticipant)
+            {
+                cam.Locked = true;
+                ConsoleJoystick.SetMode_Task();
+                if (PlayerControl.LocalPlayer.AmOwner)
+                {
+                    PlayerControl.LocalPlayer.MyPhysics.inputHandler.enabled = true;
+                }
+            }
+            target.Die(DeathReason.Kill, true);
+            if (!hideAnimation)
+            {
+                yield return source.MyPhysics.Animations.CoPlayCustomAnimation(__instance.BlurAnim);
+                source.NetTransform.SnapTo(target.transform.position);
+                sourcePhys.Animations.PlayIdleAnimation();
+            }
+            KillAnimation.SetMovement(source, true);
+            KillAnimation.SetMovement(target, true);
+            deadBody.enabled = true;
+            if (isParticipant)
+            {
+                cam.Locked = false;
+            }
+        }
+        __result = GetEnumerator().WrapToIl2Cpp();
         hideNextAnimation = false;
+        return false;
     }
 }
 
@@ -530,12 +619,15 @@ class KillAnimationCoPerformKillPatch
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CompleteTask))]
 public static class CompleteTaskPatch
 {
-    public static void Postfix(PlayerControl __instance)
+    public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)]uint idx)
     {
         GameData.Instance.RecomputeTaskCounts();
 
         if (__instance.PlayerId == PlayerControl.LocalPlayer.PlayerId)
-            Helpers.RoleAction(PlayerControl.LocalPlayer.PlayerId, (role) => role.OnTaskComplete());
+        {
+            PlayerTask? playerTask = __instance.myTasks.Find((Il2CppSystem.Predicate<PlayerTask>)((PlayerTask p) => p.Id == idx));
+            Helpers.RoleAction(PlayerControl.LocalPlayer.PlayerId, (role) => role.OnTaskComplete(playerTask));
+        }
     }
 }
 

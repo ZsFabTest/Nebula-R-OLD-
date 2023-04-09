@@ -8,6 +8,7 @@
 ## 下载
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
+| 1.0.1.6 | 2022.3.28s  | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.6/Nebula-R.1.0.1.6.zip)
 | 1.0.1.5 | 2022.12.14s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.5/Nebula-R.1.0.1.5.zip)
 
 ## 参考
@@ -26,6 +27,10 @@
 或邮箱 a1234567890001919@outlook.com
 
 ## 部分更新日志
+### 2023.4.9 update to Among Us 2023.3.28, Nebula On The Ship V2.3.1
+1.新增职业
+2.改了一堆小问题(我故意保留了一部分bushi)
+3.应付暗改(更新就更新，au天天暗改)
 ### 2023.3.25 update to Among Us 2023.2.28, Nebula On The Ship V2.2.2
 1.移除部分改动(其实是忘记改了什么懒得动了)
 2.将原生模组Nebula On The Ship的新内容移植和统一

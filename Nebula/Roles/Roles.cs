@@ -1,4 +1,7 @@
-﻿namespace Nebula.Roles;
+﻿using Nebula.Roles.NeutralRoles;
+using Nebula.Roles.Perk;
+
+namespace Nebula.Roles;
 
 static public class Roles
 {
@@ -99,17 +102,15 @@ static public class Roles
 
     public static MinigameRoles.Player Player = new MinigameRoles.Player();
 
-    public static MinigameRoles.Escapees.Biela Biela = new MinigameRoles.Escapees.Biela();
-    public static MinigameRoles.Escapees.Halley Halley = new MinigameRoles.Escapees.Halley();
 
     public static MinigameRoles.Hunters.Hadar Hadar = new MinigameRoles.Hunters.Hadar();
-    public static MinigameRoles.Hunters.Polis Polis = new MinigameRoles.Hunters.Polis();
-
-    public static RitualRoles.RitualCrewmate RitualCrewmate = new RitualRoles.RitualCrewmate();
-    public static RitualRoles.RitualKiller RitualKiller = new RitualRoles.RitualKiller();
 
     public static HnSCrewmateRoles.Crewmate HnSCrewmate = new HnSCrewmateRoles.Crewmate();
-    public static HnSImpostorRoles.Impostor HnSImpostor = new HnSImpostorRoles.Impostor();
+
+    public static HnSImpostorRoles.HnSCleaner HnSCleaner = new HnSImpostorRoles.HnSCleaner();
+    public static HnSImpostorRoles.HnSHadar HnSHadar = new HnSImpostorRoles.HnSHadar();
+    public static HnSImpostorRoles.HnSRaider HnSRaider = new HnSImpostorRoles.HnSRaider();
+    public static HnSImpostorRoles.HnSReaper HnSReaper = new HnSImpostorRoles.HnSReaper();
 
     public static ComplexRoles.FCrewmate F_Crewmate = new ComplexRoles.FCrewmate();
     public static ComplexRoles.FGuesser F_Guesser = new ComplexRoles.FGuesser();
@@ -130,14 +131,14 @@ static public class Roles
     public static ExtraRoles.AvengerTarget AvengerTarget = new ExtraRoles.AvengerTarget();
    // public static ExtraRoles.TeamSanta TeamSanta = new ExtraRoles.TeamSanta();
     public static MetaRoles.MetaRole MetaRole = new MetaRoles.MetaRole();
-    public static RitualRoles.PerkHolder PerkHolder = new RitualRoles.PerkHolder();
+    public static PerkHolder PerkHolder = new Perk.PerkHolder();
 
     public static GhostRoles.Poltergeist Poltergeist = new GhostRoles.Poltergeist();
 
     public static AllSideRoles.GameMaster GameMaster = new AllSideRoles.GameMaster();
     public static ComplexRoles.FDecider F_Decider = new ComplexRoles.FDecider();
-    public static ComplexRoles.Decider EvilDecider = new ComplexRoles.Decider("EvilDecider","evilDecider",true);
-    public static ComplexRoles.Decider NiceDecider = new ComplexRoles.Decider("NiceDecider","niceDecider",false);
+    public static ComplexRoles.Decider EvilDecider = new ComplexRoles.Decider("EvilDecider", "evilDecider", true);
+    public static ComplexRoles.Decider NiceDecider = new ComplexRoles.Decider("NiceDecider", "niceDecider", false);
     public static CrewmateRoles.SecondaryBait SecondaryBait = new CrewmateRoles.SecondaryBait();
     public static CrewmateRoles.Holmes Holmes = new CrewmateRoles.Holmes();
     public static CrewmateRoles.Kotwal Kotwal = new CrewmateRoles.Kotwal();
@@ -161,6 +162,9 @@ static public class Roles
     public static NeutralRoles.Pavlov Pavlov = new NeutralRoles.Pavlov();
     public static NeutralRoles.Dog Dog = new NeutralRoles.Dog();
     public static CrewmateRoles.Dictator Dictator = new CrewmateRoles.Dictator();
+    public static NeutralRoles.JackalMayor JackalMayor = new NeutralRoles.JackalMayor();
+    public static NeutralRoles.PavlovsCat PavlovsCat = new NeutralRoles.PavlovsCat();
+    public static ImpostorRoles.InvisibleMan InvisibleMan = new ImpostorRoles.InvisibleMan();
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
@@ -175,16 +179,15 @@ static public class Roles
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,
             Holmes,Kotwal,Necrophilic,Observer,OnlineCelebrity,Sanctifier,Transporter,Dictator,
-            Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,
+            Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,
             Madman,Pavlov,Dog,
-            SchrodingersCat,RedCat,BlueCat,WhiteCat,
+            JackalMayor,
+            SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,
 
             Player,
-            Halley,Biela,
-            Polis,Hadar,
-            RitualCrewmate,RitualKiller,
+            Hadar,
             HnSCrewmate,
-            HnSImpostor,
+            HnSCleaner,HnSHadar,HnSRaider,HnSReaper
         };
 
     public static List<ExtraRole> AllExtraRoles = new List<ExtraRole>()
@@ -194,7 +197,7 @@ static public class Roles
             Bloody,Confused,Drunk,Lover,Trilemma,
             MetaRole,AvengerTarget,
             PerkHolder,
-            SecondaryBait,Flash,
+            SecondaryBait,Flash
         };
 
     public static List<GhostRole> AllGhostRoles = new List<GhostRole>()

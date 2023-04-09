@@ -1382,9 +1382,10 @@
 "option.canBeSick" : "可以成为病人"
 "option.canBeBait" : "可以成为诱饵"
 "option.canBeFlash" : "可以成为闪电侠"
+"option.canBeSignaller" : "可以成为通讯兵"
 
-"role.agent.canKnowImpostorAndJackal" : "代理人可以得知伪装者与豺狼"
-"role.agent.theLeastCompletedTasks" : "代理人得知伪装者与豺狼需要的最少任务数"
+"role.agent.canKnowImpostorAndJackal" : "代理人可以得知伪装者/豺狼/巴浦洛夫"
+"role.agent.theLeastCompletedTasks" : "代理人得知伪装者/豺狼/巴浦洛夫需要的最少任务数"
 
 "role.bait.canBeExtraRole" : "生成为附加职业"
 
@@ -1423,21 +1424,28 @@
 "role.redCat.short" : "猫"
 "role.blueCat.name" : "薛定谔的猫"
 "role.blueCat.short" : "猫"
+"role.pavlovsCat.name" : "巴浦洛夫的猫"
+"role.pavlovsCat.short" : "猫"
 "role.schrodingersCat.hint" : "打不过就加入"
 "role.whiteCat.hint" : "打不过就加入"
 "role.redCat.hint" : "打不过就加入"
 "role.blueCat.hint" : "打不过就加入"
+"role.pavlovsCat.hint" : "打不过就加入"
 "role.schrodingersCat.info" : "通过被击杀加入凶手所在的阵营。"
 "role.whiteCat.info" : "通过被击杀加入凶手所在的阵营。"
 "role.redCat.info" : "通过被击杀加入凶手所在的阵营。"
 "role.blueCat.info" : "通过被击杀加入凶手所在的阵营。"
+"role.pavlovsCat.info" : "通过被击杀加入凶手所在的阵营。"
 "role.schrodingersCat.isGuessable" : "是否可以被猜测"
 "role.schrodingersCat.canBeCrewmate" : "可以加入船员阵营"
 "role.schrodingersCat.canBeImpostor" : "可以加入伪装者阵营"
-"role.schrodingersCat.canBeJackal" : "可以加入豺狼阵营（全局）"
+"role.schrodingersCat.canBeJackal" : "可以加入豺狼阵营"
+"role.schrodingersCat.canBePavlovs" : "可以加入巴浦洛夫团队"
 "role.schrodingersCat.canUseKillButtonI" : "（伪装者）可以使用击杀键"
 "role.schrodingersCat.canUseKillButton" : "（豺狼）可以使用击杀键"
+"role.schrodingersCat.canUseKillButtonP" : "（巴浦洛夫）可以使用击杀键"
 "role.schrodingersCat.killCooldown" : "（豺狼）击杀冷却"
+"role.schrodingersCat.killCooldownP" : "（巴浦洛夫）击杀冷却"
 "role.schrodingersCat.canAlwaysChangeTeam" : "猫可以连续更换阵营"
 
 "role.madman.name" : "疯子"
@@ -1597,13 +1605,28 @@
 "role.dictator.hint" : "让我们执行独裁统治吧！"
 "role.dictator.info" : "用你的权利，和生命。"
 
+"role.jackalMayor.name" : "狼族市长"
+"role.jackalMayor.short" : "狼市"
+"role.jackalMayor.hint" : "大统一的集体！"
+"role.jackalMayor.info" : "你可以看见所有豺狼。\n你拥有小部分市长能力。"
+"role.jackalMayor.minVote" : "最小投票数量"
+"role.jackalMayor.maxVote" : "最大投票数量"
+"role.jackalMayor.maxVoteStock" : "最大存票数量"
+"role.jackalMayor.killCoolDown" : "击杀冷却时间"
+
+"role.invisibleMan.name" : "隐身人"
+"role.invisibleMan.short" : "隐"
+"role.invisibleMan.invisibleCooldown" : "隐身冷却时间"
+"role.invisibleMan.invisibleDuringTime" : "隐身持续时间"
+
 "side.pavlov.name" : "巴普洛夫团队"
 "side.schrodingersCat.name" : "薛定谔的猫"
 "side.madman.name" : "疯子"
 
 "text.exile.role" : " 是 "
+"text.exile.jesterAddition" : "没想到吧awa"
 
-"game.endText.pavlov" : "汪汪队胜利"
+"game.endText.pavlov" : "巴浦洛夫团队胜利"
 
 "status.hemorrhage" : "失血"
 

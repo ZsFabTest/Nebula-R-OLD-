@@ -19,9 +19,18 @@ using BepInEx;
 using System.Text;
 using System.Reflection;
 using BepInEx.Unity.IL2CPP;
-
+using Nebula.Patches;
+using UnityEngine.SceneManagement;
+using Il2CppSystem.Xml;
+using Nebula.Module;
 
 namespace Nebula;
+
+public static class RuntimePrefabs
+{
+    public static TMPro.TextMeshPro? TextPrefab = null;
+    public static PlayerDisplay? PlayerDisplayPrefab = null;
+}
 
 [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
 [BepInProcess("Among Us.exe")]
@@ -31,11 +40,11 @@ public class NebulaPlugin : BasePlugin
 
     public const string AmongUsVersion = "2023.2.28";
     public const string PluginGuid = "jp.dreamingpig.amongus.nebula";
-    public const string PluginName = "TheNebula";
+    public const string PluginName = "TheNebula-R";
     public const string PluginVersion = "1.0.1.6";
     public const bool IsSnapshot = false;
 
-    public static string PluginVisualVersion = PluginVersion;
+    public static string PluginVisualVersion = IsSnapshot ? "23.03.29a" : PluginVersion;
     public static string PluginStage = IsSnapshot ? "Snapshot" : "";
     
     public const string PluginVersionForFetch = "1.0.1.6";
@@ -49,12 +58,15 @@ public class NebulaPlugin : BasePlugin
 
     public Logger.Logger Logger;
 
-    private void InstallCPUAffinityEditor()
+    private void InstallTools()
     {
-       
+        InstallTool("CPUAffinityEditor");
+    }
+    private void InstallTool(string name)
+    {
         Assembly assembly = Assembly.GetExecutingAssembly();
-        Stream stream = assembly.GetManifestResourceStream("Nebula.Resources.CPUAffinityEditor.exe");
-        var file = File.Create("CPUAffinityEditor.exe");
+        Stream stream = assembly.GetManifestResourceStream("Nebula.Resources." + name + ".exe");
+        var file = File.Create(name + ".exe");
         byte[] data = new byte[stream.Length];
         stream.Read(data);
         file.Write(data);
@@ -84,7 +96,7 @@ public class NebulaPlugin : BasePlugin
         InitialModification();
 
         //CPUAffinityEditorを生成
-        InstallCPUAffinityEditor();
+        InstallTools();
 
         //アセットバンドルを読み込む
         Module.AssetLoader.Load();
@@ -117,15 +129,21 @@ public class NebulaPlugin : BasePlugin
         //ヘルプを読み込む
         Module.HelpContent.Load();
 
-        //RPC情報を読み込む
-        RemoteProcessBase.Load();
-
         //ゴースト情報を読み込む
         //Ghost.GhostInfo.Load();
         //Ghost.Ghost.Load();
 
         // Harmonyパッチ全てを適用する
         Harmony.PatchAll();
+
+        //RPC情報を読み込む
+        RemoteProcessBase.Load();
+
+
+        SceneManager.sceneLoaded += (Action<Scene,LoadSceneMode>)((scene,loadMode) =>
+        {
+            new GameObject("NebulaManager").AddComponent<NebulaManager>();
+        });
     }
 
     public static Sprite GetModStamp()
@@ -148,6 +166,7 @@ public static class AmongUsClientAwakePatch
         {
             map.LoadAssets(__instance);
         }
+        NebulaEvents.OnMapAssetLoaded();
 
         __instance.PlayerPrefab.cosmetics.zIndexSpacing = 0.00001f;
 
@@ -172,89 +191,12 @@ public static class AmBannedPatch
     }
 }
 
-
-// メタコントローラ
-[HarmonyPatch(typeof(KeyboardJoystick), nameof(KeyboardJoystick.Update))]
-public static class MetaControlManager
+[HarmonyPatch(typeof(Constants), nameof(Constants.ShouldHorseAround))]
+public static class AprilFoolPatch
 {
-    private static readonly System.Random random = new System.Random((int)DateTime.Now.Ticks);
-    private static List<PlayerControl> bots = new List<PlayerControl>();
-
-
-    public static void SaveTexture(Texture2D texture, string fileName)
+    public static bool Prefix(out bool __result)
     {
-        byte[] bytes = UnityEngine.ImageConversion.EncodeToPNG(Helpers.CreateReadabeTexture(texture));
-        //保存
-        File.WriteAllBytes(fileName + ".png", bytes);
-    }
-
-    static public IEnumerator CaptureAndSave()
-    {
-        yield return new WaitForEndOfFrame();
-        Texture2D tex = ScreenCapture.CaptureScreenshotAsTexture();
-
-        File.WriteAllBytes(Patches.NebulaOption.CreateDirAndGetPictureFilePath(out string displayPath), tex.EncodeToPNG());
-    }
-
-    public static void Postfix(KeyboardJoystick __instance)
-    {
-        //スクリーンショット
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if (AmongUsClient.Instance)
-            {
-                AmongUsClient.Instance.StartCoroutine(CaptureAndSave().WrapToIl2Cpp());
-            }
-        }
-
-        /* ホスト専用コマンド */
-        if (AmongUsClient.Instance.AmHost && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
-        {
-            //ゲーム強制終了
-            if (Input.GetKey(Module.NebulaInputManager.metaControlInput.keyCode) && Input.GetKey(Module.NebulaInputManager.noGameInput.keyCode))
-            {
-                Game.GameData.data.IsCanceled = true;
-            }
-        }
-
-        /* 以下デバッグモード専用 */
-        if (!Patches.NebulaOption.configGameControl.Value) return;
-
-        // Spawn dummys
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            var playerControl = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
-
-            var i = playerControl.PlayerId = (byte)GameData.Instance.GetAvailableId();
-
-            GameData.Instance.AddPlayer(playerControl);
-
-            //playerControl.transform.position = PlayerControl.LocalPlayer.transform.position;
-            playerControl.GetComponent<DummyBehaviour>().enabled = true;
-            playerControl.isDummy = true;
-            playerControl.SetName(Patches.RandomNamePatch.GetRandomName());
-            playerControl.SetColor((byte)random.Next(15));
-
-            bots.Add(playerControl);
-            AmongUsClient.Instance.Spawn(playerControl, -2, InnerNet.SpawnFlags.None);
-
-            GameData.Instance.RpcSetTasks(playerControl.PlayerId, new byte[0]);
-        }
-
-        // Suiside
-        if (Input.GetKeyDown(KeyCode.F9))
-        {
-            Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, PlayerControl.LocalPlayer, Game.PlayerData.PlayerStatus.Suicide, false, false);
-        }
-
-        // Kill nearest player
-        if (Input.GetKeyDown(KeyCode.F10))
-        {
-            PlayerControl target = Patches.PlayerControlPatch.SetMyTarget();
-            if (target == null) return;
-
-            Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, target, Game.PlayerData.PlayerStatus.Dead, false, false);
-
-        }
+        __result = true;
+        return false;
     }
 }

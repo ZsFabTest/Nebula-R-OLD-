@@ -41,6 +41,7 @@ public class Jackal : Role
 
         NumOfKillingToCreateSidekickOption = CreateOption(Color.white, "numOfKillingToCreateSidekick", 3, 0, 10, 1).AddPrerequisite(CanCreateSidekickOption);
         createSidekickCoolDownOption = CreateOption(Color.white, "createSidekickCoolDown", 20f, 15f, 35f, 5f).AddPrerequisite(CanCreateSidekickOption);
+        createSidekickCoolDownOption.suffix = "second";
     }
 
     public override IEnumerable<Assignable> GetFollowRoles()
@@ -58,18 +59,18 @@ public class Jackal : Role
             (player) =>
             {
                 if (player.Object.inVent) return false;
-                if (player.GetModData().role == Roles.Sidekick)
+                if (player.GetModData().role.side == Side.Jackal)
                 {
-                    return player.GetModData().GetRoleData(jackalDataId) != jackalId;
+                    return false;
                 }
                 else if (player.GetModData().HasExtraRole(Roles.SecondarySidekick))
                 {
-                    return player.GetModData().GetExtraRoleData(Roles.SecondarySidekick) != (ulong)jackalId;
+                    return false;
                 }
                 return true;
             });
 
-        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
+        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, RoleColor);
     }
 
     public override void GlobalInitialize(PlayerControl __instance)
@@ -213,19 +214,13 @@ public class Jackal : Role
 
     public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
     {
-        if (PlayerControl.LocalPlayer.GetModData().role == Roles.Sidekick || PlayerControl.LocalPlayer.GetModData().role == Roles.Jackal)
+        if (PlayerControl.LocalPlayer.GetModData().role.side == Side.Jackal)
         {
-            if (PlayerControl.LocalPlayer.GetModData().GetRoleData(jackalDataId) == Helpers.playerById(playerId).GetModData().GetRoleData(jackalDataId))
-            {
-                displayColor = RoleColor;
-            }
+            displayColor = RoleColor;
         }
         else if (PlayerControl.LocalPlayer.GetModData().HasExtraRole(Roles.SecondarySidekick))
         {
-            if (PlayerControl.LocalPlayer.GetModData().GetExtraRoleData(Roles.SecondarySidekick) == (ulong)Helpers.playerById(playerId).GetModData().GetRoleData(jackalDataId))
-            {
-                displayColor = RoleColor;
-            }
+            displayColor = RoleColor;
         }
     }
 

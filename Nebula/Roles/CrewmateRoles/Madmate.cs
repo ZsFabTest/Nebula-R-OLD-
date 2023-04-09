@@ -127,7 +127,7 @@ public class Madmate : Role
     }
 
     //適切なタイミングでインポスターを発見する
-    public override void OnTaskComplete()
+    public override void OnTaskComplete(PlayerTask ? task)
     {
         UpdateKnownImpostors();
     }
@@ -316,7 +316,7 @@ public class SecondaryMadmate : ExtraRole
         return true;
     }
 
-    public override void OnTaskComplete()
+    public override void OnTaskComplete(PlayerTask? task)
     {
         UpdateKnownImpostors();
     }

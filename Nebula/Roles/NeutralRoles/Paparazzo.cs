@@ -5,6 +5,7 @@ using TMPro;
 
 namespace Nebula.Roles.NeutralRoles;
 
+[NebulaRPCHolder]
 public class Paparazzo : Role, Template.HasWinTrigger
 {
     public struct PaparazzoImageMessage
@@ -16,7 +17,9 @@ public class Paparazzo : Role, Template.HasWinTrigger
         public int index;
         public byte[] data;
     }
+
     public static RemoteProcess<PaparazzoImageMessage> SharePaparazzoImage = new RemoteProcess<PaparazzoImageMessage>(
+        "SharePaparazzoImage",
         (writer,message) => { 
             writer.Write(message.sender);
             writer.Write(message.id);
@@ -137,12 +140,12 @@ public class Paparazzo : Role, Template.HasWinTrigger
             if (bytes.Length == 0) return;
 
             int sent = 0;
-            int division = (int)((bytes.Length - 1) / 4098) + 1;
+            int division = (int)((bytes.Length - 1) / 512) + 1;
             int i = 0;
             while (sent < bytes.Length)
             {
                 int length = bytes.Length - sent;
-                if (length > 4098) length = 4098;
+                if (length > 512) length = 512;
                 var subBytes = bytes.SubArray(sent,length);
 
                 SharePaparazzoImage.Invoke(new PaparazzoImageMessage
@@ -364,6 +367,10 @@ public class Paparazzo : Role, Template.HasWinTrigger
     private Module.CustomOption winConditionSubjectOption;
     private Module.CustomOption winConditionDisclosedOption;
     private Module.CustomOption canUseVentsOption;
+    private Module.CustomOption isGuessableOption;
+
+    public override bool IsGuessableRole { get => isGuessableOption.getBool(); }
+
 
     public bool WinTrigger { get; set; } = false;
     public byte Winner { get; set; } = Byte.MaxValue;
@@ -378,9 +385,10 @@ public class Paparazzo : Role, Template.HasWinTrigger
         shootCoolDownOption = CreateOption(Color.white, "shootCoolDown", 10f, 0f, 60f, 2.5f);
         shootCoolDownOption.suffix = "second";
 
-        
         winConditionSubjectOption = CreateOption(Color.white, "winConditionSubject", CustomOptionHolder.GetStringMixedSelections("role.paparazzo.winConditionSubject.allAlives", 1, 15, 1, 15, 1).ToArray(), "role.paparazzo.winConditionSubject.allAlives");
         winConditionDisclosedOption = CreateOption(Color.white, "winConditionDisclosed", 6f, 1f, 15f, 1f);
+
+        isGuessableOption = CreateOption(Color.white, "isGuessable", false);
 
         canUseVentsOption = CreateOption(Color.white, "canUseVents", true);
     }

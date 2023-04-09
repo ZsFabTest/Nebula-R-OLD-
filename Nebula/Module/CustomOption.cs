@@ -13,12 +13,12 @@ namespace Nebula.Module;
 public enum CustomGameMode
 {
     Standard = 0x0001,
-    Minigame = 0x0002,
-    Ritual = 0x0004,
-    Investigators = 0x0008,
-    FreePlay = 0x0010,
-    StandardHnS = 0x0100,
-    All = int.MaxValue
+    FreePlay = 0x0002,
+    StandardHnS = 0x0010,
+    FreePlayHnS = 0x0020,
+    All = int.MaxValue,
+    AllHnS = 0x0030
+        
 }
 
 [Flags]
@@ -40,9 +40,9 @@ public static class CustomGameModes
 {
     static public List<CustomGameMode> AllGameModes = new List<CustomGameMode>()
         {
-            CustomGameMode.Standard,CustomGameMode.Minigame,CustomGameMode.Ritual,CustomGameMode.Investigators,
-            CustomGameMode.FreePlay,CustomGameMode.Standard,CustomGameMode.Standard,CustomGameMode.Standard,
-            CustomGameMode.StandardHnS,
+            CustomGameMode.Standard,CustomGameMode.FreePlay,CustomGameMode.Standard,CustomGameMode.Standard,
+            CustomGameMode.Standard,CustomGameMode.Standard,CustomGameMode.Standard,CustomGameMode.Standard,
+            CustomGameMode.StandardHnS,CustomGameMode.FreePlayHnS
         };
 
     static public CustomGameMode GetGameMode(int GameModeIndex)
@@ -58,6 +58,7 @@ public static class CustomGameModes
 
 public delegate string CustomOptionDecorator(string original, CustomOption option);
 
+[NebulaRPCHolder]
 public class CustomOption
 {
     public class MSOptionString : MSString
@@ -105,6 +106,83 @@ public class CustomOption
             }));
         }
     }
+
+    private static void UpdateSelectionProcess(Tuple<int,int> param)
+    {
+        int optionId = param.Item1;
+        int selection = param.Item2;
+
+        if (optionId == int.MaxValue)
+        {
+            GameOptionsManager.Instance.CurrentGameOptions.SetInt(Int32OptionNames.NumImpostors, selection);
+        }
+        else
+        {
+            CustomOption option = CustomOption.AllOptions.FirstOrDefault(opt => opt.id == optionId);
+            option.updateSelection(selection);
+        }
+
+        GameOptionsDataPatch.dirtyFlag = true;
+    }
+
+    public static RemoteProcess<Tuple<int,int>> ShareOption = new("ShareGameOption",
+        (writer, message) => {
+            writer.WritePacked(message.Item1);
+            writer.WritePacked(message.Item2);
+        },
+        (reader) => {
+            return new(reader.ReadPackedInt32(), reader.ReadPackedInt32());
+        },
+        (message,calledByMe) =>
+        {
+            if (calledByMe) return;
+            UpdateSelectionProcess(message);
+        }
+        );
+
+    public static DivisibleRemoteProcess<List<CustomOption>, Tuple<int, int>[]> ShareAllOptions = new("ShareAllGameOption",
+        (parameter, sender) =>
+        {
+            int num = parameter.Count;
+            int sent = 0;
+            while (num > 0)
+            {
+                int length = num > 8 ? 8 : num;
+                var options = new Tuple<int, int>[length];
+                for (int i = 0; i < length; i++)
+                {
+                    options[i] = new(parameter[sent].id, parameter[sent].selection);
+                    sent++;
+                }
+                sender(options);
+                num -= length;
+            }
+        },
+        (writer, parameter) =>
+        {
+            writer.Write(parameter.Length);
+            foreach (var option in parameter)
+            {
+                writer.WritePacked(option.Item1);
+                writer.WritePacked(option.Item2);
+            }
+        },
+        (reader) =>
+        {
+            var result = new Tuple<int, int>[reader.ReadInt32()];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = new Tuple<int, int>(reader.ReadPackedInt32(), reader.ReadPackedInt32());
+            }
+            return result;
+        },
+        (message, calledByMe) =>
+        {
+            if (calledByMe) return;
+            foreach(var option in message) UpdateSelectionProcess(option);
+        }
+        );
+    
 
     public static DataSaver optionSaver;
 
@@ -337,58 +415,7 @@ public class CustomOption
         }
     }
 
-    public static void ShareOptionSelections()
-    {
-        GameOptionsDataPatch.dirtyFlag = true;
-
-        if (PlayerControl.AllPlayerControls.Count <= 1 || AmongUsClient.Instance?.AmHost == false || PlayerControl.LocalPlayer == null) return;
-
-        uint count = (uint)CustomOption.AllOptions.Count;
-        MessageWriter? messageWriter = null;
-        bool startFlag = true;
-        bool firstFlag = true;
-        int written = 0;
-
-        var itr = CustomOption.AllOptions.GetEnumerator();
-
-        while (itr.MoveNext())
-        {
-            if (startFlag)
-            {
-                startFlag = false;
-
-                messageWriter = AmongUsClient.Instance.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ShareOptions, Hazel.SendOption.Reliable);
-                messageWriter.WritePacked((uint)(count > 50 ? 50 : count));
-                written = 0;
-
-                if (firstFlag)
-                {
-                    firstFlag = false;
-
-                    messageWriter.WritePacked((uint)uint.MaxValue);
-                    messageWriter.WritePacked((uint)(GameOptionsManager.Instance.CurrentGameOptions.NumImpostors));
-                    written++;
-                }
-            }
-
-            //ひとつずつオプションを書き込む
-            messageWriter?.WritePacked((uint)itr.Current.id);
-            messageWriter?.WritePacked((uint)Convert.ToUInt32(Int32.MaxValue & itr.Current.selection));
-            written++;
-
-            //メッセージ終端
-            if (written == 50)
-            {
-                messageWriter?.EndMessage();
-                messageWriter = null;
-
-                startFlag = true;
-            }
-        }
-
-        if (messageWriter != null) messageWriter.EndMessage();
-    }
-
+    
     public CustomOption AddPrerequisite(CustomOption option)
     {
         prerequisiteOptions.Add(option);
@@ -514,8 +541,7 @@ public class CustomOption
         if (AmongUsClient.Instance?.AmHost == true && PlayerControl.LocalPlayer)
         {
             if (entry != null) entry.Value = selection; // Save selection to config
-
-            ShareOptionSelections();// Share all selections
+            ShareOption.Invoke(new(id,selection));
         }
 
     }
@@ -932,12 +958,6 @@ class GameOptionsMenuStartPatch
                     designer.screen.Close();
                     OpenConfigTopOptionScreen(leftTabScreen);
                 }
-                else if ((myOption.tab & CustomOptionTab.EscapeRoles) != 0)
-                {
-                    CustomOptionHolder.escapeHunterOption.addSelection(1);
-                    designer.screen.Close();
-                    OpenConfigTopOptionScreen(leftTabScreen);
-                }
             }, (myOption.selections.Length == 2 && myOption.getSelection() == 0) ? Palette.DisabledGrey : ((myOption.yellowCondition != null && myOption.yellowCondition(CustomOption.CurrentTab) ? Color.yellow : Color.white))));
             options.Add(option);
 
@@ -1092,8 +1112,6 @@ class GameOptionsMenuStartPatch
                          if (Constants.ShouldPlaySfx()) SoundManager.Instance.PlaySound(FastDestroyableSingleton<HudManager>.Instance.TaskUpdateSound, false, 0.8f);
                          bool result = CustomOptionPreset.LoadAndInput("Presets/" + name + ".options");
 
-                         CustomOption.ShareOptionSelections();
-
                          Helpers.ShowDialog(result ? "preset.dialog.load" : "preset.dialog.loadFailed");
                      }));
 
@@ -1201,20 +1219,19 @@ class GameOptionsMenuStartPatch
         }
 
 
-        var killCoolOption = __instance.Children.FirstOrDefault(x => x.name == "KillCooldown").TryCast<NumberOption>();
+        var killCoolOption = __instance.Children.FirstOrDefault(x => x.name == "KillCooldown")?.TryCast<NumberOption>();
         if (killCoolOption != null) killCoolOption.ValidRange = new FloatRange(2.5f, 60f);
 
-
-        var commonTasksOption = __instance.Children.FirstOrDefault(x => x.name == "NumCommonTasks").TryCast<NumberOption>();
+        var commonTasksOption = __instance.Children.FirstOrDefault(x => x.name == "NumCommonTasks")?.TryCast<NumberOption>();
         if (commonTasksOption != null) commonTasksOption.ValidRange = new FloatRange(0f, 4f);
 
-        var shortTasksOption = __instance.Children.FirstOrDefault(x => x.name == "NumShortTasks").TryCast<NumberOption>();
+        var shortTasksOption = __instance.Children.FirstOrDefault(x => x.name == "NumShortTasks")?.TryCast<NumberOption>();
         if (shortTasksOption != null) shortTasksOption.ValidRange = new FloatRange(0f, 23f);
 
-        var longTasksOption = __instance.Children.FirstOrDefault(x => x.name == "NumLongTasks").TryCast<NumberOption>();
+        var longTasksOption = __instance.Children.FirstOrDefault(x => x.name == "NumLongTasks")?.TryCast<NumberOption>();
         if (longTasksOption != null) longTasksOption.ValidRange = new FloatRange(0f, 15f);
 
-        var impostorsOption = __instance.Children.FirstOrDefault(x => x.name == "NumImpostors").TryCast<NumberOption>();
+        var impostorsOption = __instance.Children.FirstOrDefault(x => x.name == "NumImpostors")?.TryCast<NumberOption>();
         if (impostorsOption != null) impostorsOption.ValidRange = new FloatRange(0f, 5f);
 
     }
@@ -1261,7 +1278,7 @@ public class RpcSyncSettingsPatch
 {
     public static void Postfix()
     {
-        CustomOption.ShareOptionSelections();
+        CustomOption.ShareOption.Invoke(new(int.MaxValue, GameOptionsManager.Instance.CurrentGameOptions.GetInt(Int32OptionNames.NumImpostors)));
     }
 }
 
@@ -1270,7 +1287,7 @@ public class PlayerJoinedPatch
 {
     public static void Postfix()
     {
-        CustomOption.ShareOptionSelections();
+        if(AmongUsClient.Instance.AmHost)CustomOption.ShareAllOptions.Invoke(CustomOption.AllOptions);
     }
 }
 
@@ -1608,10 +1625,10 @@ public class CreateOptionsPickerPatch
 }
 */
 
-[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSyncSettings))]
+[HarmonyPatch(typeof(LogicOptions), nameof(LogicOptions.Deserialize))]
 public static class RpcSyncSettingPatch
 {
-    public static void Postfix(PlayerControl __instance)
+    public static void Postfix(LogicOptions __instance)
     {
         GameOptionsDataPatch.dirtyFlag = true;
     }

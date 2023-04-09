@@ -36,14 +36,9 @@ public class EndCondition
 
     public static EndCondition NoGame = new EndCondition(64, new Color(72f / 255f, 78f / 255f, 84f / 255f), "noGame", 0, Module.CustomGameMode.All).SetNoBodyWin(true);
 
-    public static EndCondition PavlovWin = new EndCondition(27, Roles.NeutralRoles.Pavlov.RoleColor, "pavlov", 0, Module.CustomGameMode.Standard);
+    public static EndCondition PavlovWin = new EndCondition(1024, Roles.NeutralRoles.Pavlov.RoleColor, "pavlov", 0, Module.CustomGameMode.Standard);
 
-    public static EndCondition RitualCrewmateWin = new EndCondition(96, Palette.CrewmateBlue, "escaped", 0, Module.CustomGameMode.Ritual, true);
-    public static EndCondition KillerWin = new EndCondition(97, Palette.ImpostorRed, "killer", 0, Module.CustomGameMode.Ritual, false);
 
-    public static EndCondition MinigamePlayersWin = new EndCondition(128, Palette.CrewmateBlue, "players", 0, Module.CustomGameMode.Minigame, true);
-    public static EndCondition MinigameEscapeesWin = new EndCondition(129, Palette.CrewmateBlue, "escapees", 0, Module.CustomGameMode.Minigame, true);
-    public static EndCondition MinigameHunterWin = new EndCondition(130, Palette.ImpostorRed, "hunter", 0, Module.CustomGameMode.Minigame);
 
 
 
@@ -727,10 +722,10 @@ public class PlayerStatistics
         AliveInLoveJackals = 0;
         AliveInLoveImpostors = 0;
         AliveImpostorsWithSidekick = 0;
-        AlivePavlov = 0;
         AlivePavlovCouple = 0;
         AlivePavlovTrilemma = 0;
         AliveInLovePavlov = 0;
+        AliveSpectre = 0;
 
         Roles.Side side;
         
@@ -824,7 +819,7 @@ public class PlayerStatistics
                     {
                         AliveTrilemma++;
 
-                        bool jackalFlag = false, impostorFlag = false ,pavlovFlag = false;
+                        bool jackalFlag = false, impostorFlag = false, pavlovFlag = false;
 
                         foreach (var d in lData)
                         {
@@ -838,7 +833,7 @@ public class PlayerStatistics
                                 impostorFlag = true;
                                 AliveInLoveImpostors++;
                             }
-                            if ((data.role.side == Roles.Side.Pavlov))
+                            if ((d.role.side == Roles.Side.Pavlov))
                             {
                                 pavlovFlag = true;
                                 AliveInLovePavlov++;

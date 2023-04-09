@@ -80,7 +80,7 @@ public class BountyHunter : Template.HasHologram
         killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
         killButton.SetButtonCoolDownOption(true);
 
-        if(changeTarget != null)
+        if (changeTarget != null)
         {
             changeTarget.Destroy();
         }
@@ -117,7 +117,7 @@ public class BountyHunter : Template.HasHologram
             Arrow = null;
         }
 
-        if(changeTarget != null)
+        if (changeTarget != null)
         {
             changeTarget.Destroy();
             changeTarget = null;

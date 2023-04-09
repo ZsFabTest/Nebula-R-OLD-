@@ -218,6 +218,8 @@ public class CustomObject
         GameObject.transform.position = pos;
         Renderer = GameObject.AddComponent<SpriteRenderer>();
         Renderer.material = new Material(ShipStatus.Instance.AllConsoles[0].Image.material);
+        Renderer.material.SetFloat("_Outline", 0f);
+        Renderer.material.SetColor("_AddColor", Color.clear);
 
         if (type.RequireMonoBehaviour) Behaviour = GameObject.AddComponent<CustomObjectBehaviour>();
         else Behaviour = null;
@@ -238,7 +240,7 @@ public class CustomObject
 
         Data = new int[0];
 
-        PassedMeetings = 0;
+        PassedMeetings = Game.HnSModificator.IsHnSGame ? 1 : 0;
 
         ObjectType.Initialize(this);
 

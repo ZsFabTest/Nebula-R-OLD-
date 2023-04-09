@@ -1,4 +1,5 @@
-﻿using Rewired.Utils.Platforms.Windows;
+﻿using Nebula.Game;
+using Rewired.Utils.Platforms.Windows;
 
 namespace Nebula.Roles.ComplexRoles;
 
@@ -65,6 +66,8 @@ public class FTrapper : Template.HasBilateralness
 
         Objects.CustomObject.RegisterUpdater((player) =>
         {
+            if (HnSModificator.IsHnSGame) return;
+
             CustomObject trap = Objects.CustomObject.GetTarget(0.875f / 2f, player, (obj) => { return obj.PassedMeetings > 0; }, Objects.ObjectTypes.VisibleTrap.AccelTrap, Objects.ObjectTypes.VisibleTrap.DecelTrap);
             if (trap == null) return;
 
@@ -272,7 +275,7 @@ public class Trapper : Template.BilateralnessRole
 
                 trapButton.Timer = Roles.F_Trapper.rootTimeOption.getFloat();
 
-                //Objects.SoundPlayer.PlaySound((trapButton.Timer < 3f) ? Module.AudioAsset.PlaceTrap2s : Module.AudioAsset.PlaceTrap3s);
+                Objects.SoundPlayer.PlaySound((trapButton.Timer < 3f) ? Module.AudioAsset.PlaceTrap2s : Module.AudioAsset.PlaceTrap3s);
 
                 if (isKillTrap)
                 {

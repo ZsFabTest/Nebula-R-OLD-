@@ -49,9 +49,13 @@ public class Sidekick : Role
             (player) =>
             {
                 if (player.Object.inVent) return false;
-                if (player.GetModData().role == Roles.Jackal)
+                if (player.GetModData().role.side == Side.Jackal)
                 {
-                    return player.GetModData().GetRoleData(Roles.Jackal.jackalDataId) != jackalId;
+                    return false;
+                }
+                else if (player.GetModData().HasExtraRole(Roles.SecondarySidekick))
+                {
+                    return false;
                 }
                 return true;
             });
@@ -106,12 +110,13 @@ public class Sidekick : Role
 
     public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
     {
-        if (PlayerControl.LocalPlayer.GetModData().role == Roles.Jackal)
+        if (PlayerControl.LocalPlayer.GetModData().role.side == Side.Jackal)
         {
-            if (PlayerControl.LocalPlayer.GetModData().GetRoleData(Roles.Jackal.jackalDataId) == Helpers.playerById(playerId).GetModData().GetRoleData(Roles.Jackal.jackalDataId))
-            {
-                displayColor = Color;
-            }
+            displayColor = Color;
+        }
+        else if (PlayerControl.LocalPlayer.GetModData().HasExtraRole(Roles.SecondarySidekick))
+        {
+            displayColor = Color;
         }
     }
 
