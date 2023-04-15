@@ -182,21 +182,21 @@ class ExileControllerPatch
                     if (id is StringNames.ExileTextPN or StringNames.ExileTextSN or StringNames.ExileTextPP or StringNames.ExileTextSP)
                     {
                         __result = player.Data.PlayerName + Language.Language.GetString("text.exile.role") + Language.Language.GetString("role." + player.GetModData().role.GetActualRole(player.GetModData()).LocalizeName + ".name");
-                        foreach (Roles.ExtraRole extraRole in player.GetModData().extraRole)
+                        if (player.GetModData().extraRole.Contains(Roles.Roles.SecondaryGuesser))
                         {
-                            if (extraRole.id == Roles.Roles.SecondaryGuesser.id)
-                            {
-                                __result += " " + Language.Language.GetString("role.guesser.name");
-                                continue;
-                            }
-                            if (extraRole.id == Roles.Roles.Lover.id)
-                            {
-                                __result += " " + Language.Language.GetString("role.lover.name");
-                            }
+                            __result += " " + Language.Language.GetString("role.guesser.name");
+                        }
+                        if (player.GetModData().extraRole.Contains(Roles.Roles.Lover))
+                        {
+                            __result += " " + Language.Language.GetString("role.lover.name");
                         }
                     }
                     // Hide number of remaining impostors on Jester win
-                    if (player.GetModData().role == Roles.Roles.Jester) __result += "\n" + Language.Language.GetString("text.exile.jesterAddition");
+                    if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS)
+                    {
+                        if (player.GetModData().role == Roles.Roles.Jester) __result = Language.Language.GetString("text.exile.jesterAddition");
+                        if (player == Roles.NeutralRoles.Cascrubinter.target) __result = Language.Language.GetString("text.exile.cascrubinterAddition");
+                    } 
                 }
             }
             catch

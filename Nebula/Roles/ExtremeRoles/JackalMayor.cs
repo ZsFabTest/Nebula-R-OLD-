@@ -153,7 +153,6 @@ public class JackalMayor : Role
 
     public override void LoadOptionData()
     {
-        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         minVoteOption = CreateOption(Color.white, "minVote", 0f, 0f, 20f, 1f);
         maxVoteOption = CreateOption(Color.white, "maxVote", 5f, 0f, 20f, 1f);
         maxVoteStockOption = CreateOption(Color.white, "maxVoteStock", 5f, 0f, 20f, 1f);

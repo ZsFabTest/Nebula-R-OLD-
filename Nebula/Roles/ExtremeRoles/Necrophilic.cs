@@ -11,7 +11,6 @@ public class Necrophilic : Role
 
     public override void LoadOptionData()
     {
-        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         snapCoolDownOption = CreateOption(Color.white, "snapCoolDown", 15f, 5f, 35f, 2.5f);
         snapCoolDownOption.suffix = "second";
     }

@@ -10,7 +10,6 @@ public class Madman : Role
 
     public override void LoadOptionData()
     {
-        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         isGuessableOption = CreateOption(Color.white, "isGuessable", false);
         killCooldownOption = CreateOption(Color.white, "killCooldown", 25f, 15f, 60f, 5f);
     }

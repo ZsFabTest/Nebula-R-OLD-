@@ -41,14 +41,14 @@ public class NebulaPlugin : BasePlugin
     public const string AmongUsVersion = "2023.2.28";
     public const string PluginGuid = "jp.dreamingpig.amongus.nebula";
     public const string PluginName = "TheNebula-R";
-    public const string PluginVersion = "1.0.1.6";
+    public const string PluginVersion = "1.0.1.7";
     public const bool IsSnapshot = false;
 
     public static string PluginVisualVersion = IsSnapshot ? "23.03.29a" : PluginVersion;
     public static string PluginStage = IsSnapshot ? "Snapshot" : "";
     
-    public const string PluginVersionForFetch = "1.0.1.6";
-    public byte[] PluginVersionData = new byte[] { 1, 0, 1, 6 };
+    public const string PluginVersionForFetch = "1.0.1.7";
+    public byte[] PluginVersionData = new byte[] { 1, 0, 1, 7 };
 
     public static NebulaPlugin Instance;
 
@@ -191,6 +191,7 @@ public static class AmBannedPatch
     }
 }
 
+/*
 [HarmonyPatch(typeof(Constants), nameof(Constants.ShouldHorseAround))]
 public static class AprilFoolPatch
 {
@@ -200,3 +201,4 @@ public static class AprilFoolPatch
         return false;
     }
 }
+*/

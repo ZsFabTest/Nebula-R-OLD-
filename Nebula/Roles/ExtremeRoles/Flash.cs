@@ -8,7 +8,6 @@ public class Flash : Template.StandardExtraRole
 
     public override void LoadOptionData()
     {
-        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         CustomSpeed = CreateOption(Color.white, "customSpeed", 2f, 1.25f, 3f, 0.25f);
         CustomSpeed.suffix = "cross";
     }

@@ -18,6 +18,8 @@ public class Side
         {
             if (statistics.GetAlivePlayers(Impostor) == 0 &&
             statistics.GetAlivePlayers(Jackal) == 0 &&
+            statistics.GetAlivePlayers(Pavlov) == 0 &&
+            statistics.GetAlivePlayers(Moriarty) == 0 &&
             !Game.GameData.data.AllPlayers.Values.Any((p) => p.IsAlive && p.extraRole.Contains(Roles.SecondarySidekick)))
             {
                 return EndCondition.CrewmateWinByVote;
@@ -85,6 +87,8 @@ public class Side
 
             if (statistics.AliveImpostors > 0 &&
             statistics.AliveJackals == 0 &&
+            statistics.AlivePavlov == 0 &&
+            statistics.AliveMoriarty == 0 &&
             !Game.GameData.data.AllPlayers.Values.Any((p) => p.IsAlive && p.extraRole.Contains(Roles.SecondarySidekick)) &&
             (statistics.TotalAlive - statistics.AliveSpectre) <= (statistics.AliveImpostors - statistics.AliveInLoveImpostors) * 2 &&
             (statistics.AliveImpostorCouple + statistics.AliveImpostorTrilemma == 0 ||
@@ -108,9 +112,9 @@ public class Side
         return null;
     });
 
-    public static Side Jackal = new Side("Jackal", "jackal", IntroDisplayOption.SHOW_ONLY_ME, NeutralRoles.Jackal.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
+    public static Side Jackal = new Side("Jackal", "jackal", IntroDisplayOption.STANDARD, NeutralRoles.Jackal.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
-        if ((statistics.AliveJackals - statistics.AliveInLoveJackals) * 2 >= (statistics.TotalAlive-statistics.AliveSpectre) && statistics.GetAlivePlayers(Impostor) - statistics.AliveImpostorsWithSidekick <= 0 &&
+        if ((statistics.AliveJackals - statistics.AliveInLoveJackals) * 2 >= (statistics.TotalAlive-statistics.AliveSpectre) && statistics.GetAlivePlayers(Impostor) - statistics.AliveImpostorsWithSidekick <= 0 && statistics.GetAlivePlayers(Pavlov) == 0 &&
         (statistics.AliveJackalCouple + statistics.AliveJackalTrilemma == 0 ||
         statistics.AliveJackalCouple * 2 + statistics.AliveJackalTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3))
         {
@@ -216,6 +220,7 @@ public class Side
         if (endCondition == EndCondition.VultureWin) return null;
         if (endCondition == EndCondition.AvengerWin) return null;
         if (endCondition == EndCondition.SpectreWin) return null;
+        if (endCondition == EndCondition.MoriartyWin || endCondition == EndCondition.MoriartyWinByKillHolmes) return null;
 
         foreach (var player in Game.GameData.data.AllPlayers.Values)
         {
@@ -246,9 +251,28 @@ public class Side
         if ((statistics.AlivePavlov - statistics.AliveInLovePavlov) * 2 >= (statistics.TotalAlive - statistics.AliveSpectre) && statistics.AliveImpostors == 0 &&
         (statistics.AlivePavlovCouple + statistics.AlivePavlovTrilemma == 0 ||
         statistics.AlivePavlovCouple * 2 + statistics.AlivePavlovTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3) &&
-        statistics.AliveJackals == 0)
+        statistics.AliveJackals == 0 && statistics.AliveMoriarty == 0)
         {
             return EndCondition.PavlovWin;
+        }
+        return null;
+    });
+
+    public static Side Moriarty = new Side("Moriarty","moriarty",IntroDisplayOption.STANDARD, NeutralRoles.Moriarty.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
+        if ((statistics.AliveMoriarty - statistics.AliveInLoveMoriarty) * 2 >= statistics.TotalAlive && statistics.AliveImpostors == 0 &&
+        (statistics.AliveMoriartyCouple + statistics.AliveMoriartyTrilemma == 0 ||
+        statistics.AliveMoriartyCouple * 2 + statistics.AliveMoriartyTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3) &&
+        statistics.AliveJackals == 0 && statistics.AlivePavlov == 0)
+        {
+            return EndCondition.MoriartyWin;
+        }
+        else if (Roles.Moriarty.WinTrigger) return EndCondition.MoriartyWinByKillHolmes;
+        return null;
+    });
+
+    public static Side Cascrubinter = new Side("Cascrubinter","cascrubinter",IntroDisplayOption.SHOW_ONLY_ME,NeutralRoles.Cascrubinter.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
+        if(Roles.Cascrubinter.WinTrigger){
+            return EndCondition.CascrubinterWin;
         }
         return null;
     });
@@ -338,7 +362,8 @@ public class Side
             Jackal, Jester, Vulture, Empiric, Arsonist, Paparazzo, Avenger,ChainShifter,Spectre,/*SantaClaus,*/
             GamePlayer,
             Extra,VOID,
-            RitualCrewmate
+            RitualCrewmate,
+            Madman,SchrodingersCat,Pavlov,Moriarty
         };
 
     public IntroDisplayOption ShowOption { get; }

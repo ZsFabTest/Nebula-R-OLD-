@@ -8,6 +8,7 @@
 ## 下载
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
+| 1.0.1.7 | 2022.3.28s  | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.7/Nebula-R.1.0.1.7.zip)
 | 1.0.1.6 | 2022.3.28s  | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.6/Nebula-R.1.0.1.6.zip)
 | 1.0.1.5 | 2022.12.14s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.5/Nebula-R.1.0.1.5.zip)
 
@@ -27,6 +28,13 @@
 或邮箱 a1234567890001919@outlook.com
 
 ## 部分更新日志
+### 2023.4.15 update
+1.新增职业...
+2.修复了职业确认的问题
+3.修复了忽略巴浦洛夫团队的问题
+4.独裁者现在不会显示击杀动画
+5.重新分配职业选项界面(一个栏目不够放了)
+6.不要说我乱用英文，原模组有一个伪装者职业叫行刑者，中立行刑者只能用代行刑者了
 ### 2023.4.9 update to Among Us 2023.3.28, Nebula On The Ship V2.3.1
 1.新增职业
 2.改了一堆小问题(我故意保留了一部分bushi)

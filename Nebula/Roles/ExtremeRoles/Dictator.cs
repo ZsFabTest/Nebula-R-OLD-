@@ -7,11 +7,6 @@ public class Dictator : Role{
     private byte target;
     private byte voteId = 255;
 
-    public override void LoadOptionData()
-    {
-        TopOption.tab = Module.CustomOptionTab.GhostRoles;
-    }
-
     public override void GlobalIntroInitialize(PlayerControl __instance)
     {
         isVoted = false;
@@ -37,7 +32,7 @@ public class Dictator : Role{
         if (isVoted)
         {
             byte playerId = PlayerControl.LocalPlayer.PlayerId;
-            RPCEventInvoker.UncheckedMurderPlayer(playerId,playerId, Game.PlayerData.PlayerStatus.Suicide.Id,false);
+            RPCEventInvoker.SuicideWithoutOverlay(Game.PlayerData.PlayerStatus.Suicide.Id);
             RPCEventInvoker.CleanDeadBody(playerId);
             RPCEventInvoker.UncheckedExilePlayer(target, Game.PlayerData.PlayerStatus.Exiled.Id);
         }

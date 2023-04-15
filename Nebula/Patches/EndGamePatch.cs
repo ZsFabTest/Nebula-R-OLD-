@@ -36,10 +36,10 @@ public class EndCondition
 
     public static EndCondition NoGame = new EndCondition(64, new Color(72f / 255f, 78f / 255f, 84f / 255f), "noGame", 0, Module.CustomGameMode.All).SetNoBodyWin(true);
 
-    public static EndCondition PavlovWin = new EndCondition(1024, Roles.NeutralRoles.Pavlov.RoleColor, "pavlov", 0, Module.CustomGameMode.Standard);
-
-
-
+    public static EndCondition PavlovWin = new EndCondition(128, Roles.NeutralRoles.Pavlov.RoleColor, "pavlov", 1, Module.CustomGameMode.Standard);
+    public static EndCondition MoriartyWin = new EndCondition(129, Roles.NeutralRoles.Moriarty.RoleColor, "moriarty", 1, Module.CustomGameMode.Standard);
+    public static EndCondition MoriartyWinByKillHolmes = new EndCondition(130, Roles.NeutralRoles.Moriarty.RoleColor, "holmesIsKilled", 1, Module.CustomGameMode.Standard);
+    public static EndCondition CascrubinterWin = new EndCondition(131,Roles.NeutralRoles.Cascrubinter.RoleColor,"cascrubinter",1,Module.CustomGameMode.Standard);
 
 
 
@@ -51,7 +51,8 @@ public class EndCondition
             CrewmateWinHnS,ImpostorWinHnS,
             JesterWin,JackalWin,ArsonistWin,EmpiricWin,PaparazzoWin,VultureWin,SpectreWin,/*SantaWin,*/
             LoversWin,TrilemmaWin,AvengerWin,
-            NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin
+            NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
+            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin
         };
 
     public static EndCondition GetEndCondition(GameOverReason gameOverReason)
@@ -694,6 +695,11 @@ public class PlayerStatistics
     public int AlivePavlovTrilemma;
     public int AliveInLovePavlov;
 
+    public int AliveMoriarty;
+    public int AliveMoriartyCouple;
+    public int AliveMoriartyTrilemma;
+    public int AliveInLoveMoriarty;
+
     public bool IsValid;
 
     //
@@ -725,6 +731,10 @@ public class PlayerStatistics
         AlivePavlovCouple = 0;
         AlivePavlovTrilemma = 0;
         AliveInLovePavlov = 0;
+        AliveMoriarty = 0;
+        AliveMoriartyCouple = 0;
+        AliveMoriartyTrilemma = 0;
+        AliveInLoveMoriarty = 0;
         AliveSpectre = 0;
 
         Roles.Side side;
@@ -741,6 +751,10 @@ public class PlayerStatistics
                 }
                 if (playerInfo.IsDead)
                 {
+                    IsValid = true;
+                    continue;
+                }
+                if (Game.GameData.data.playersArray[playerInfo.PlayerId].role == Roles.Roles.Madmate || Game.GameData.data.playersArray[playerInfo.PlayerId].extraRole.Contains(Roles.Roles.SecondaryMadmate)){
                     IsValid = true;
                     continue;
                 }
@@ -809,6 +823,20 @@ public class PlayerStatistics
                             AliveInLovePavlov++;
                             if (!flag) AlivePavlovCouple++;
                         }
+
+                        flag = false;
+                        if (data.role.side == Roles.Side.Moriarty)
+                        {
+                            AliveInLoveMoriarty++;
+                            AliveMoriartyCouple++;
+                            flag = true;
+                        }
+
+                        if (data.role.side == Roles.Side.Moriarty)
+                        {
+                            AliveInLoveMoriarty++;
+                            if (!flag) AliveMoriartyCouple++;
+                        }
                     }
                 }
 
@@ -819,7 +847,7 @@ public class PlayerStatistics
                     {
                         AliveTrilemma++;
 
-                        bool jackalFlag = false, impostorFlag = false, pavlovFlag = false;
+                        bool jackalFlag = false, impostorFlag = false, pavlovFlag = false, moriartyFlag = false;
 
                         foreach (var d in lData)
                         {
@@ -838,10 +866,15 @@ public class PlayerStatistics
                                 pavlovFlag = true;
                                 AliveInLovePavlov++;
                             }
+                            if((d.role.side == Roles.Side.Moriarty)){
+                                moriartyFlag = true;
+                                AliveInLoveMoriarty++;
+                            }
                         }
                         if (jackalFlag) AliveJackalTrilemma++;
                         if (impostorFlag) AliveImpostorTrilemma++;
                         if (pavlovFlag) AlivePavlovTrilemma++;
+                        if (moriartyFlag) AliveMoriartyTrilemma++;
                     }
                 }
 
@@ -867,12 +900,14 @@ public class PlayerStatistics
         AliveImpostors = GetAlivePlayers(Roles.Side.Impostor);
         AliveJackals = GetAlivePlayers(Roles.Side.Jackal);
         AlivePavlov = GetAlivePlayers(Roles.Side.Pavlov);
+        AliveMoriarty = GetAlivePlayers(Roles.Side.Moriarty);
 
         if (!Roles.Roles.Lover.loversAsIndependentSideOption.getBool())
         {
             AliveInLoveImpostors = 0;
             AliveInLoveJackals = 0;
             AliveInLovePavlov = 0;
+            AliveInLoveMoriarty = 0;
         }
     }
 }

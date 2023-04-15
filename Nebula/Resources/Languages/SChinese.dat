@@ -1384,8 +1384,9 @@
 "option.canBeFlash" : "可以成为闪电侠"
 "option.canBeSignaller" : "可以成为通讯兵"
 
-"role.agent.canKnowImpostorAndJackal" : "代理人可以得知伪装者/豺狼/巴浦洛夫"
-"role.agent.theLeastCompletedTasks" : "代理人得知伪装者/豺狼/巴浦洛夫需要的最少任务数"
+"role.agent.canKnowImpostorAndJackal" : "代理人可以得知伪装者/豺狼/巴浦洛夫/莫里亚蒂"
+"role.agent.theLeastCompletedTasks" : "代理人得知伪装者/豺狼/巴浦洛夫/莫里亚蒂需要的最少任务数"
+"role.agent.willBeFoundLeft" : "剩余多少任务时会公开身份"
 
 "role.bait.canBeExtraRole" : "生成为附加职业"
 
@@ -1607,7 +1608,7 @@
 
 "role.jackalMayor.name" : "狼族市长"
 "role.jackalMayor.short" : "狼市"
-"role.jackalMayor.hint" : "大统一的集体！"
+"role.jackalMayor.hint" : "什么叫铁腕市长"
 "role.jackalMayor.info" : "你可以看见所有豺狼。\n你拥有小部分市长能力。"
 "role.jackalMayor.minVote" : "最小投票数量"
 "role.jackalMayor.maxVote" : "最大投票数量"
@@ -1619,17 +1620,49 @@
 "role.invisibleMan.invisibleCooldown" : "隐身冷却时间"
 "role.invisibleMan.invisibleDuringTime" : "隐身持续时间"
 
+"role.moriarty.name" : "莫里亚蒂"
+"role.moriarty.short" : "莫"
+"role.moriarty.hint" : "谋篇布局"
+"role.moriarty.info" : "找到福尔摩斯，或者暴力一点——杀光所有人。"
+"role.moriarty.coolDown" : "招募莫兰冷却时间"
+
+"role.moran.name" : "莫兰上校"
+"role.moran.short" : "校"
+"role.moran.hint" : "用气枪狙死他们"
+"role.moran.info" : "熟练使用你的特制气枪"
+"role.moran.help.equip" : "拿出/隐匿狙击枪"
+"role.moran.snipeCoolDown" : "狙击冷却"
+"role.moran.shotSize" : "子弹大小"
+"role.moran.shotEffectiveRange" : "狙击有效射程"
+"role.moran.storeRifleOnFire" : "射击后继续持枪"
+"role.moran.showAimAssist" : "显示辅助瞄准"
+"role.moran.aimAssistDelay" : "辅助瞄准线的延迟"
+"role.moran.aimAssistDuration" : "辅助瞄准线的持续时间"
+"role.moran.nearMessage" : "你的附近似乎有一个隐身的玩家，千万小心！"
+
+"role.cascrubinter.name" : "代行刑者"
+"role.cascrubinter.short" : "代"
+"role.cascrubinter.hint" : "把他扔出去！"
+"role.cascrubinter.info" : "将你的行刑目标扔出去。"
+
 "side.pavlov.name" : "巴普洛夫团队"
 "side.schrodingersCat.name" : "薛定谔的猫"
 "side.madman.name" : "疯子"
+"side.moran.name" : "莫里亚蒂"
+"side.cascrubinter.name" : "行刑者"
 
 "text.exile.role" : " 是 "
 "text.exile.jesterAddition" : "没想到吧awa"
+"text.exile.cascrubinterAddition" : "好像有不好的事情发生..."
 
 "game.endText.pavlov" : "巴浦洛夫团队胜利"
+"game.endText.moriarty" : "莫里亚蒂与莫兰胜利"
+"game.endText.holmesIsKilled" : "福尔摩斯失踪了..."
+"game.endText.cascrubinter" : "行刑者胜利"
 
 "status.hemorrhage" : "失血"
 
+"button.label.preach" : "传教"
 "button.label.survey" : "调查"
 "button.label.sanctify" : "净化"
 "button.label.suckBlond" : "吸血"

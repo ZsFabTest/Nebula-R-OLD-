@@ -40,7 +40,6 @@ public class Kotwal : Role
 
     public override void LoadOptionData()
     {
-        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         createSheriffCooldownOption = CreateOption(Color.white, "createSheriffCooldown", 30f, 15f, 45f, 2.5f);
         createSheriffCooldownOption.suffix = "second";
     }

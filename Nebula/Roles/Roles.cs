@@ -165,6 +165,9 @@ static public class Roles
     public static NeutralRoles.JackalMayor JackalMayor = new NeutralRoles.JackalMayor();
     public static NeutralRoles.PavlovsCat PavlovsCat = new NeutralRoles.PavlovsCat();
     public static ImpostorRoles.InvisibleMan InvisibleMan = new ImpostorRoles.InvisibleMan();
+    public static NeutralRoles.Moriarty Moriarty = new NeutralRoles.Moriarty();
+    public static NeutralRoles.Moran Moran = new NeutralRoles.Moran();
+    public static NeutralRoles.Cascrubinter Cascrubinter = new NeutralRoles.Cascrubinter();
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
@@ -180,7 +183,7 @@ static public class Roles
             GameMaster,F_Decider,EvilDecider,NiceDecider,
             Holmes,Kotwal,Necrophilic,Observer,OnlineCelebrity,Sanctifier,Transporter,Dictator,
             Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,
-            Madman,Pavlov,Dog,
+            Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,
             JackalMayor,
             SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,
 

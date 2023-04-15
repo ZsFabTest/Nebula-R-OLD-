@@ -35,7 +35,6 @@ public class SchrodingersCat : Role
 
     public override void LoadOptionData()
     {
-        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         isGuessable = CreateOption(Color.white, "isGuessable", true);
         canBeCrewmate = CreateOption(Palette.CrewmateBlue, "canBeCrewmate", true);
         canBeImpostor = CreateOption(Palette.ImpostorRed, "canBeImpostor", true);
@@ -45,7 +44,9 @@ public class SchrodingersCat : Role
         canUseKillButton = CreateOption(Roles.Jackal.Color, "canUseKillButton", false).AddPrerequisite(canBeJackal);
         canUseKillButtonP = CreateOption(Roles.Pavlov.Color, "canUseKillButtonP", false).AddPrerequisite(canBePavlovsCat);
         killCooldown = CreateOption(Roles.Jackal.Color, "killCooldown", 25f, 10f, 60f, 2.5f).AddPrerequisite(canUseKillButton);
+        killCooldown.suffix = "second";
         killCooldownP = CreateOption(Roles.Pavlov.Color, "killCooldownP", 25f, 10f, 60f, 2.5f).AddPrerequisite(canUseKillButtonP);
+        killCooldownP.suffix = "second";
         canChangeTeam = CreateOption(Color.white, "canAlwaysChangeTeam", true);
     }
 

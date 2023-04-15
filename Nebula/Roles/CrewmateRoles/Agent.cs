@@ -17,6 +17,7 @@ public class Agent : Template.ExemptTasks
     private Module.CustomOption madmateKillCoolDownOption;
     private Module.CustomOption canKnowImpostorAndJackalByTasksOption;
     private Module.CustomOption LeastTasksNumberOption;
+    private Module.CustomOption willBeFoundLeftOption;
 
     public override void LoadOptionData()
     {
@@ -33,6 +34,8 @@ public class Agent : Template.ExemptTasks
         canKnowImpostorAndJackalByTasksOption = CreateOption(Color.white, "canKnowImpostorAndJackal", true);
 
         LeastTasksNumberOption = CreateOption(Color.white, "theLeastCompletedTasks", 10f, 1f, 15f, 1f).AddPrerequisite(canKnowImpostorAndJackalByTasksOption);
+
+        willBeFoundLeftOption = CreateOption(Color.white,"willBeFoundLeft",1f,1f,5f,1f).AddPrerequisite(canKnowImpostorAndJackalByTasksOption);
     }
 
     private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.AgentButton.png", 115f);
@@ -160,9 +163,19 @@ public class Agent : Template.ExemptTasks
         {
             displayColor = Roles.Pavlov.Color;
         }
+        else if(Helpers.playerById(playerId).GetModData().role.side == Side.Moriarty){
+            displayColor = Roles.Moriarty.Color;
+        }
         else if(Helpers.playerById(playerId).GetModData().role.side != Side.Crewmate)
         {
             displayColor = Roles.ChainShifter.Color;
+        }
+    }
+
+    public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
+    {
+        if (canKnowImpostorAndJackalByTasksOption.getBool() || PlayerControl.LocalPlayer.GetModData().Tasks.Completed >= LeastTasksNumberOption.getFloat() - willBeFoundLeftOption.getFloat()){
+            displayColor = RoleColor;
         }
     }
 

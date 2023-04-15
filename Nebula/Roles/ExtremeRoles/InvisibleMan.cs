@@ -8,7 +8,6 @@ public class InvisibleMan : Role{
 
     public override void LoadOptionData()
     {
-        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         InvisibleCooldown = CreateOption(Color.white,"invisibleCooldown",30f,15f,45f,2.5f);
         InvisibleDuringTime = CreateOption(Color.white,"invisibleDuringTime",7.5f,2.5f,15f,2.5f);
     }

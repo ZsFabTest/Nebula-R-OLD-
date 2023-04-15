@@ -168,8 +168,6 @@ public class EvilBusker : Role
 
     public override void LoadOptionData()
     {
-        TopOption.tab = Module.CustomOptionTab.GhostRoles;
-
         buskCoolDownOption = CreateOption(Color.white, "buskCoolDown", 30f, 5f, 60f, 2.5f);
         buskCoolDownOption.suffix = "second";
 
