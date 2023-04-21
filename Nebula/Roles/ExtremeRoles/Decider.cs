@@ -23,8 +23,15 @@ static public class DecideSystem
         int data = Game.GameData.data.myData.getGlobalData().GetRoleData(decideDataId);
         data--;
         RPCEventInvoker.UpdateRoleData(PlayerControl.LocalPlayer.PlayerId, decideDataId, data);
-        RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, target.PlayerId, Game.PlayerData.PlayerStatus.Guessed.Id,true);
-        RPCEventInvoker.CleanDeadBody(target.PlayerId);
+        if(PlayerControl.LocalPlayer.GetModData().role == Roles.NiceDecider && FDecider.niceDeciderCannotKillCrewmateOption.getBool() && 
+        target.GetModData().role.side == Side.Crewmate && 
+        target.GetModData().role != Roles.Madmate && !target.GetModData().extraRole.Contains(Roles.SecondaryMadmate)){
+            RPCEventInvoker.Guess(PlayerControl.LocalPlayer.PlayerId);
+        }
+        else{
+            RPCEventInvoker.Guess(target.PlayerId);
+        }
+        __instance.playerStates.ToList().ForEach(x => { if (x.transform.FindChild("ShootButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("ShootButton").gameObject); });
     }
 
     public static void SetupMeetingButton(MeetingHud __instance)
@@ -68,6 +75,7 @@ public class FDecider : Template.HasBilateralness
     public static Color RoleColor = new Color(241f / 255f, 199f / 255f, 31f / 255f);
 
     public Module.CustomOption decideCountOption;
+    public static Module.CustomOption niceDeciderCannotKillCrewmateOption;
 
     public override void LoadOptionData()
     {
@@ -75,6 +83,7 @@ public class FDecider : Template.HasBilateralness
 
         base.LoadOptionData();
         decideCountOption = CreateOption(Color.white, "decideCount", 1f, 1f, 3f, 1f);
+        niceDeciderCannotKillCrewmateOption = CreateOption(Color.white, "niceDeciderCannotKillCrewmate",true);
 
         FirstRole = Roles.NiceDecider;
         SecondaryRole = Roles.EvilDecider;

@@ -115,10 +115,9 @@ public class Pavlov : Role
 
 public class Dog : Role
 {
-    public override bool IsSpawnable()
-    {
-        return false;
-    }
+    public override bool IsSpawnable() => Roles.Pavlov.IsSpawnable();
+
+    public override bool IsUnsuitable { get { return false; } }
 
     private CustomButton killButton;
     public override void ButtonInitialize(HudManager __instance)

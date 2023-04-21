@@ -277,6 +277,10 @@ public class Side
         return null;
     });
 
+    public static Side Amnesiac = new Side("Amnesiac","amnesiac",IntroDisplayOption.SHOW_ONLY_ME,NeutralRoles.Amnesiac.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
+        return null;
+    });
+
     /*
     public static Side SantaClaus = new Side("SantaClaus", "santaClaus", IntroDisplayOption.STANDARD, NeutralRoles.SantaClaus.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
@@ -363,7 +367,7 @@ public class Side
             GamePlayer,
             Extra,VOID,
             RitualCrewmate,
-            Madman,SchrodingersCat,Pavlov,Moriarty
+            Madman,SchrodingersCat,Pavlov,Moriarty,Cascrubinter,Amnesiac
         };
 
     public IntroDisplayOption ShowOption { get; }

@@ -5,7 +5,24 @@ public class Cascrubinter : Role,Template.HasWinTrigger{
     public bool WinTrigger { get; set; } = false;
     public byte Winner { get; set; } = Byte.MaxValue;
 
+    private Module.CustomOption changeRoleAfterTargetDiedOption;
     public static PlayerControl target;
+
+    public override void LoadOptionData(){
+        changeRoleAfterTargetDiedOption = CreateOption(Color.white,"changeRoleAfterTargetDied",new string[] { "role.cascrubinter.keep","role.cascrubinter.toOpportunist","role.cascrubinter.toAmnesiac" });
+    }
+    public override void OnAnyoneDied(byte playerId){
+        if(playerId == target.PlayerId){
+            switch(changeRoleAfterTargetDiedOption.getSelection()){
+                case 2:
+                    RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,Roles.Opportunist);
+                    break;
+                case 3:
+                    RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,Roles.Amnesiac);
+                    break;
+            }
+        }
+    }
 
     public override void GlobalInitialize(PlayerControl __instance)
     {
@@ -38,18 +55,13 @@ public class Cascrubinter : Role,Template.HasWinTrigger{
 
     /*
     public override void OnMeetingStart(){
-        RPCEventInvoker.MultipleVote(PlayerControl.LocalPlayer, 255); //Í¶Æ±²âÊÔ
+        RPCEventInvoker.MultipleVote(PlayerControl.LocalPlayer, 255); //Í¶Æ±ï¿½ï¿½ï¿½ï¿½
     }
     */
 
     public override void OnExiledPre(byte[] voters, byte playerId)
     {
         if(playerId == target.PlayerId && !PlayerControl.LocalPlayer.Data.IsDead) RPCEventInvoker.WinTrigger(this);
-    }
-
-    public override void MyPlayerControlUpdate()
-    {
-        if(target.Data.IsDead && target.GetModData().Status != Game.PlayerData.PlayerStatus.Exiled) RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,Roles.Opportunist);
     }
 
     public Cascrubinter()

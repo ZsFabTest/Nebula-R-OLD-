@@ -9,11 +9,14 @@ public class Heretic : Role{
         {
             if(!mode) RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Madmate);
             else{
-                if(target.GetModData().role.side == Side.Crewmate){
-                    PlayerControl.LocalPlayer.GetModData().AddRoleData(Heretic.leftMadmateDataId,-1);
-                    RPCEventInvoker.AddExtraRole(target,Roles.SecondaryMadmate,0);
-                }else target.ShowFailedMurder();
+                if(target.GetModData().role.side == Side.Crewmate) RPCEventInvoker.AddExtraRole(target,Roles.SecondaryMadmate,0);
+                else
+                {
+                    target.ShowFailedMurder();
+                    return;
+                }
             }
+            PlayerControl.LocalPlayer.GetModData().AddRoleData(Heretic.leftMadmateDataId, -1);
         }
     }
 
@@ -59,8 +62,15 @@ public class Heretic : Role{
             __instance,
             Module.NebulaInputManager.abilityInput.keyCode,
             "button.label.preach"
-        );
+        ).SetTimer(CustomOptionHolder.InitialAbilityCoolDownOption.getFloat());
         preach.MaxTimer = preachCooldownOption.getFloat();
+    }
+
+    public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
+    {
+        PlayerControl target = Helpers.playerById(playerId);
+        if (target.GetModData().role == Roles.Madmate) displayColor = Palette.ImpostorRed;
+        else if(target.GetModData().extraRole.Contains(Roles.SecondaryMadmate)) displayColor = Palette.ImpostorRed;
     }
 
     public override void MyPlayerControlUpdate()

@@ -172,6 +172,7 @@ static public class GuesserSystem
             if (!role.IsGuessableRole || role.category == RoleCategory.Complex) continue;
             if (Roles.F_Guesser.spawnableRoleFilter.getBool() && !role.IsSpawnable()) continue;
             if (role == Roles.Player) break;
+            if (role.side != Side.Crewmate) continue;
 
             Transform buttonParent = (new GameObject()).transform;
             buttonParent.SetParent(container);
@@ -239,14 +240,124 @@ static public class GuesserSystem
 
             i++;
         }
-        container.transform.localScale *= 0.85f;
 
         FastDestroyableSingleton<HatManager>.Instance.GetNamePlateById("nameplate_NoPlate").CoLoadViewData((Il2CppSystem.Action<NamePlateViewData>)((n) =>
         {
             foreach (var b in buttons)
                 b.GetComponent<SpriteRenderer>().sprite = n.Image;
         }));
+
+        container.transform.localScale *= 0.85f * 0.85f;
+
+        for (int index = 0; index < 3; index++)
+        {
+            Transform TeambuttonParent = new GameObject().transform;
+            TeambuttonParent.SetParent(container);
+            Transform Teambutton = UnityEngine.Object.Instantiate(buttonTemplate, TeambuttonParent);
+            Teambutton.FindChild("ControllerHighlight").gameObject.SetActive(false);
+            Transform TeambuttonMask = UnityEngine.Object.Instantiate(maskTemplate, TeambuttonParent);
+            TMPro.TextMeshPro Teamlabel = UnityEngine.Object.Instantiate(textTemplate, Teambutton);
+            Teambutton.GetComponent<SpriteRenderer>().sprite = FastDestroyableSingleton<HatManager>.Instance.GetNamePlateById("nameplate_NoPlate")?.viewData?.viewData?.Image;
+            TeambuttonParent.localPosition = new(-2.75f + (index * 1.75f), 2.225f, -200);
+            TeambuttonParent.localScale = new(0.55f, 0.55f, 1f);
+            Teamlabel.color = index is 0 ? Palette.CrewmateBlue : index is 1 ? Palette.ImpostorRed : Roles.ChainShifter.Color;
+            Teamlabel.text = index is 0 ? "Crewmate" : (index is 1 ? "Impostor" : "Neutral");
+            Teamlabel.alignment = TMPro.TextAlignmentOptions.Center;
+            Teamlabel.transform.localPosition = new Vector3(0, 0, Teamlabel.transform.localPosition.z);
+            Teamlabel.transform.localScale *= 1.6f;
+            Teamlabel.autoSizeTextContainer = true;
+            Teambutton.GetComponent<PassiveButton>().OnClick.RemoveAllListeners();
+            if (!PlayerControl.LocalPlayer.Data.IsDead) Teambutton.GetComponent<PassiveButton>().OnClick.AddListener((System.Action)(() => {
+                i = 0;
+                selectedButton = null;
+                foreach(Transform button in buttons) UnityEngine.Object.Destroy(button.gameObject);
+                buttons = new List<Transform>();
+                foreach (Role role in Roles.AllRoles)
+                {
+                    //撃てないロールを除外する
+                    if (!role.IsGuessableRole || role.category == RoleCategory.Complex) continue;
+                    if (Roles.F_Guesser.spawnableRoleFilter.getBool() && !role.IsSpawnable()) continue;
+                    if (role == Roles.Player) break;
+                    if (Teamlabel.text == "Crewmate" && role.side != Side.Crewmate) continue;
+                    else if (Teamlabel.text == "Impostor" && role.side != Side.Impostor) continue;
+                    else if (Teamlabel.text == "Neutral" && (role.side == Side.Impostor || role.side == Side.Crewmate)) continue;
+
+                    Transform buttonParent = (new GameObject()).transform;
+                    buttonParent.SetParent(container);
+                    Transform button = UnityEngine.Object.Instantiate(buttonTemplate, buttonParent);
+                    Transform buttonMask = UnityEngine.Object.Instantiate(maskTemplate, buttonParent);
+                    TMPro.TextMeshPro label = UnityEngine.Object.Instantiate(textTemplate, button);
+                    buttons.Add(button);
+                    int row = i / 6, col = i % 6;
+                    buttonParent.localPosition = new Vector3(-3.5f + 1.4f * col, 1.5f - 0.37f * row, -5);
+                    buttonParent.localScale = new Vector3(0.5f, 0.5f, 1f);
+                    label.text = Helpers.cs(role.Color, Language.Language.GetString("role." + role.LocalizeName + ".name"));
+                    label.alignment = TMPro.TextAlignmentOptions.Center;
+                    label.transform.localPosition = new Vector3(0, 0, label.transform.localPosition.z);
+                    label.transform.localScale *= 1.7f;
+                    int copiedIndex = i;
+
+                    button.GetComponent<PassiveButton>().OnClick.RemoveAllListeners();
+                    if (!PlayerControl.LocalPlayer.Data.IsDead) button.GetComponent<PassiveButton>().OnClick.AddListener((System.Action)(() =>
+                    {
+                        if (selectedButton != button)
+                        {
+                            selectedButton = button;
+                            buttons.ForEach(x => x.GetComponent<SpriteRenderer>().color = x == selectedButton ? Color.red : Color.white);
+                        }
+                        else
+                        {
+                            if (PlayerControl.LocalPlayer.Data.IsDead)
+                            {
+                                __instance.playerStates.ToList().ForEach(x => x.gameObject.SetActive(true));
+                                UnityEngine.Object.Destroy(container.gameObject);
+                                return;
+                            }
+
+                            PlayerControl focusedTarget = Helpers.playerById((byte)__instance.playerStates[buttonTarget].TargetPlayerId);
+                            if (!(__instance.state == MeetingHud.VoteStates.Voted || __instance.state == MeetingHud.VoteStates.NotVoted) || focusedTarget == null) return;
+                            if (target.Data.IsDead) return;
+                            var focusedTargetData = focusedTarget.GetModData();
+                            var actualRole = focusedTargetData.role.GetActualRole(focusedTargetData);
+                            PlayerControl dyingTarget =
+                            (
+                            actualRole == role ||
+                            role.GetImplicateRoles().Contains(actualRole) ||
+                            role.GetImplicateExtraRoles().Any((r) => focusedTargetData.HasExtraRole(r))
+                            )
+                            ? focusedTarget : PlayerControl.LocalPlayer;
+
+                            // Reset the GUI
+                            __instance.playerStates.ToList().ForEach(x => x.gameObject.SetActive(true));
+                            UnityEngine.Object.Destroy(container.gameObject);
+
+                            ulong data = PlayerControl.LocalPlayer.GetModData().GetExtraRoleData(Roles.SecondaryGuesser.id);
+                            data--;
+                            RPCEventInvoker.UpdateExtraRoleData(PlayerControl.LocalPlayer.PlayerId, Roles.SecondaryGuesser.id, data);
+
+                            if (Roles.F_Guesser.canShotSeveralTimesInTheSameMeeting.getBool() &&
+                            Game.GameData.data.myData.getGlobalData().GetExtraRoleData(Roles.SecondaryGuesser) >= 1 && dyingTarget != PlayerControl.LocalPlayer)
+                                __instance.playerStates.ToList().ForEach(x => { if (x.TargetPlayerId == dyingTarget.PlayerId && x.transform.FindChild("ShootButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("ShootButton").gameObject); });
+                            else
+                                __instance.playerStates.ToList().ForEach(x => { if (x.transform.FindChild("ShootButton") != null) UnityEngine.Object.Destroy(x.transform.FindChild("ShootButton").gameObject); });
+
+                            // Shoot player and send chat info if activated
+                            RPCEventInvoker.Guess(dyingTarget.PlayerId);
+                        }
+                    }));
+
+                    i++;
+                }
+
+                FastDestroyableSingleton<HatManager>.Instance.GetNamePlateById("nameplate_NoPlate").CoLoadViewData((Il2CppSystem.Action<NamePlateViewData>)((n) =>
+                {
+                    foreach (var b in buttons)
+                        b.GetComponent<SpriteRenderer>().sprite = n.Image;
+                }));
+            }));
+        }
     }
+    
 
     public static void SetupMeetingButton(MeetingHud __instance)
     {

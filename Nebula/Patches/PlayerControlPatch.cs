@@ -157,7 +157,7 @@ public class PlayerControlPatch
         float num = range;
         if (!ShipStatus.Instance) return result;
         if (targetingPlayer == null) targetingPlayer = PlayerControl.LocalPlayer;
-        if (targetingPlayer.Data.IsDead) return result;
+        if (targetingPlayer.Data.IsDead || (targetingPlayer.GetModData().role == Roles.Roles.EvilBusker && Roles.Roles.EvilBusker.pseudocideFlag)) return result;
 
         Vector2 truePosition = targetingPlayer.GetTruePosition();
         Il2CppSystem.Collections.Generic.List<GameData.PlayerInfo> allPlayers = GameData.Instance.AllPlayers;

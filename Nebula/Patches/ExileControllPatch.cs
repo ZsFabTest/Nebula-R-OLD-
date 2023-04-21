@@ -1,4 +1,6 @@
-﻿namespace Nebula.Patches;
+﻿using static MeetingHud;
+
+namespace Nebula.Patches;
 
 [HarmonyPatch]
 class ExileControllerPatch
@@ -177,25 +179,33 @@ class ExileControllerPatch
                 if (ExileController.Instance != null && ExileController.Instance.exiled != null)
                 {
                     PlayerControl player = Helpers.playerById(ExileController.Instance.exiled.Object.PlayerId);
+                    if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS)
+                    {
+                        bool flag = false;
+                        foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                        {
+                            if (p.GetModData().role == Roles.Roles.Bartender && p.GetModData().IsAlive) flag = true;
+                            Debug.LogWarning(string.Format("ExileControllPatch - {0} : {1}", p.name, p.GetModData().role.LocalizeName));
+                        }
+                        if (flag) __result += "\n" + Language.Language.GetString("text.exile.bartenderAddition");
+                    }
                     if (player == null) return;
                     // Exile role text
                     if (id is StringNames.ExileTextPN or StringNames.ExileTextSN or StringNames.ExileTextPP or StringNames.ExileTextSP)
                     {
                         __result = player.Data.PlayerName + Language.Language.GetString("text.exile.role") + Language.Language.GetString("role." + player.GetModData().role.GetActualRole(player.GetModData()).LocalizeName + ".name");
-                        if (player.GetModData().extraRole.Contains(Roles.Roles.SecondaryGuesser))
-                        {
-                            __result += " " + Language.Language.GetString("role.guesser.name");
-                        }
-                        if (player.GetModData().extraRole.Contains(Roles.Roles.Lover))
-                        {
-                            __result += " " + Language.Language.GetString("role.lover.name");
+                        foreach(Roles.ExtraRole extra in player.GetModData().extraRole){
+                            __result += " " + Language.Language.GetString("role." + extra.LocalizeName + ".name");
                         }
                     }
                     // Hide number of remaining impostors on Jester win
                     if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS)
                     {
-                        if (player.GetModData().role == Roles.Roles.Jester) __result = Language.Language.GetString("text.exile.jesterAddition");
-                        if (player == Roles.NeutralRoles.Cascrubinter.target) __result = Language.Language.GetString("text.exile.cascrubinterAddition");
+                        if (player.GetModData().role == Roles.Roles.Jester){
+                            __result = Language.Language.GetString("text.exile.jesterAddition");
+                            return;
+                        }
+                        else if (player == Roles.NeutralRoles.Cascrubinter.target) __result = Language.Language.GetString("text.exile.cascrubinterAddition");
                     } 
                 }
             }

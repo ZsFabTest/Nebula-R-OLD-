@@ -142,6 +142,10 @@ public class Moriarty : Role, Template.HasWinTrigger{
 }
 
 public class Moran : Role{
+
+    public override bool IsSpawnable() => Roles.Moriarty.IsSpawnable();
+    public override bool IsUnsuitable { get { return false; } }
+
     private bool equipRifleFlag;
 
     /* オプション */

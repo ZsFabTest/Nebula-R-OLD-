@@ -212,6 +212,36 @@ public class Madmate : Role
         RPCEventInvoker.UncheckedExilePlayer(players[NebulaPlugin.rnd.Next(players.Count)].PlayerId, Game.PlayerData.PlayerStatus.Embroiled.Id);
     }
 
+    private void checkImpostor(byte playerId){
+        if(Helpers.playerById(playerId).GetModData().role.side == Side.Impostor){
+            int sums = 0;
+            foreach(PlayerControl player in PlayerControl.AllPlayerControls){
+                if(player.Data.IsDead) continue;
+                if(player.GetModData().role.side == Side.Impostor) sums++;
+            }
+            if(sums is 0) RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,Roles.Impostor); 
+        }
+    }
+
+    public override void MyPlayerControlUpdate()
+    {
+        int sums = 0;
+        foreach(PlayerControl player in PlayerControl.AllPlayerControls){
+            if(player.Data.IsDead) continue;
+            if(player.GetModData().role.side == Side.Impostor) sums++;
+        }
+        if(sums is 0) RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,Roles.Impostor); 
+    }
+
+    public override void OnAnyoneDied(byte playerId){
+        checkImpostor(playerId);
+    }
+
+    public override bool OnExiledPost(byte[] voters, byte playerId){
+        checkImpostor(playerId);
+        return true;
+    }
+
     public override void GlobalIntroInitialize(PlayerControl __instance)
     {
         canMoveInVents = CanUseVentsOption.getBool();
@@ -357,6 +387,42 @@ public class SecondaryMadmate : ExtraRole
         option.AddPrerequisite(CustomOptionHolder.advanceRoleOptions);
         option.AddCustomPrerequisite(() => { return Roles.SecondaryMadmate.IsSpawnable(); });
         return option;
+    }
+
+    private void checkImpostor(byte playerId){
+        if(Helpers.playerById(playerId).GetModData().role.side == Side.Impostor){
+            int sums = 0;
+            foreach(PlayerControl player in PlayerControl.AllPlayerControls){
+                if(player.Data.IsDead) continue;
+                if(player.GetModData().role.side == Side.Impostor) sums++;
+            }
+            if(sums is 0){
+                RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,Roles.Impostor); 
+                RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,Roles.SecondaryMadmate,false);
+            }
+        }
+    }
+
+    public override void MyPlayerControlUpdate()
+    {
+        int sums = 0;
+        foreach(PlayerControl player in PlayerControl.AllPlayerControls){
+            if(player.Data.IsDead) continue;
+            if(player.GetModData().role.side == Side.Impostor) sums++;
+        }
+        if(sums is 0){
+            RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,Roles.Impostor); 
+            RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,Roles.SecondaryMadmate,false);
+        }
+    }
+
+    public override void OnAnyoneDied(byte playerId){
+        checkImpostor(playerId);
+    }
+
+    public override bool OnExiledPost(byte[] voters, byte playerId){
+        checkImpostor(playerId);
+        return true;
     }
 }
 

@@ -754,10 +754,6 @@ public class PlayerStatistics
                     IsValid = true;
                     continue;
                 }
-                if (Game.GameData.data.playersArray[playerInfo.PlayerId].role == Roles.Roles.Madmate || Game.GameData.data.playersArray[playerInfo.PlayerId].extraRole.Contains(Roles.Roles.SecondaryMadmate)){
-                    IsValid = true;
-                    continue;
-                }
 
                 TotalAlive++;
 

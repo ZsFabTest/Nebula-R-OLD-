@@ -1,5 +1,4 @@
-﻿using Nebula.Roles.NeutralRoles;
-using Nebula.Roles.Perk;
+﻿using Nebula.Roles.Perk;
 
 namespace Nebula.Roles;
 
@@ -168,6 +167,12 @@ static public class Roles
     public static NeutralRoles.Moriarty Moriarty = new NeutralRoles.Moriarty();
     public static NeutralRoles.Moran Moran = new NeutralRoles.Moran();
     public static NeutralRoles.Cascrubinter Cascrubinter = new NeutralRoles.Cascrubinter();
+    public static ImpostorRoles.Heretic Heretic = new ImpostorRoles.Heretic();
+    public static NeutralRoles.Amnesiac Amnesiac = new NeutralRoles.Amnesiac();
+    public static CrewmateRoles.Bartender Bartender = new CrewmateRoles.Bartender();
+    public static ComplexRoles.FSwapper F_Swapper = new ComplexRoles.FSwapper();
+    public static ComplexRoles.Swapper EvilSwapper = new ComplexRoles.Swapper("EvilSwapper","evilSwapper",true);
+    public static ComplexRoles.Swapper NiceSwapper = new ComplexRoles.Swapper("NiceSwapper","niceSwapper",false);
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
@@ -180,10 +185,10 @@ static public class Roles
             Crewmate,CrewmateWithoutTasks,Agent,Alien,Bait,Busker,Comet,DamnedCrew,Doctor,Guardian,Mayor,Navvy,Necromancer,NiceGuesser,NiceTracker,NiceTrapper,Oracle,Provocateur,Psychic,Seer,Sheriff,Splicer,Spy,
             Madmate,
 
-            GameMaster,F_Decider,EvilDecider,NiceDecider,
-            Holmes,Kotwal,Necrophilic,Observer,OnlineCelebrity,Sanctifier,Transporter,Dictator,
-            Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,
-            Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,
+            GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,
+            Holmes,Kotwal,Necrophilic,Observer,OnlineCelebrity,Sanctifier,Transporter,Dictator,Bartender,
+            Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,
+            Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,
             JackalMayor,
             SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,
 
