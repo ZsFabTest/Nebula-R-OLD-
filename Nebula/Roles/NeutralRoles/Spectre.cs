@@ -27,7 +27,6 @@ public class Spectre : Role
     public Module.CustomOption canTakeOverSabotageWinOption;
     public Module.CustomOption canTakeOverTaskWinOption;
     public Module.CustomOption canFixEmergencySabotageOption;
-    public Module.CustomOption lastImpostorCanGuessSpectreOption;
     private Module.CustomOption ventCoolDownOption;
     private Module.CustomOption ventDurationOption;
 
@@ -553,8 +552,6 @@ public class Spectre : Role
         clarifyCoolDownOption = CreateOption(Color.white, "clarifyCoolDown", 10f, 5f, 40f, 5f);
         clarifyCoolDownOption.suffix = "second";
 
-        lastImpostorCanGuessSpectreOption = CreateOption(Color.white, "lastImpostorCanGuessSpectre", true);
-
         canFixEmergencySabotageOption = CreateOption(Color.white, "canFixEmergencySabotage", false);
 
         canTakeOverSabotageWinOption = CreateOption(Color.white, "canTakeOverSabotageWin", true);
@@ -631,25 +628,6 @@ public class Spectre : Role
     }
 
     //ラストインポスターに推察チャンスを与える
-    public override void OnAnyoneDied(byte playerId)
-    {
-        if (!lastImpostorCanGuessSpectreOption.getBool()) return;
-
-        int impostors = 0;
-        byte impostorId = 0;
-        foreach(var p in Game.GameData.data.AllPlayers.Values)
-        {
-            if (!p.IsAlive) continue;
-            if (p.role.side != Side.Impostor) continue;
-            if (p.HasExtraRole(Roles.LastImpostor)) return;
-
-            impostors++;
-            impostorId = p.id;
-        }
-        if (impostors != 1) return;
-
-        RPCEventInvoker.AddExtraRole(Helpers.playerById(impostorId), Roles.LastImpostor, 0);
-    }
 
     public IEnumerator CoAnimateFox(SpriteRenderer renderer,float duration)
     {

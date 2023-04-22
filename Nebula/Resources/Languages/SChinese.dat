@@ -1397,6 +1397,9 @@
 
 "role.jackal.createSidekickCoolDown" : "豺狼招募冷却时间"
 
+"role.lastImpostor.canSpawn" : "是否可以生成"
+"role.lastImpostor.guessCount" : "最多猜测次数"
+
 "role.opportunist.canWinWithPavlov" : "可以与巴浦洛夫团队共同胜利"
 
 "role.holmes.name" : "福尔摩斯"
@@ -1689,6 +1692,7 @@
 "role.heretic.short" : "异"
 "role.heretic.description" : "成为我的教徒吧！"
 "role.heretic.hint" : "成为我的教徒吧"
+"role.heretic.info" : "招募叛徒"
 "role.heretic.maxPreachCount" : "最多教徒数量"
 "role.heretic.preachCooldown" : "传教冷却时间"
 "role.heretic.secondaryMadmate" : "作为附加职业传教"
@@ -1697,6 +1701,7 @@
 "role.amnesiac.short" : "失"
 "role.amnesiac.description" : "我是谁，我在哪？"
 "role.amnesiac.hint" : "抢夺尸体的职业"
+"role.amnesiac.info" : "抢夺尸体的职业"
 "role.amnesiac.targetsRoleMode" : "尸体职业转变模式"
 "role.amnesiac.targetsRoleMode.dontShift" : "保留"
 "role.amnesiac.targetsRoleMode.erase" : "清除"
@@ -1708,6 +1713,7 @@
 "role.bartender.short" : "调"
 "role.bartender.description" : "香飘万里"
 "role.bartender.hint" : "我还在呢！"
+"role.bartender.info" : "全体目光向我看齐"
 
 "side.pavlov.name" : "巴普洛夫团队"
 "side.schrodingersCat.name" : "薛定谔的猫"
@@ -1720,6 +1726,10 @@
 "text.exile.jesterAddition" : "没想到吧awa"
 "text.exile.cascrubinterAddition" : "好像有不好的事情发生..."
 "text.exile.bartenderAddition" : "调酒师正在调酒..."
+
+"guess.team.crewmate" : "船员"
+"guess.team.impostor" : "伪装者"
+"guess.team.neutral" : "中立阵营"
 
 "game.endText.pavlov" : "巴浦洛夫团队胜利"
 "game.endText.moriarty" : "莫里亚蒂与莫兰胜利"

@@ -152,4 +152,11 @@ public class Swapper : Template.BilateralnessRole
     public override void OnMeetingEnd(){
         SwapSystem.OnMeetingEnd();
     }
+
+    public override void MyPlayerControlUpdate(){
+        if(PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.LastImpostor) || PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryGuesser)){
+            RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,Roles.LastImpostor,false);
+            RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,Roles.SecondaryGuesser,false);
+        }
+    }
 }

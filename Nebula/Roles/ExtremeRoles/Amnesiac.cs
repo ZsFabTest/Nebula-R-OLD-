@@ -84,6 +84,13 @@ public class Amnesiac : Role{
         remember.MaxTimer = rememberCoolDownOption.getFloat();    
     }
 
+    public override void CleanUp(){
+        if(remember != null){
+            remember.Destroy();
+            remember = null;
+        }
+    }
+
     public Amnesiac()
         : base("Amnesiac","amnesiac",RoleColor,RoleCategory.Neutral,Side.Amnesiac,Side.Amnesiac,
         new HashSet<Side>() { Side.Amnesiac },new HashSet<Side>() { Side.Amnesiac },

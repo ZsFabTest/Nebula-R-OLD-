@@ -40,6 +40,14 @@ public class Side
 
     public static Side Impostor = new Side("Impostor", "impostor", IntroDisplayOption.STANDARD, Palette.ImpostorRed, (PlayerStatistics statistics, ShipStatus status) =>
     {
+        if(statistics.AliveImpostors == 1 && Roles.LastImpostor.canSpawnOption.getBool()){
+            foreach(PlayerControl p in PlayerControl.AllPlayerControls){
+                if(!p.Data.IsDead && p.GetModData().role.side == Side.Impostor && !p.GetModData().extraRole.Contains(Roles.LastImpostor)){
+                    RPCEventInvoker.AddExtraRole(p,Roles.LastImpostor,0);
+                    break;
+                }
+            }
+        }
         if (GameOptionsManager.Instance.currentGameMode == GameModes.Normal)
         {
             if (Game.GameData.data != null)

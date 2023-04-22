@@ -17,6 +17,10 @@ public class Jailer : Role
 
         public override void OnMapClose(MapBehaviour mapBehaviour) => ImpAdminSystem.OnMapClose(mapBehaviour);
 
+        public override void MyPlayerControlUpdate()
+        {
+            if(PlayerControl.LocalPlayer.GetModData().role.side != Side.Impostor) RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,this,false);
+        }
 
         public InheritedJailer() : base("InheritedJailer", "inheritedJailer", Palette.ImpostorRed, 0)
         {
@@ -38,6 +42,10 @@ public class Jailer : Role
         inheritAbilityOption = CreateOption(Color.white, "canInheritAbility", false);
     }
 
+    public override void GlobalInitialize(PlayerControl __instance)
+    {
+        if(!PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.InheritedJailer)) RPCEventInvoker.AddExtraRole(PlayerControl.LocalPlayer,Roles.InheritedJailer,0);
+    }
 
     /* ボタン */
 

@@ -261,7 +261,8 @@ static public class GuesserSystem
             TeambuttonParent.localPosition = new(-2.75f + (index * 1.75f), 2.225f, -200);
             TeambuttonParent.localScale = new(0.55f, 0.55f, 1f);
             Teamlabel.color = index is 0 ? Palette.CrewmateBlue : index is 1 ? Palette.ImpostorRed : Roles.ChainShifter.Color;
-            Teamlabel.text = index is 0 ? "Crewmate" : (index is 1 ? "Impostor" : "Neutral");
+            string text = index is 0 ? "crewmate" : (index is 1 ? "impostor" : "neutral");
+            Teamlabel.text = Language.Language.GetString("guess.team." + text);
             Teamlabel.alignment = TMPro.TextAlignmentOptions.Center;
             Teamlabel.transform.localPosition = new Vector3(0, 0, Teamlabel.transform.localPosition.z);
             Teamlabel.transform.localScale *= 1.6f;
@@ -278,9 +279,9 @@ static public class GuesserSystem
                     if (!role.IsGuessableRole || role.category == RoleCategory.Complex) continue;
                     if (Roles.F_Guesser.spawnableRoleFilter.getBool() && !role.IsSpawnable()) continue;
                     if (role == Roles.Player) break;
-                    if (Teamlabel.text == "Crewmate" && role.side != Side.Crewmate) continue;
-                    else if (Teamlabel.text == "Impostor" && role.side != Side.Impostor) continue;
-                    else if (Teamlabel.text == "Neutral" && (role.side == Side.Impostor || role.side == Side.Crewmate)) continue;
+                    if (Teamlabel.text == Language.Language.GetString("guess.team.crewmate") && role.side != Side.Crewmate) continue;
+                    else if (Teamlabel.text == Language.Language.GetString("guess.team.impostor") && role.side != Side.Impostor) continue;
+                    else if (Teamlabel.text == Language.Language.GetString("guess.team.neutral") && (role.side == Side.Impostor || role.side == Side.Crewmate)) continue;
 
                     Transform buttonParent = (new GameObject()).transform;
                     buttonParent.SetParent(container);
@@ -569,7 +570,8 @@ public class SecondaryGuesser : ExtraRole
             return
                 (role.side == Side.Crewmate && Roles.F_Guesser.crewmateRoleCountOption.getFloat() > 0) ||
                 (role.side == Side.Impostor && Roles.F_Guesser.impostorRoleCountOption.getFloat() > 0) ||
-                (role.side != Side.Crewmate && role.side != Side.Impostor && Roles.F_Guesser.neutralRoleCountOption.getFloat() > 0);
+                (role.side != Side.Crewmate && role.side != Side.Impostor && Roles.F_Guesser.neutralRoleCountOption.getFloat() > 0) ||
+                (role != Roles.EvilDecider && role != Roles.NiceDecider && role != Roles.EvilSwapper && role != Roles.NiceSwapper);
         });
         return option;
     }

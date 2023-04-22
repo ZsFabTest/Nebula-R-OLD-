@@ -139,4 +139,11 @@ public class Decider : Template.BilateralnessRole
         base.OnMeetingStart();
         DecideSystem.OnMeetingStart();
     }
+
+    public override void MyPlayerControlUpdate(){
+        if(PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.LastImpostor) || PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryGuesser)){
+            RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,Roles.LastImpostor,false);
+            RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,Roles.SecondaryGuesser,false);
+        }
+    }
 }
