@@ -7,6 +7,8 @@ public class LastImpostor : ExtraRole
     public Module.CustomOption canSpawnOption;
     public Module.CustomOption GuessCountOption;
 
+    bool hasGuesserUI = false;
+
     public override void LoadOptionData()
     {
         TopOption.AddCustomPrerequisite(() => { return true; });
@@ -19,9 +21,10 @@ public class LastImpostor : ExtraRole
     }
 
     public override void GlobalInitialize(PlayerControl __instance){
+        hasGuesserUI = false;
         __instance.GetModData().SetExtraRoleData(Roles.SecondaryGuesser.id, (ulong)GuessCountOption.getFloat());
         if(PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryGuesser)){
-            RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,this,false);
+            hasGuesserUI = true;
         }
     }
 
@@ -38,7 +41,7 @@ public class LastImpostor : ExtraRole
 
     public override void MeetingUpdate(MeetingHud __instance, TextMeshPro meetingInfo)
     {
-        ComplexRoles.GuesserSystem.MeetingUpdate(__instance, meetingInfo);
+        if(!hasGuesserUI) ComplexRoles.GuesserSystem.MeetingUpdate(__instance, meetingInfo);
     }
 
     public override bool IsSpawnable()

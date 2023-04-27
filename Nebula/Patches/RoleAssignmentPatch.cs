@@ -541,9 +541,6 @@ class RoleAssignmentPatch
 
             foreach (ExtraAssignable role in Roles.Roles.AllExtraAssignable)
             {
-                //無効なロールは入れない
-                if ((int)(CustomOptionHolder.GetCustomGameMode() & role.ValidGamemode) == 0) continue;
-
                 if (role is Assignable && ((Assignable)role).TopOption != null && !((Assignable)role).TopOption.getBool()) continue;
 
                 if (role.assignmentPriority == currentPriority)

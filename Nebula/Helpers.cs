@@ -475,6 +475,10 @@ public static class Helpers
     public static MurderAttemptResult checkMurderAttemptAndAction(PlayerControl killer, PlayerControl target, Action successAction, Action failedAction, bool isMeetingStart = false)
     {
         MurderAttemptResult murder = checkMuderAttempt(killer, target, isMeetingStart);
+        if(target.GetModData().role == Roles.Roles.LuckyMan){
+            int r = NebulaPlugin.rnd.Next(1,11);
+            if(r <= (Roles.CrewmateRoles.LuckyMan.chanceToRevievOption.getFloat() / 10f)) murder = MurderAttemptResult.PerformKill;
+        }
         switch (murder)
         {
             case MurderAttemptResult.PerformKill:

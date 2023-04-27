@@ -72,7 +72,7 @@ public class Pavlov : Role
         if (hasDog)
         {
             PlayerControl Dog = Helpers.playerById((byte)Game.GameData.data.myData.getGlobalData().GetRoleData(myDog));
-            if(Dog.Data.IsDead) hasDog = false;
+            if(Dog.Data.IsDead || Dog.GetModData().role != Roles.Dog) hasDog = false;
             feed.Timer = feed.MaxTimer;
         }
     }
@@ -139,7 +139,8 @@ public class Dog : Role
             __instance.KillButton.graphic.sprite,
             Expansion.GridArrangeExpansion.GridArrangeParameter.AlternativeKillButtonContent,
             __instance,
-            Module.NebulaInputManager.modKillInput.keyCode
+            Module.NebulaInputManager.modKillInput.keyCode,
+            "button.label.kill"
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
         killButton.MaxTimer = Pavlov.dogKillCooldownOption.getFloat();
         killButton.SetButtonCoolDownOption(true);

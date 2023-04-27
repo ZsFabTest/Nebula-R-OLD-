@@ -136,7 +136,8 @@ public class JackalMayor : Role
             __instance.KillButton.graphic.sprite,
             Expansion.GridArrangeExpansion.GridArrangeParameter.AlternativeKillButtonContent,
             __instance,
-            Module.NebulaInputManager.modKillInput.keyCode
+            Module.NebulaInputManager.modKillInput.keyCode,
+            "button.label.kill"
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
         killButton.MaxTimer = killCoolDownOption.getFloat();
         killButton.SetButtonCoolDownOption(true);
@@ -192,7 +193,8 @@ public class JackalMayor : Role
         RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId, votesId, 1);
     }
 
-    public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
+    public override void EditDisplayNameColor(byte playerId, ref Color displayColor) => Roles.Jackal.EditDisplayNameColor(playerId,ref displayColor);
+    /*
     {
         if (PlayerControl.LocalPlayer.GetModData().role.side == Side.Jackal)
         {
@@ -203,6 +205,7 @@ public class JackalMayor : Role
             displayColor = RoleColor;
         }
     }
+    */
 
     public override void CleanUp()
     {

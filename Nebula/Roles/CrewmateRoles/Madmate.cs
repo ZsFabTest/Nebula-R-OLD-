@@ -294,7 +294,7 @@ public class SecondaryMadmate : ExtraRole
 
     public override void Assignment(Patches.AssignMap assignMap)
     {
-        if (!Roles.Madmate.SecondoryRoleOption.getBool()) return;
+        if (!Roles.Madmate.SecondoryRoleOption.getBool() || !IsSpawnable()) return;
 
         List<byte> crewmates = new List<byte>();
 

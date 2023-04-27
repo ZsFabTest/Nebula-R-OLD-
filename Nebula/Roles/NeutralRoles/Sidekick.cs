@@ -108,7 +108,8 @@ public class Sidekick : Role
         VentPermission = SidekickCanUseVentsOption.getBool() ? VentPermission.CanUseUnlimittedVent : VentPermission.CanNotUse;
     }
 
-    public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
+    public override void EditDisplayNameColor(byte playerId, ref Color displayColor) => Roles.Jackal.EditDisplayNameColor(playerId,ref displayColor);
+    /*
     {
         if (PlayerControl.LocalPlayer.GetModData().role.side == Side.Jackal)
         {
@@ -119,6 +120,7 @@ public class Sidekick : Role
             displayColor = Color;
         }
     }
+    */
 
     public override bool IsSpawnable()
     {
@@ -146,7 +148,8 @@ public class SecondarySidekick : ExtraRole
 {
     public override RelatedExtraRoleData[] RelatedExtraRoleDataInfo { get => new RelatedExtraRoleData[] { new RelatedExtraRoleData("Jackal Identifer", this, 0, 14) }; }
 
-    public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
+    public override void EditDisplayNameColor(byte playerId, ref Color displayColor) => Roles.Jackal.EditDisplayNameColor(playerId,ref displayColor);
+    /*
     {
         if (PlayerControl.LocalPlayer.GetModData().role == Roles.Jackal)
         {
@@ -156,6 +159,7 @@ public class SecondarySidekick : ExtraRole
             }
         }
     }
+    */
 
     public override bool CheckAdditionalWin(PlayerControl player, Patches.EndCondition condition)
     {

@@ -1383,6 +1383,7 @@
 "option.canBeBait" : "可以成为诱饵"
 "option.canBeFlash" : "可以成为闪电侠"
 "option.canBeSignaller" : "可以成为通讯兵"
+"option.canBeSecondaryJackal" : "可以成为附加豺狼"
 
 "role.agent.canKnowImpostorAndJackal" : "代理人可以得知伪装者/豺狼/巴浦洛夫/莫里亚蒂"
 "role.agent.theLeastCompletedTasks" : "代理人得知伪装者/豺狼/巴浦洛夫/莫里亚蒂需要的最少任务数"
@@ -1715,6 +1716,39 @@
 "role.bartender.hint" : "我还在呢！"
 "role.bartender.info" : "全体目光向我看齐"
 
+"role.secondaryJackal.name" : "豺狼"
+"role.secondaryJackal.short" : "狼"
+"role.secondaryJackal.description" : "你也是豺狼！"
+"role.secondaryJackal.info" : "豺狼阵营啊啊啊啊"
+"role.secondaryJackal.prefix" : "狼化的"
+"role.secondaryJackal.impostorCanBeSecondaryJackal" : "伪装者可以成为附加豺狼"
+
+"role.luckyMan.name" : "幸运儿"
+"role.luckyMan.short" : "幸"
+"role.luckyMan.description" : "6"
+"role.luckyMan.hint" : "避免驱逐或击杀"
+"role.luckyMan.info" : "有概率避免驱逐或击杀"
+"role.luckyMan.chanceToReviev" : "避免死亡概率"
+
+"role.moda.name" : "摩达石神"
+"role.moda.short" : "摩"
+"role.moda.description" : "掩盖尸体的最好方法"
+"role.moda.hint" : "通过击杀清理上一个尸体"
+"role.moda.info" : "在击杀过后，全场序列中的最后一个尸体将被清理"
+
+"role.ghostEngineer.name" : "灵魂工程师"
+"role.ghostEngineer.short" : "灵工"
+"role.ghostEngineer.hint" : "帮助船员修复破坏"
+"role.ghostEngineer.info" : "在一定程度上帮助船员"
+"role.ghostEngineer.maxRepair" : "最大修复次数"
+
+"role.marksman.name" : "快枪手"
+"role.marksman.short" : "快"
+"role.marksman.description" : "主打的就是一个快"
+"role.marksman.hint" : "急速出刀"
+"role.marksman.info" : "你可以储存击杀冷却"
+"role.marksman.maxShoot" : "最大储存数量"
+
 "side.pavlov.name" : "巴普洛夫团队"
 "side.schrodingersCat.name" : "薛定谔的猫"
 "side.madman.name" : "疯子"
@@ -1753,3 +1787,5 @@
 "button.label.appoint" : "任命"
 "button.label.feed" : "喂养"
 "button.label.remember" : "回忆"
+"button.label.saveShoot" : "储存"
+"button.label.getShoot" : "取用"

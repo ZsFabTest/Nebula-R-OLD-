@@ -780,13 +780,13 @@ public class PlayerStatistics
                         AliveCouple++;
 
                         bool flag = false;
-                        if (data.role.side == Roles.Side.Jackal || lData.HasExtraRole(Roles.Roles.SecondarySidekick))
+                        if (data.role.side == Roles.Side.Jackal || lData.HasExtraRole(Roles.Roles.SecondarySidekick) || lData.HasExtraRole(Roles.Roles.SecondaryJackal))
                         {
                             AliveInLoveJackals++;
                             AliveJackalCouple++;
                             flag = true;
                         }
-                        if (lData.role.side == Roles.Side.Jackal || lData.HasExtraRole(Roles.Roles.SecondarySidekick))
+                        if (lData.role.side == Roles.Side.Jackal || lData.HasExtraRole(Roles.Roles.SecondarySidekick) || lData.HasExtraRole(Roles.Roles.SecondaryJackal))
                         {
                             AliveInLoveJackals++;
                             if (!flag) AliveJackalCouple++;
@@ -847,7 +847,7 @@ public class PlayerStatistics
 
                         foreach (var d in lData)
                         {
-                            if ((d.role.side == Roles.Side.Jackal || d.HasExtraRole(Roles.Roles.SecondarySidekick)))
+                            if ((d.role.side == Roles.Side.Jackal || d.HasExtraRole(Roles.Roles.SecondarySidekick) || d.HasExtraRole(Roles.Roles.SecondaryJackal)))
                             {
                                 jackalFlag = true;
                                 AliveInLoveJackals++;
@@ -876,7 +876,7 @@ public class PlayerStatistics
 
                 if (side == Roles.Side.Impostor)
                 {
-                    if (data.HasExtraRole(Roles.Roles.SecondarySidekick))
+                    if (data.HasExtraRole(Roles.Roles.SecondarySidekick) || data.HasExtraRole(Roles.Roles.SecondaryJackal))
                     {
                         AliveImpostorsWithSidekick++;
                     }

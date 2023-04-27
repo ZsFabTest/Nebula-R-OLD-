@@ -173,6 +173,11 @@ static public class Roles
     public static ComplexRoles.FSwapper F_Swapper = new ComplexRoles.FSwapper();
     public static ComplexRoles.Swapper EvilSwapper = new ComplexRoles.Swapper("EvilSwapper","evilSwapper",true);
     public static ComplexRoles.Swapper NiceSwapper = new ComplexRoles.Swapper("NiceSwapper","niceSwapper",false);
+    public static ExtraRoles.SecondaryJackal SecondaryJackal = new ExtraRoles.SecondaryJackal();
+    public static CrewmateRoles.LuckyMan LuckyMan = new CrewmateRoles.LuckyMan();
+    public static ImpostorRoles.Moda Moda = new ImpostorRoles.Moda();
+    public static GhostRoles.GhostEngineer GhostEngineer = new GhostRoles.GhostEngineer();
+    public static ImpostorRoles.Marksman Marksman = new ImpostorRoles.Marksman();
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
@@ -186,8 +191,8 @@ static public class Roles
             Madmate,
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,
-            Holmes,Kotwal,Necrophilic,Observer,OnlineCelebrity,Sanctifier,Transporter,Dictator,Bartender,
-            Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,
+            Holmes,Kotwal,Necrophilic,Observer,OnlineCelebrity,Sanctifier,Transporter,Dictator,Bartender,LuckyMan,
+            Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,
             Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,
             JackalMayor,
             SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,
@@ -205,12 +210,12 @@ static public class Roles
             Bloody,Confused,Drunk,Lover,Trilemma,
             MetaRole,AvengerTarget,
             PerkHolder,
-            SecondaryBait,Flash
+            SecondaryBait,Flash,SecondaryJackal
         };
 
     public static List<GhostRole> AllGhostRoles = new List<GhostRole>()
         {
-            Poltergeist
+            Poltergeist,GhostEngineer
         };
 
     private static SideCommonRoles.SideCommonRolesLoader loader = new SideCommonRoles.SideCommonRolesLoader();

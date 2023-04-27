@@ -44,7 +44,8 @@ public class PavlovsCat : Role
             __instance.KillButton.graphic.sprite,
             Expansion.GridArrangeExpansion.GridArrangeParameter.AlternativeKillButtonContent,
             __instance,
-            Module.NebulaInputManager.modKillInput.keyCode
+            Module.NebulaInputManager.modKillInput.keyCode,
+            "button.label.kill"
         ).SetTimer(Roles.SchrodingersCat.killCooldownP.getFloat());
         killButton.MaxTimer = Roles.SchrodingersCat.killCooldownP.getFloat();
         killButton.SetButtonCoolDownOption(true);

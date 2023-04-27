@@ -99,7 +99,7 @@ public abstract class Role : Assignable
     public virtual bool CheckWin(PlayerControl player, Patches.EndCondition winReason)
     {
         //Madmateの場合は元陣営の勝利を無効化する
-        if (player.IsMadmate()) return false;
+        if (player.IsMadmate() || player.GetModData().extraRole.Contains(Roles.SecondaryJackal)) return false;
 
         //単独勝利ロール
         if (winReason.TriggerRole != null)

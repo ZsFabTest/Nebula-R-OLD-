@@ -88,7 +88,8 @@ public class Madman : Role
             __instance.KillButton.graphic.sprite,
             Expansion.GridArrangeExpansion.GridArrangeParameter.LeftSideContent,
             __instance,
-            Module.NebulaInputManager.modKillInput.keyCode
+            Module.NebulaInputManager.modKillInput.keyCode,
+            "button.label.kill"
         ).SetTimer(killCooldownOption.getFloat());
         killButton.MaxTimer = killCooldownOption.getFloat();
         killButton.SetButtonCoolDownOption(true);

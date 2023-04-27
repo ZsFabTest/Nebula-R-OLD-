@@ -218,7 +218,7 @@ public class Jackal : Role
         {
             displayColor = RoleColor;
         }
-        else if (PlayerControl.LocalPlayer.GetModData().HasExtraRole(Roles.SecondarySidekick))
+        else if (PlayerControl.LocalPlayer.GetModData().HasExtraRole(Roles.SecondarySidekick) || PlayerControl.LocalPlayer.GetModData().HasExtraRole(Roles.SecondaryJackal))
         {
             displayColor = RoleColor;
         }

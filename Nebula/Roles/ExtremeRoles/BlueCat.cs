@@ -44,7 +44,8 @@ public class BlueCat : Role
             __instance.KillButton.graphic.sprite,
             Expansion.GridArrangeExpansion.GridArrangeParameter.AlternativeKillButtonContent,
             __instance,
-            Module.NebulaInputManager.modKillInput.keyCode
+            Module.NebulaInputManager.modKillInput.keyCode,
+            "button.label.kill"
         ).SetTimer(Roles.SchrodingersCat.killCooldown.getFloat());
         killButton.MaxTimer = Roles.SchrodingersCat.killCooldown.getFloat();
         killButton.SetButtonCoolDownOption(true);

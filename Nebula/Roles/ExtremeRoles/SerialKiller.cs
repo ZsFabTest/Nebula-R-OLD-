@@ -47,7 +47,8 @@ public class SerialKiller : Role
             __instance.KillButton.graphic.sprite,
             Expansion.GridArrangeExpansion.GridArrangeParameter.AlternativeKillButtonContent,
             __instance,
-            Module.NebulaInputManager.modKillInput.keyCode
+            Module.NebulaInputManager.modKillInput.keyCode,
+            "button.label.kill"
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
         killButton.MaxTimer = killCooldownOption.getFloat();
         killButton.SetButtonCoolDownOption(true);
@@ -81,7 +82,7 @@ public class SerialKiller : Role
     public override void MyPlayerControlUpdate()
     {
         Game.MyPlayerData data = Game.GameData.data.myData;
-        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget();
+        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget(true);
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
         if(suicideButton.Timer <= 0)
         {

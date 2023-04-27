@@ -8,15 +8,16 @@
 ## 下载
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
+| 1.0.2.0 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.0/Nebula-R.1.0.2.0.zip)
 | 1.0.1.9 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.9/Nebula-R.1.0.1.9.zip)
 | 1.0.1.8 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.8/Nebula-R.1.0.1.8.zip)
-| 1.0.1.7 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.7/Nebula-R.1.0.1.7.zip)
 
 <details>
 <summary> 更多 </summary>
 
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
+| 1.0.1.7 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.7/Nebula-R.1.0.1.7.zip)
 | 1.0.1.6 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.6/Nebula-R.1.0.1.6.zip)
 | 1.0.1.5 | 2022.12.14s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.5/Nebula-R.1.0.1.5.zip)
 
@@ -42,21 +43,26 @@
 | -------------- | ----------------- | ------------------ | --------------- |
 | Holmes - 福尔摩斯 | Vampire - 吸血鬼 | Schrodinger's Cat - 薛定谔的猫 | Sick - 病人 |
 | Sanctifier - 净化者 | Assassin - 刺客 | Madman - 疯子 | Flash - 闪电侠 |
-| Observer - 观察者 | Serial Killer - 嗜血杀手 | Pavlov - 巴浦洛夫之主 | |
-| Online Celebrity - 网红 | Demagogue - 反叛者 | Pavlov's Dog - 巴浦洛夫的狗 | |
-| Nice Decider - 正义的裁决者 | Evil Decider - 邪恶的裁决者 | Jackal Mayor - 狼族市长 | |
+| Observer - 观察者 | Serial Killer - 嗜血杀手 | Pavlov - 巴浦洛夫之主 | Secondary Bait - 附加诱饵 |
+| Online Celebrity - 网红 | Demagogue - 反叛者 | Pavlov's Dog - 巴浦洛夫的狗 | Secondary Jackal - 附加豺狼  |
+| Nice Decider - 正义的裁决者 | Evil Decider - 邪恶的裁决者 | Jackal Mayor - 狼族市长 |  |
 | Nice Swapper - 正义的换票师 | Evil Swapper - 邪恶的换票师 | Moriarty - 莫里亚蒂 | |
 | Necrophilic - 寻尸者 | Escapist - 逃逸者 | Moran - 莫兰上校 | |
 | Transporter - 传送师 | Evil Busker - 灵界杀手 | Cascrubinter - 代行刑者 | |
 | Kotwal - 警察局长 | Invisible Man - 隐身人 | Heretic - 异教徒 | |
-| Dictator - 独裁者 | | Amnesiac - 失忆者 | |
-| Bartender - 调酒师 | | | |
-| Others - 其他 | | | |
-| Game Master - 管理员 | | | |
+| Dictator - 独裁者 | Moda - 摩达石神 | Amnesiac - 失忆者 | |
+| Bartender - 调酒师 | Marksman - 快枪手 | | |
+| Lucky Man - 幸运儿 | | | |
+
+| Others - 其他 | Ghost - 灵魂职业 |
+| ------------- | --------------- |
+| Game Master - 管理员 | Ghost Engineer - 灵魂工程师 |
 
 1.新增驱逐显示(和以前的群内版本完全不同的写法)
 
 2.代理人现在可以通过做完任务来披露伪装者/中立阵营
+
+3.更改了LastImpostor的效果(变成赌怪)
 
 ## 职业介绍
 <details>
@@ -208,6 +214,19 @@
 
 </details>
 
+#### 幸运儿
+<details>
+
+| Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
+| ----------- | --------------------- | -------------- |
+| 船员阵营 | 跟随船员获胜 | 免疫击杀与票出(概率) |
+
+| 设置 |
+| ---- |
+| 免疫概率 |
+
+</details>
+
 ### 伪装者职业
 
 #### 吸血鬼
@@ -318,6 +337,28 @@
 | 招募冷却时间 |
 | 最多招募个数 |
 | 作为副职业招募 |
+
+</details>
+
+#### 摩达石神
+<details>
+
+| Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
+| ----------- | --------------------- | -------------- |
+| 伪装者阵营 | 跟随伪装者获胜 | 击杀后清理本局第一个死亡的尸体(不算刚击杀的) |
+
+</details>
+
+#### 快枪手
+<details>
+
+| Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
+| ----------- | --------------------- | -------------- |
+| 伪装者阵营 | 跟随伪装者获胜 | 囤积子弹 |
+
+| 设置 |
+| ---- |
+| 最大子弹数量 |
 
 </details>
 
@@ -481,6 +522,43 @@
 
 </details>
 
+#### 诱饵
+<details>
+
+| Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
+| ----------- | --------------------- | -------------- |
+| 船员阵营 | N/A | 同诱饵 |
+
+</details>
+
+#### 豺狼
+<details>
+
+| Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
+| ----------- | --------------------- | -------------- |
+| 豺狼阵营 | 跟随豺狼团队获胜 | 占人数 |
+
+| 设置 |
+| ---- |
+| 伪装者可以成为附加豺狼 |
+
+</details>
+
+### 灵魂职业
+
+#### 灵魂工程师
+<details>
+
+| Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
+| ----------- | --------------------- | -------------- |
+| 船员阵营 | N/A | 秒修破坏 |
+
+| 设置 |
+| ---- |
+| 秒修次数 |
+
+</details>
+
 </details>
 
 ## 联系作者
@@ -491,6 +569,12 @@
 <details>
 <summary> 展开 </summary>
 
+### 2023.4.27 update
+1.新增职业 附加豺狼 幸运儿 摩达石神 灵魂工程师 快枪手
+
+2.巴浦洛夫的狗当更换职业时会被判定为狗已经死亡(可以再次招募了)
+
+3.日常借鉴SuperNewRoles
 ### 2023.4.21 update
 1.新增职业 调酒师(其实就是面包师)
 
