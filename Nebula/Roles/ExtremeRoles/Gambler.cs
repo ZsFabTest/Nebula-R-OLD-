@@ -1,19 +1,16 @@
 namespace Nebula.Roles.ImpostorRoles;
-using Nebula.Events;
 
-public class Moda : Role{
-    public class ModaEvent : LocalEvent{
-        public ModaEvent() : base(0.1f) {}
-        public override void OnActivate()
-        {
-            if(Helpers.AllDeadBodies().Count() == 1) return;
-            RPCEventInvoker.CleanDeadBody(Helpers.AllDeadBodies()[0].ParentId);
-        }
-    }
+public class Gambler : Role{
+    private Module.CustomOption reduceKillCooldownOption;
+    private Module.CustomOption addKillCooldownOption;
 
     public override void LoadOptionData()
     {
         TopOption.tab = Module.CustomOptionTab.GhostRoles;
+        reduceKillCooldownOption = CreateOption(Color.white,"reduceKillCooldown",15f,5f,25f,0.5f);
+        reduceKillCooldownOption.suffix = "second";
+        addKillCooldownOption = CreateOption(Color.white,"addKillCooldown",15f,5f,25f,0.5f);
+        addKillCooldownOption.suffix = "second";
     }
 
     private CustomButton killButton;
@@ -27,10 +24,11 @@ public class Moda : Role{
             () =>
             {
                 var r = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, Game.GameData.data.myData.currentTarget, Game.PlayerData.PlayerStatus.Dead, true);
-                killButton.Timer = killButton.MaxTimer;
-                if(r != Helpers.MurderAttemptResult.PerformKill) return;
+                int result = NebulaPlugin.rnd.Next(1,11);
+                if(result <= 5) killButton.Timer = killButton.MaxTimer - reduceKillCooldownOption.getFloat();
+                else killButton.Timer = killButton.MaxTimer + addKillCooldownOption.getFloat();
+                if(killButton.Timer < 0) killButton.Timer = 0;
                 Game.GameData.data.myData.currentTarget = null;
-                LocalEvent.Activate(new ModaEvent());
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
@@ -41,7 +39,7 @@ public class Moda : Role{
             Module.NebulaInputManager.modKillInput.keyCode,
             "button.label.kill"
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
-        killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);;
+        killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
         killButton.SetButtonCoolDownOption(true);
     }
 
@@ -51,13 +49,6 @@ public class Moda : Role{
         killButton.actionButton.ShowButtonText("+" + count + "s");
     }
 
-    public override void MyPlayerControlUpdate()
-    {
-        Game.MyPlayerData data = Game.GameData.data.myData;
-        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget(true);
-        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
-    }
-
     public override void CleanUp(){
         if(killButton != null){
             killButton.Destroy();
@@ -65,10 +56,18 @@ public class Moda : Role{
         }
     }
 
-    public Moda()
-        : base("Moda","moda",Palette.ImpostorRed,RoleCategory.Impostor,Side.Impostor,Side.Impostor,
-        Impostor.impostorSideSet,Impostor.impostorSideSet,Impostor.impostorEndSet,
-        true,VentPermission.CanUseUnlimittedVent,true,true,true){
+    public override void MyPlayerControlUpdate()
+    {
+        Game.MyPlayerData data = Game.GameData.data.myData;
+        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget(true);
+        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
+    }
+
+    public Gambler()
+         : base("Gambler","gambler",Palette.ImpostorRed,RoleCategory.Impostor,Side.Impostor,Side.Impostor,
+                Impostor.impostorSideSet,Impostor.impostorSideSet,Impostor.impostorEndSet,
+                true,VentPermission.CanUseUnlimittedVent,true,true,true){
         HideKillButtonEvenImpostor = true;
+        killButton = null;
     }
 }

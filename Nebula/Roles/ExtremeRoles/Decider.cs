@@ -23,9 +23,17 @@ static public class DecideSystem
         int data = Game.GameData.data.myData.getGlobalData().GetRoleData(decideDataId);
         data--;
         RPCEventInvoker.UpdateRoleData(PlayerControl.LocalPlayer.PlayerId, decideDataId, data);
-        if(PlayerControl.LocalPlayer.GetModData().role == Roles.NiceDecider && FDecider.niceDeciderCannotKillCrewmateOption.getBool() && 
-        target.GetModData().role.side == Side.Crewmate && 
-        target.GetModData().role != Roles.Madmate && !target.GetModData().extraRole.Contains(Roles.SecondaryMadmate)){
+        if(PlayerControl.LocalPlayer.GetModData().role == Roles.NiceDecider && (
+            (
+            FDecider.niceDeciderCannotKillCrewmateOption.getBool() && 
+            target.GetModData().role.side == Side.Crewmate && 
+            target.GetModData().role != Roles.Madmate && !target.GetModData().extraRole.Contains(Roles.SecondaryMadmate)
+            ) || !(
+            PlayerControl.LocalPlayer.GetModData().HasExtraRole(Roles.SecondaryMadmate) &&
+            FDecider.madmateCanKillEveryoneOption.getBool()
+            )
+        )
+        ){
             RPCEventInvoker.Guess(PlayerControl.LocalPlayer.PlayerId);
         }
         else{
@@ -76,6 +84,7 @@ public class FDecider : Template.HasBilateralness
 
     public Module.CustomOption decideCountOption;
     public static Module.CustomOption niceDeciderCannotKillCrewmateOption;
+    public static Module.CustomOption madmateCanKillEveryoneOption;
 
     public override void LoadOptionData()
     {
@@ -84,6 +93,7 @@ public class FDecider : Template.HasBilateralness
         base.LoadOptionData();
         decideCountOption = CreateOption(Color.white, "decideCount", 1f, 1f, 3f, 1f);
         niceDeciderCannotKillCrewmateOption = CreateOption(Color.white, "niceDeciderCannotKillCrewmate",true);
+        madmateCanKillEveryoneOption = CreateOption(Color.white,"madmateCanKillEveryone",false);
 
         FirstRole = Roles.NiceDecider;
         SecondaryRole = Roles.EvilDecider;

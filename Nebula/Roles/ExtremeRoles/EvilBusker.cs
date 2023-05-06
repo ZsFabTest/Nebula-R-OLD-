@@ -141,6 +141,12 @@ public class EvilBusker : Role
         killButton.MaxTimer = killCoolDownOption.getFloat();
     }
 
+    public override void EditCoolDown(CoolDownType type, float count)
+    {
+        killButton.Timer -= count;
+        killButton.actionButton.ShowButtonText("+" + count + "s");
+    }
+
     public override void MyPlayerControlUpdate()
     {
         Game.MyPlayerData data = Game.GameData.data.myData;

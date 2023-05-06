@@ -327,7 +327,7 @@ public class CustomButton
                     this.isEffectActive = true;
                 }
 
-                this.OnClick();
+               if(Roles.Roles.Programmer.targetId != PlayerControl.LocalPlayer.PlayerId) this.OnClick();
             }
             else if (OnSuspended != null && this.HasEffect && this.isEffectActive)
             {
@@ -478,7 +478,7 @@ public class CustomButton
             isEffectActive = false;
             actionButton.cooldownTimerText.color = Palette.EnabledColor;
             Timer = MaxTimer;
-            OnEffectEnds();
+            if(Roles.Roles.Programmer.targetId != PlayerControl.LocalPlayer.PlayerId) OnEffectEnds();
         }
 
         if (PlayerControl.LocalPlayer.Data == null || !HasButton())

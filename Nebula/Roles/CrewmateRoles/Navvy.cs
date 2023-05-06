@@ -54,17 +54,21 @@ public class Navvy : Role
         Vent target = null;
         Vector2 truePosition = PlayerControl.LocalPlayer.GetTruePosition();
         float closestDistance = float.MaxValue;
+        //Debug.LogWarning("14 " + ShipStatus.Instance.AllVents[14].name);
         for (int i = 0; i < ShipStatus.Instance.AllVents.Length; i++)
         {
             Vent vent = ShipStatus.Instance.AllVents[i];
+            //Debug.Log(vent.name);
             if (vent.GetVentData().PreSealed || vent.GetVentData().Sealed) continue;
             float distance = Vector2.Distance(vent.transform.position, truePosition);
+            //Debug.Log(vent.name + " " + distance.ToString() + " " + vent.UsableDistance.ToString());
             if (distance <= vent.UsableDistance && distance < closestDistance)
             {
                 closestDistance = distance;
                 target = vent;
             }
         }
+        //try{ Debug.Log(target.name); }catch{ Debug.LogWarning("No Target"); };
         ventTarget = target;
     }
 
