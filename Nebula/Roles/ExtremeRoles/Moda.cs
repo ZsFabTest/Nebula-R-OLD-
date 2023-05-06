@@ -45,6 +45,12 @@ public class Moda : Role{
         killButton.SetButtonCoolDownOption(true);
     }
 
+    public override void EditCoolDown(CoolDownType type, float count)
+    {
+        killButton.Timer -= count;
+        killButton.actionButton.ShowButtonText("+" + count + "s");
+    }
+
     public override void MyPlayerControlUpdate()
     {
         Game.MyPlayerData data = Game.GameData.data.myData;

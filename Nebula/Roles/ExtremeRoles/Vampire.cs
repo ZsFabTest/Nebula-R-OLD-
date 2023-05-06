@@ -22,7 +22,7 @@ public class Vampire : Role
         {
             if (PlayerControl.LocalPlayer.GetModData().IsAlive && target.GetModData().IsAlive)
             {
-                RPCEventInvoker.UncheckedMurderPlayer(target.PlayerId, target.PlayerId, Game.PlayerData.PlayerStatus.Hemorrhage.Id, true);
+                RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, target.PlayerId, Game.PlayerData.PlayerStatus.Hemorrhage.Id, false);
             }
         }
     }

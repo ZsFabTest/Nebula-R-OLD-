@@ -8,7 +8,7 @@ public static class SwapSystem{
 
     public static void GlobalInitialize(PlayerControl __instance)
     {
-        swapTargetf = Byte.MaxValue;swapTargets = Byte.MaxValue;isSwapped = false;
+        OnMeetingStart();
         __instance.GetModData().SetRoleData(swapDataId, (int)Roles.F_Swapper.swapCountOption.getFloat());
     }
 
@@ -112,21 +112,18 @@ public class Swapper : Template.BilateralnessRole
 {
     public Swapper(string name, string localizeName, bool isImpostor)
             : base(name, localizeName,
-                 isImpostor ? Palette.ImpostorRed : FDecider.RoleColor,
+                 isImpostor ? Palette.ImpostorRed : FSwapper.RoleColor,
                  isImpostor ? RoleCategory.Impostor : RoleCategory.Crewmate,
                  isImpostor ? Side.Impostor : Side.Crewmate, isImpostor ? Side.Impostor : Side.Crewmate,
                  isImpostor ? ImpostorRoles.Impostor.impostorSideSet : CrewmateRoles.Crewmate.crewmateSideSet,
                  isImpostor ? ImpostorRoles.Impostor.impostorSideSet : CrewmateRoles.Crewmate.crewmateSideSet,
                  isImpostor ? ImpostorRoles.Impostor.impostorEndSet : CrewmateRoles.Crewmate.crewmateEndSet,
                  false, isImpostor ? VentPermission.CanUseUnlimittedVent : VentPermission.CanNotUse,
-                 isImpostor, isImpostor, isImpostor, () => { return Roles.F_Decider; }, isImpostor)
+                 isImpostor, isImpostor, isImpostor, () => { return Roles.F_Swapper; }, isImpostor)
     {
         IsHideRole = true;
         CanCallEmergencyMeeting = false;
     }
-
-    public override Assignable AssignableOnHelp => Roles.F_Decider;
-    public override HelpSprite[] helpSprite => Roles.F_Decider.helpSprite;
 
     public override void GlobalInitialize(PlayerControl __instance)
     {

@@ -63,7 +63,7 @@ public static class CredentialsPatch
         static void Postfix(PingTracker __instance)
         {
             __instance.text.alignment = TMPro.TextAlignmentOptions.TopRight;
-            __instance.text.text = $"<size=130%><color=#9579ce>Nebula on the Ship</color></size> v" + NebulaPlugin.PluginVisualVersion + "\n" + __instance.text.text;
+            __instance.text.text = $"<size=130%><color=#9579ce>NoS - Remake</color></size> v" + NebulaPlugin.PluginVisualVersion + "\n" + __instance.text.text;
             if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started)
             {
                 __instance.gameObject.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(1.2f, 0.8f, 0f);

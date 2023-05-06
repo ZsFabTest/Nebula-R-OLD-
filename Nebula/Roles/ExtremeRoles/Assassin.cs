@@ -93,6 +93,12 @@ public class Assassin : Role
         assassinateTarget = null;
     }
 
+    public override void EditCoolDown(CoolDownType type, float count)
+    {
+        assassinate.Timer -= count;
+        assassinate.actionButton.ShowButtonText("+" + count + "s");
+    }
+
     public Assassin()
         : base("Assassin", "assassin", Palette.ImpostorRed, RoleCategory.Impostor, Side.Impostor, Side.Impostor,
              Impostor.impostorSideSet, Impostor.impostorSideSet,

@@ -43,7 +43,7 @@ public class Assignable
     /// 割り当てを設定しない場合はNoneにしてください。
     /// </summary>
     public AllocationType Allocation { get; protected set; }
-
+    
     public virtual bool IsUnsuitable { get { return false; } }
 
     public Module.CustomGameMode ValidGamemode { get; set; }

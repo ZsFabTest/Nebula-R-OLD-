@@ -42,7 +42,7 @@ public class Marksman : Role{
             Module.NebulaInputManager.modKillInput.keyCode,
             "button.label.kill"
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
-        killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);;
+        killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
         killButton.SetButtonCoolDownOption(true);
 
         if (saveShootButton != null)
@@ -90,6 +90,12 @@ public class Marksman : Role{
         getShootButton.Timer = getShootButton.MaxTimer = 0;
 
         getShootButton.UsesText.text = "0";
+    }
+
+    public override void EditCoolDown(CoolDownType type, float count)
+    {
+        killButton.Timer -= count;
+        killButton.actionButton.ShowButtonText("+" + count + "s");
     }
 
     public override void CleanUp(){
