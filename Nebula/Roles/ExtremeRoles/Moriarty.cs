@@ -165,7 +165,7 @@ public class Moran : Role{
 
     public override void LoadOptionData()
     {
-        TopOption.AddCustomPrerequisite(() => Roles.Moriarty.IsSpawnable());
+        TopOption.AddPrerequisite(Roles.Moriarty.TopOption).AddCustomPrerequisite(() => Roles.Moriarty.IsSpawnable());
         snipeCoolDownOption = CreateOption(Color.white, "snipeCoolDown", 20f, 5f, 60f, 2.5f);
         snipeCoolDownOption.suffix = "second";
         shotSizeOption = CreateOption(Color.white, "shotSize", 1f, 0.5f, 4f, 0.25f);
@@ -299,6 +299,12 @@ public class Moran : Role{
         killButton.MaxTimer = snipeCoolDownOption.getFloat();
         killButton.FireOnClicked = true;
         killButton.SetButtonCoolDownOption(true);
+    }
+
+    public override void EditCoolDown(CoolDownType type, float count)
+    {
+        killButton.Timer -= count;
+        killButton.actionButton.ShowButtonText("+" + count + "s");
     }
 
     public byte deadBodyId;
@@ -520,7 +526,5 @@ public class Moran : Role{
 
         sniperButton = null;
         killButton = null;
-        CreateOptionFollowingRelatedRole = true;
-        Allocation = AllocationType.None;
     }
 }

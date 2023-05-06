@@ -2,30 +2,26 @@
 本模组是 Nebula on the ship 的分支版本 目前只有中文
 
 模组不盈利，只做单纯兴趣爱好，bug修不修看时间
-
-部分贴图取自TheOtherRoles-GM-Haoming和SuperNewRoles
+主要看齐TheOtherRoles-GM-Haoming的职业转化，新增的职业大多是与职业的交换和变化有关的
+部分贴图取自TheOtherRoles-GM-Haoming
 
 ## 下载
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
-| 1.0.2.2 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.2/Nebula-R.1.0.2.2.zip)
-| 1.0.2.1 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.2/Nebula1021.dll)
 | 1.0.2.0 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.0/Nebula-R.1.0.2.0.zip)
+| 1.0.1.9 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.9/Nebula-R.1.0.1.9.zip)
+| 1.0.1.8 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.8/Nebula-R.1.0.1.8.zip)
 
 <details>
 <summary> 更多 </summary>
 
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
-| 1.0.1.9 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.9/Nebula-R.1.0.1.9.zip)
-| 1.0.1.8 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.8/Nebula-R.1.0.1.8.zip)
 | 1.0.1.7 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.7/Nebula-R.1.0.1.7.zip)
 | 1.0.1.6 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.6/Nebula-R.1.0.1.6.zip)
 | 1.0.1.5 | 2022.12.14s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.5/Nebula-R.1.0.1.5.zip)
 
 </details>
-
-注: 2.0.2.1是一个特殊版本,因为本来正常的窃时者不小心被我删了(删的很彻底),所以说找不回来了,就当图一乐玩玩
 
 ## 参考
 <details>
@@ -56,22 +52,17 @@
 | Kotwal - 警察局长 | Invisible Man - 隐身人 | Heretic - 异教徒 | |
 | Dictator - 独裁者 | Moda - 摩达石神 | Amnesiac - 失忆者 | |
 | Bartender - 调酒师 | Marksman - 快枪手 | | |
-| Lucky Man - 幸运儿 | Gambler - 赌徒 | | |
-| Superstar - 明星 | | | |
-| Chivalrous Expert - 侠客 | | | |
-| Programmer - 程序员 | | | |
+| Lucky Man - 幸运儿 | | | |
 
 | Others - 其他 | Ghost - 灵魂职业 |
 | ------------- | --------------- |
 | Game Master - 管理员 | Ghost Engineer - 灵魂工程师 |
 
-1.修改驱逐显示(增加了附加信息、附加职业信息)
+1.新增驱逐显示(和以前的群内版本完全不同的写法)
 
 2.代理人现在可以通过做完任务来披露伪装者/中立阵营
 
 3.更改了LastImpostor的效果(变成赌怪)
-
-4.可以选择叛徒警长/叛徒正义裁决的击杀模式
 
 ## 职业介绍
 <details>
@@ -236,33 +227,6 @@
 
 </details>
 
-#### 明星
-<details>
-
-| Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
-| ----------- | --------------------- | -------------- |
-| 船员阵营 | 跟随船员获胜 | 所有人可以看到职业 |
-
-</details>
-
-#### 侠客
-<details>
-
-| Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
-| ----------- | --------------------- | -------------- |
-| 船员阵营 | 跟随船员获胜 | 一次任意击杀能力 |
-
-</details>
-
-#### 程序员
-<details>
-
-| Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
-| ----------- | --------------------- | -------------- |
-| 船员阵营 | 跟随船员获胜 | 钓出凶手 |
-
-</details>
-
 ### 伪装者职业
 
 #### 吸血鬼
@@ -395,34 +359,6 @@
 | 设置 |
 | ---- |
 | 最大子弹数量 |
-
-</details>
-
-#### 赌徒
-<details>
-
-| Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
-| ----------- | --------------------- | -------------- |
-| 伪装者阵营 | 跟随伪装者获胜 | 奇怪的击杀CD |
-
-| 设置 |
-| ---- |
-| 减少的冷却时间 |
-| 增加的冷却时间 |
-
-</details>
-
-#### 管道工
-<details>
-
-| Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
-| ----------- | --------------------- | -------------- |
-| 伪装者阵营 | 跟随伪装者获胜 | 创建管道 |
-
-| 设置 |
-| ---- |
-| 冷却时间 |
-| 最大数量 |
 
 </details>
 
@@ -633,14 +569,6 @@
 <details>
 <summary> 展开 </summary>
 
-### 2023.5.6 v2.0.2.2 update
-1.克服了一些代码上的问题
-
-2.修了一点小问题(屎山代码堆上去)
-
-3.为管道类职业作了充足准备(写好了VentManager框架)
-
-4.和Nebula屎山代码斗智斗勇
 ### 2023.4.27 update
 1.新增职业 附加豺狼 幸运儿 摩达石神 灵魂工程师 快枪手
 

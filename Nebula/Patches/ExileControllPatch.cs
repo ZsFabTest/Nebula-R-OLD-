@@ -5,7 +5,6 @@ namespace Nebula.Patches;
 [HarmonyPatch]
 class ExileControllerPatch
 {
-    /*
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.Begin))]
     class ExileControllerBeginPatch
     {
@@ -21,7 +20,6 @@ class ExileControllerPatch
             OnExiled(exiled);
         }
     }
-    */
 
 
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.ReEnableGameplay))]
@@ -195,12 +193,10 @@ class ExileControllerPatch
                     // Exile role text
                     if (id is StringNames.ExileTextPN or StringNames.ExileTextSN or StringNames.ExileTextPP or StringNames.ExileTextSP)
                     {
-                        __result = Language.Language.GetString("text.exile.role").Replace("%PLAYER%",player.Data.PlayerName);
-                        string roleText = Language.Language.GetString("role." + player.GetModData().role.GetActualRole(player.GetModData()).LocalizeName + ".name");
+                        __result = player.Data.PlayerName + Language.Language.GetString("text.exile.role") + Language.Language.GetString("role." + player.GetModData().role.GetActualRole(player.GetModData()).LocalizeName + ".name");
                         foreach(Roles.ExtraRole extra in player.GetModData().extraRole){
-                            roleText += Language.Language.GetString("text.exile.connection") + Language.Language.GetString("role." + extra.LocalizeName + ".name");
+                            __result += " " + Language.Language.GetString("role." + extra.LocalizeName + ".name");
                         }
-                        __result.Replace("%ROLE%",roleText);
                     }
                     // Hide number of remaining impostors on Jester win
                     if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS)

@@ -95,7 +95,6 @@ public enum CustomRPC
     InstantiateDeadBody,
     EnterRemoteVent,
     Guess,
-    Dig,
 }
 
 //RPCを受け取ったときのイベント
@@ -369,9 +368,6 @@ class RPCHandlerPatch
             case (byte)CustomRPC.Guess:
                 RPCEvents.Guess(reader.ReadByte(), reader.ReadByte());
                 break;
-            case (byte)CustomRPC.Dig:
-                RPCEvents.Dig(new Vector3(reader.ReadSingle(),reader.ReadSingle(),reader.ReadSingle()));
-                break;
         }
     }
 }
@@ -394,7 +390,6 @@ static class RPCEvents
         Objects.SoundPlayer.Initialize();
         Patches.LightPatch.Initialize();
         MapBehaviourExpansion.Initialize();
-        VentManager.CleanUp();
     }
 
     public static void SetMyColor(byte playerId, byte hue,byte dis, byte posHue, byte posDis, Color mainColor,Color shadowColor)
@@ -1591,11 +1586,6 @@ static class RPCEvents
         obj.GetComponent<SpriteRenderer>().sprite = Roles.Roles.Spectre.GetConsoleUsedSprite().GetSprite();
         obj.name = "NoS-Used";
     }
-
-    static public void Dig(Vector3 pos){
-        VentManager.newVent(pos);
-        //Debug.Log("Plumber created new vent");
-    }
 }
 
 public class RPCEventInvoker
@@ -2518,14 +2508,5 @@ public class RPCEventInvoker
         writer.Write(id);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
         RPCEvents.SpectrReform(id);
-    }
-
-    static public void Dig(Vector3 pos){
-        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.Dig,Hazel.SendOption.Reliable,-1);
-        writer.Write(pos.x);
-        writer.Write(pos.y);
-        writer.Write(pos.z);
-        AmongUsClient.Instance.FinishRpcImmediately(writer);
-        RPCEvents.Dig(pos);
     }
 }

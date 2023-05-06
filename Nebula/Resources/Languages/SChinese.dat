@@ -1385,10 +1385,6 @@
 "option.canBeSignaller" : "可以成为通讯兵"
 "option.canBeSecondaryJackal" : "可以成为附加豺狼"
 
-"role.guesser.canWinAlong" : "可以单独胜利"
-"role.guesser.guessCountToWin" : "单独胜利需要的正确猜测次数"
-"role.guesser.spawnableRoleFilter" : "只显示可能生成的职业"
-
 "role.agent.canKnowImpostorAndJackal" : "代理人可以得知伪装者/豺狼/巴浦洛夫/莫里亚蒂"
 "role.agent.theLeastCompletedTasks" : "代理人得知伪装者/豺狼/巴浦洛夫/莫里亚蒂需要的最少任务数"
 "role.agent.willBeFoundLeft" : "剩余多少任务时会公开身份"
@@ -1397,16 +1393,10 @@
 
 "role.madmate.taskPercent" : "得知伪装者所需任务百分比"
 
-"role.sheriff.madmateCanKillEveryone" : "叛徒警长可以任意击杀"
-
 "role.bountyHunter.canChangeTarget" : "可以手动更换目标"
 "role.bountyHunter.changeTargetCoolDown" : "手动更换目标冷却"
 
 "role.jackal.createSidekickCoolDown" : "豺狼招募冷却时间"
-
-"role.jester.isGuessable" : "是否可以被猜测"
-
-"role.paparazzo.isGuessable" : "是否可以被猜测"
 
 "role.lastImpostor.canSpawn" : "是否可以生成"
 "role.lastImpostor.guessCount" : "最多猜测次数"
@@ -1542,7 +1532,6 @@
 "role.decider.prefix.primary" : "正义"
 "role.decider.prefix.secondary" : "邪恶"
 "role.decider.numOfSecondarySide" : "邪恶的裁决者数量"
-"role.decider.madmateCanKillEveryone" : "叛徒正义裁决者可以任意裁决"
 
 "role.niceDecider.name" : "正义的裁决者"
 "role.niceDecider.short" : "正裁"
@@ -1623,14 +1612,13 @@
 "role.pavlov.description" : "狗子是个好东西"
 "role.pavlov.info" : "舔 狗 之 王"
 "role.pavlov.createDogsCooldown" : "喂食冷却时间"
+"role.pavlov.dogKillCooldown" : "巴浦洛夫的狗的击杀冷却"
 
 "role.dog.name" : "巴浦洛夫的狗"
 "role.dog.short" : "巴狗"
 "role.dog.hint" : "来个鸡腿"
 "role.dog.description" : "来个鸡腿"
 "role.dog.info" : "来个鸡腿~"
-"role.dog.dogKillCooldown" : "击杀冷却"
-"role.dog.canUseVent" : "可以使用管道"
 
 "role.evilBusker.name" : "灵界杀手"
 "role.evilBusker.short" : "邪灵"
@@ -1761,50 +1749,6 @@
 "role.marksman.info" : "你可以储存击杀冷却"
 "role.marksman.maxShoot" : "最大储存数量"
 
-"role.gambler.name" : "赌徒"
-"role.gambler.short" : "徒"
-"role.gambler.description" : "开始狂赌吧！"
-"role.gambler.hint" : "你的运气如何？"
-"role.gambler.info" : "每次出刀后，各有50%的概率增加或减少CD"
-"role.gambler.reduceKillCooldown" : "减少的冷却时间"
-"role.gambler.addKillCooldown" : "增加的冷却时间"
-
-"role.superstar.name" : "明星"
-"role.superstar.short" : "明"
-"role.superstar.description" : "自信放光芒"
-"role.superstar.hint" : "你是明星！"
-"role.superstar.info" : "所有人能看到你的职业"
-
-"role.timeStealer.name" : "窃时者"
-"role.timeStealer.short" : "窃"
-"role.timeStealer.description" : "不要开会模拟器"
-"role.timeStealer.hint" : "减少开会时间"
-"role.timeStealer.info" : "每次成功击杀后会减少开会时间"
-"role.timeStealer.reduceTimeEachOne" : "每次击杀减少时间"
-"role.timeStealer.maxReduceTime" : "会议时长下限"
-
-"role.chivalrousExpert.name" : "侠客"
-"role.chivalrousExpert.short" : "侠"
-"role.chivalrousExpert.description" : "一击必杀！"
-"role.chivalrousExpert.hint" : "击杀 <color=#ff1919ff>伪装者</color>"
-"role.chivalrousExpert.info" : "你可以随意击杀一人"
-
-"role.programmer.name" : "程序员"
-"role.programmer.short" : "程"
-"role.programmer.description" : "因为实在不知道取什么名字所以就这样吧"
-"role.programmer.hint" : "让别人成为你的诱饵"
-"role.programmer.info" : "当目标被击杀时，屏幕会闪光提示并将目标转变为凶手。\n你只有一次设定目标的机会。"
-
-"role.plumber.name" : "管道工"
-"role.plumber.short" : "管"
-"role.plumber.description" : "不要随地下蛋！"
-"role.plumber.hint" : "挖出新的管道"
-"role.plumber.info" : "你可以自行创建新管道"
-"role.plumber.createVentCooldown" : "挖掘管道冷却时间"
-"role.plumber.maxCreateVentCount" : "最大管道数量"
-
-"option.display.random" : "随机"
-
 "side.pavlov.name" : "巴普洛夫团队"
 "side.schrodingersCat.name" : "薛定谔的猫"
 "side.madman.name" : "疯子"
@@ -1812,8 +1756,7 @@
 "side.cascrubinter.name" : "行刑者"
 "side.amnesiac.name" : "失忆者"
 
-"text.exile.role" : "%PLAYER% 的职业是 %ROLE%"
-"text.exile.connection" : " "
+"text.exile.role" : " 是 "
 "text.exile.jesterAddition" : "没想到吧awa"
 "text.exile.cascrubinterAddition" : "好像有不好的事情发生..."
 "text.exile.bartenderAddition" : "调酒师正在调酒..."
@@ -1826,7 +1769,6 @@
 "game.endText.moriarty" : "莫里亚蒂与莫兰胜利"
 "game.endText.holmesIsKilled" : "福尔摩斯失踪了..."
 "game.endText.cascrubinter" : "行刑者胜利"
-"game.endText.guesser" : "赌怪们获胜"
 
 "status.hemorrhage" : "失血"
 
@@ -1847,4 +1789,3 @@
 "button.label.remember" : "回忆"
 "button.label.saveShoot" : "储存"
 "button.label.getShoot" : "取用"
-"button.label.dig" : "挖掘"

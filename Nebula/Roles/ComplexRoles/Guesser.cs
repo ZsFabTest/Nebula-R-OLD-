@@ -1,9 +1,8 @@
 ﻿using Nebula.Module;
-using Nebula.Patches;
 
 namespace Nebula.Roles.ComplexRoles;
 
-public class FGuesser : Template.HasBilateralness,Template.HasWinTrigger
+public class FGuesser : Template.HasBilateralness
 {
     public Module.CustomOption secondoryRoleOption;
     public Module.CustomOption guesserShots;
@@ -15,13 +14,8 @@ public class FGuesser : Template.HasBilateralness,Template.HasWinTrigger
     public Module.CustomOption crewmateRoleCountOption;
     public Module.CustomOption impostorRoleCountOption;
     public Module.CustomOption neutralRoleCountOption;
-    public Module.CustomOption canWinAloneOption;
-    public Module.CustomOption guessCountToWinOption;
 
     static public Color RoleColor = new Color(255f / 255f, 255f / 255f, 0f / 255f);
-
-    public bool WinTrigger { get; set; } = false;
-    public byte Winner { get; set; } = Byte.MaxValue;
 
     public override HelpSprite[] helpSprite => new HelpSprite[] {
             new HelpSprite(FGuesser.targetSprite,"role.guesser.help.guess",0.7f)
@@ -41,11 +35,6 @@ public class FGuesser : Template.HasBilateralness,Template.HasWinTrigger
     public static SpriteLoader targetSprite = new SpriteLoader("Nebula.Resources.TargetIcon.png", 150f);
 
     public override bool IsSecondaryGenerator { get { return secondoryRoleOption.getBool(); } }
-
-    public override void GlobalInitialize(PlayerControl __instance)
-    {
-        WinTrigger = false;
-    }
 
     public override void LoadOptionData()
     {
@@ -113,9 +102,6 @@ public class FGuesser : Template.HasBilateralness,Template.HasWinTrigger
             if (option.Value == null) continue;
             option.Value.AddInvPrerequisite(secondoryRoleOption);
         }
-        canWinAloneOption = CreateOption(Color.white, "canWinAlong", true);
-        guessCountToWinOption = CreateOption(Color.white, "guessCountToWin", 5f, 1f, 10f, 1f).AddPrerequisite(canWinAloneOption);
-
     }
 
     public override void SpawnableTest(ref Dictionary<Role, int> DefinitiveRoles, ref HashSet<Role> SpawnableRoles)
@@ -126,8 +112,8 @@ public class FGuesser : Template.HasBilateralness,Template.HasWinTrigger
 
     public FGuesser()
             : base("Guesser", "guesser", RoleColor)
+
     {
-        Patches.EndCondition.GuesserWin.TriggerRole = this;
     }
 
     public override List<Role> GetImplicateRoles() { return new List<Role>() { Roles.EvilGuesser, Roles.NiceGuesser }; }
@@ -137,12 +123,9 @@ static public class GuesserSystem
 {
     public static Assignable.RelatedExtraRoleData[] RelatedExtraRoleDataInfo { get => new Assignable.RelatedExtraRoleData[] { new Assignable.RelatedExtraRoleData("Guesser Shot", Roles.SecondaryGuesser, 0, 20) }; }
 
-    public static int guessId { get; set; }
-
     public static void GlobalInitialize(PlayerControl __instance)
     {
         __instance.GetModData().SetExtraRoleData(Roles.SecondaryGuesser.id, (ulong)Roles.F_Guesser.guesserShots.getFloat());
-        __instance.GetModData().SetRoleData(guessId,0);
     }
 
     private static GameObject guesserUI;
@@ -252,7 +235,6 @@ static public class GuesserSystem
 
                     // Shoot player and send chat info if activated
                     RPCEventInvoker.Guess(dyingTarget.PlayerId);
-                    if(dyingTarget.PlayerId != PlayerControl.LocalPlayer.PlayerId) RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId,guessId,1);
                 }
             }));
 
@@ -285,7 +267,6 @@ static public class GuesserSystem
             Teamlabel.transform.localPosition = new Vector3(0, 0, Teamlabel.transform.localPosition.z);
             Teamlabel.transform.localScale *= 1.6f;
             Teamlabel.autoSizeTextContainer = true;
-            int copiedIndex = index;
             Teambutton.GetComponent<PassiveButton>().OnClick.RemoveAllListeners();
             if (!PlayerControl.LocalPlayer.Data.IsDead) Teambutton.GetComponent<PassiveButton>().OnClick.AddListener((System.Action)(() => {
                 i = 0;
@@ -298,11 +279,9 @@ static public class GuesserSystem
                     if (!role.IsGuessableRole || role.category == RoleCategory.Complex) continue;
                     if (Roles.F_Guesser.spawnableRoleFilter.getBool() && !role.IsSpawnable()) continue;
                     if (role == Roles.Player) break;
-                    if (copiedIndex is 0 && role.side != Side.Crewmate) continue;
-                    else if (copiedIndex is 1 && role.side != Side.Impostor) continue;
-                    else if (copiedIndex is 2 && (role.side == Side.Impostor || role.side == Side.Crewmate)) continue;
-
-                    //Debug.LogWarningFormat(copiedIndex.ToString() + " + " + role.Name);
+                    if (Teamlabel.text == Language.Language.GetString("guess.team.crewmate") && role.side != Side.Crewmate) continue;
+                    else if (Teamlabel.text == Language.Language.GetString("guess.team.impostor") && role.side != Side.Impostor) continue;
+                    else if (Teamlabel.text == Language.Language.GetString("guess.team.neutral") && (role.side == Side.Impostor || role.side == Side.Crewmate)) continue;
 
                     Transform buttonParent = (new GameObject()).transform;
                     buttonParent.SetParent(container);
@@ -317,6 +296,7 @@ static public class GuesserSystem
                     label.alignment = TMPro.TextAlignmentOptions.Center;
                     label.transform.localPosition = new Vector3(0, 0, label.transform.localPosition.z);
                     label.transform.localScale *= 1.7f;
+                    int copiedIndex = i;
 
                     button.GetComponent<PassiveButton>().OnClick.RemoveAllListeners();
                     if (!PlayerControl.LocalPlayer.Data.IsDead) button.GetComponent<PassiveButton>().OnClick.AddListener((System.Action)(() =>
@@ -364,8 +344,6 @@ static public class GuesserSystem
 
                             // Shoot player and send chat info if activated
                             RPCEventInvoker.Guess(dyingTarget.PlayerId);
-                            if(dyingTarget.PlayerId != PlayerControl.LocalPlayer.PlayerId) RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId,guessId,1);
-                            //Debug.LogWarningFormat(PlayerControl.LocalPlayer.GetModData().GetRoleData(guessId).ToString());
                         }
                     }));
 
@@ -411,14 +389,6 @@ static public class GuesserSystem
         if (left <= 0) return;
         meetingInfo.text = Language.Language.GetString("role.guesser.guessesLeft") + ": " + left;
         meetingInfo.gameObject.SetActive(true);
-        if(PlayerControl.LocalPlayer.GetModData().GetRoleData(guessId) >= Roles.F_Guesser.guessCountToWinOption.getFloat()){
-            RPCEventInvoker.WinTrigger(Roles.F_Guesser);
-        }
-    }
-
-    public static bool CheckAdditionalWin(PlayerControl player, Patches.EndCondition condition)
-    {
-        return condition == Patches.EndCondition.GuesserWin;
     }
 }
 
@@ -437,6 +407,7 @@ public class Guesser : Template.BilateralnessRole
                  false, isImpostor ? VentPermission.CanUseUnlimittedVent : VentPermission.CanNotUse,
                  isImpostor, isImpostor, isImpostor, () => { return Roles.F_Guesser; }, isImpostor)
     {
+        IsGuessableRole = false;
         IsHideRole = true;
     }
 
@@ -469,8 +440,6 @@ public class Guesser : Template.BilateralnessRole
         if (Roles.F_Guesser.secondoryRoleOption.getBool()) return false;
         return base.IsSpawnable();
     }
-
-    public override bool CheckAdditionalWin(PlayerControl player, EndCondition condition) => GuesserSystem.CheckAdditionalWin(player,condition);
 }
 
 public class SecondaryGuesser : ExtraRole
@@ -606,6 +575,4 @@ public class SecondaryGuesser : ExtraRole
         });
         return option;
     }
-
-    public override bool CheckAdditionalWin(PlayerControl player, EndCondition condition) => GuesserSystem.CheckAdditionalWin(player,condition);
 }

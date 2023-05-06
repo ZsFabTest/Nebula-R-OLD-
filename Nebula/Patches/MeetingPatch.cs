@@ -105,19 +105,6 @@ class MeetingHudPatch
                 }
 
             }
-
-            if(Roles.ComplexRoles.SwapSystem.isSwapped){
-                PlayerVoteArea swapped1 = null;
-                PlayerVoteArea swapped2 = null;
-                foreach (PlayerVoteArea playerVoteArea in __instance.playerStates)
-                {
-                    if (playerVoteArea.TargetPlayerId == Roles.ComplexRoles.SwapSystem.swapTargetf) swapped1 = playerVoteArea;
-                    if (playerVoteArea.TargetPlayerId == Roles.ComplexRoles.SwapSystem.swapTargets) swapped2 = playerVoteArea;
-                }
-                if (!dictionary.ContainsKey(swapped1.TargetPlayerId)) dictionary[swapped1.TargetPlayerId] = 0;
-                if (!dictionary.ContainsKey(swapped2.TargetPlayerId)) dictionary[swapped2.TargetPlayerId] = 0;
-                (dictionary[swapped2.TargetPlayerId], dictionary[swapped1.TargetPlayerId]) = (dictionary[swapped1.TargetPlayerId], dictionary[swapped2.TargetPlayerId]);
-            }
         }
 
 
@@ -474,7 +461,6 @@ class MeetingHudPatch
                 }
             }
 
-            if(Roles.ComplexRoles.SwapSystem.isSwapped) Roles.ComplexRoles.SwapSystem.OnMeetingStart();
             return false;
         }
     }

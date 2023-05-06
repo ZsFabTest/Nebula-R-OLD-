@@ -178,11 +178,6 @@ static public class Roles
     public static ImpostorRoles.Moda Moda = new ImpostorRoles.Moda();
     public static GhostRoles.GhostEngineer GhostEngineer = new GhostRoles.GhostEngineer();
     public static ImpostorRoles.Marksman Marksman = new ImpostorRoles.Marksman();
-    public static ImpostorRoles.Gambler Gambler = new ImpostorRoles.Gambler();
-    public static CrewmateRoles.Superstar Superstar = new CrewmateRoles.Superstar();
-    public static CrewmateRoles.ChivalrousExpert ChivalrousExpert = new CrewmateRoles.ChivalrousExpert();
-    public static CrewmateRoles.Programmer Programmer = new CrewmateRoles.Programmer();
-    public static ImpostorRoles.Plumber Plumber = new ImpostorRoles.Plumber();
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
@@ -196,8 +191,8 @@ static public class Roles
             Madmate,
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,
-            Holmes,Kotwal,Necrophilic,Observer,OnlineCelebrity,Sanctifier,Transporter,Dictator,Bartender,LuckyMan,Superstar,ChivalrousExpert,Programmer,
-            Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,
+            Holmes,Kotwal,Necrophilic,Observer,OnlineCelebrity,Sanctifier,Transporter,Dictator,Bartender,LuckyMan,
+            Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,
             Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,
             JackalMayor,
             SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,

@@ -101,8 +101,7 @@ public class Jackal : Role
             __instance.KillButton.graphic.sprite,
             Expansion.GridArrangeExpansion.GridArrangeParameter.AlternativeKillButtonContent,
             __instance,
-            Module.NebulaInputManager.modKillInput.keyCode,
-            "button.label.kill"
+            Module.NebulaInputManager.modKillInput.keyCode
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
         killButton.MaxTimer = KillCoolDownOption.getFloat();
         killButton.SetButtonCoolDownOption(true);

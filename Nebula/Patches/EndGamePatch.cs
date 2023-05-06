@@ -40,7 +40,7 @@ public class EndCondition
     public static EndCondition MoriartyWin = new EndCondition(129, Roles.NeutralRoles.Moriarty.RoleColor, "moriarty", 1, Module.CustomGameMode.Standard);
     public static EndCondition MoriartyWinByKillHolmes = new EndCondition(130, Roles.NeutralRoles.Moriarty.RoleColor, "holmesIsKilled", 1, Module.CustomGameMode.Standard);
     public static EndCondition CascrubinterWin = new EndCondition(131,Roles.NeutralRoles.Cascrubinter.RoleColor,"cascrubinter",1,Module.CustomGameMode.Standard);
-    public static EndCondition GuesserWin = new EndCondition(132,Roles.ComplexRoles.FGuesser.RoleColor,"guesser",0,Module.CustomGameMode.Standard);
+
 
 
 
@@ -52,7 +52,7 @@ public class EndCondition
             JesterWin,JackalWin,ArsonistWin,EmpiricWin,PaparazzoWin,VultureWin,SpectreWin,/*SantaWin,*/
             LoversWin,TrilemmaWin,AvengerWin,
             NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
-            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin
+            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin
         };
 
     public static EndCondition GetEndCondition(GameOverReason gameOverReason)
