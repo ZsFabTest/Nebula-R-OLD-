@@ -1803,6 +1803,14 @@
 "role.plumber.createVentCooldown" : "挖掘管道冷却时间"
 "role.plumber.maxCreateVentCount" : "最大管道数量"
 
+"role.minekeeper.name" : "埋雷兵"
+"role.minekeeper.short" : "埋"
+"role.minekeeper.description" : "炸死你丫的"
+"role.minekeeper.hint" : "在管道盖上藏下<color=#ff1919ff>炸弹</color>"
+"role.minekeeper.info" : "埋雷兵可以对可以使用的管道使用技能。\n当有人从使用过技能的管道跳入/跳出时，会被击杀（护盾可以抵消）。"
+"role.minekeeper.setMineCooldown" : "埋雷技能冷却"
+"role.minekeeper.maxMineCount" : "最大埋雷次数"
+
 "option.display.random" : "随机"
 
 "side.pavlov.name" : "巴普洛夫团队"
@@ -1829,6 +1837,7 @@
 "game.endText.guesser" : "赌怪们获胜"
 
 "status.hemorrhage" : "失血"
+"status.killed" : "爆炸"
 
 "button.label.preach" : "传教"
 "button.label.survey" : "调查"
@@ -1848,3 +1857,4 @@
 "button.label.saveShoot" : "储存"
 "button.label.getShoot" : "取用"
 "button.label.dig" : "挖掘"
+"button.label.set" : "设置"

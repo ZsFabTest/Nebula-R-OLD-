@@ -183,6 +183,7 @@ static public class Roles
     public static CrewmateRoles.ChivalrousExpert ChivalrousExpert = new CrewmateRoles.ChivalrousExpert();
     public static CrewmateRoles.Programmer Programmer = new CrewmateRoles.Programmer();
     public static ImpostorRoles.Plumber Plumber = new ImpostorRoles.Plumber();
+    public static CrewmateRoles.Minekeeper Minekeeper = new CrewmateRoles.Minekeeper();
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
@@ -196,7 +197,7 @@ static public class Roles
             Madmate,
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,
-            Holmes,Kotwal,Necrophilic,Observer,OnlineCelebrity,Sanctifier,Transporter,Dictator,Bartender,LuckyMan,Superstar,ChivalrousExpert,Programmer,
+            Holmes,Kotwal,Necrophilic,Observer,OnlineCelebrity,Sanctifier,Transporter,Dictator,Bartender,LuckyMan,Superstar,ChivalrousExpert,Programmer,Minekeeper,
             Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,
             Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,
             JackalMayor,

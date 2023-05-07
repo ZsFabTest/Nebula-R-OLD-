@@ -8,15 +8,16 @@
 ## 下载
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
+| 1.0.2.3 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.3/Nebula-R.1.0.2.3.zip)
 | 1.0.2.2 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.2/Nebula-R.1.0.2.2.zip)
-| 1.0.2.1 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.2/Nebula1021.dll)
-| 1.0.2.0 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.0/Nebula-R.1.0.2.0.zip)
 
 <details>
 <summary> 更多 </summary>
 
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
+| 1.0.2.1 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.2/Nebula1021.dll)
+| 1.0.2.0 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.0/Nebula-R.1.0.2.0.zip)
 | 1.0.1.9 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.9/Nebula-R.1.0.1.9.zip)
 | 1.0.1.8 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.8/Nebula-R.1.0.1.8.zip)
 | 1.0.1.7 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.7/Nebula-R.1.0.1.7.zip)
@@ -60,6 +61,7 @@
 | Superstar - 明星 | | | |
 | Chivalrous Expert - 侠客 | | | |
 | Programmer - 程序员 | | | |
+| Minekeeper - 埋雷兵 | | | |
 
 | Others - 其他 | Ghost - 灵魂职业 |
 | ------------- | --------------- |
@@ -260,6 +262,20 @@
 | Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
 | ----------- | --------------------- | -------------- |
 | 船员阵营 | 跟随船员获胜 | 钓出凶手 |
+
+</details>
+
+#### 埋雷兵
+<details>
+
+| Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
+| ----------- | --------------------- | -------------- |
+| 船员阵营 | 跟随船员获胜 | 在管道上留雷 |
+
+| 设置 |
+| ---- |
+| 冷却时间 |
+| 最大次数 |
 
 </details>
 

@@ -34,17 +34,23 @@ public class Navvy : Role
     private Sprite ventSealedSprite = null;
     public Sprite getVentSealedSprite()
     {
-        if (ventSealedSprite) return ventSealedSprite;
+        if (ventSealedSprite) return chooseSprite(ventSealedSprite);
         ventSealedSprite = Helpers.loadSpriteFromResources("Nebula.Resources.VentSealed.png", 100f);
-        return ventSealedSprite;
+        return chooseSprite(ventSealedSprite);
     }
 
     private Sprite caveSealedSprite = null;
     public Sprite getCaveSealedSprite()
     {
-        if (caveSealedSprite) return caveSealedSprite;
+        if (caveSealedSprite) return chooseSprite(caveSealedSprite);
         caveSealedSprite = Helpers.loadSpriteFromResources("Nebula.Resources.CaveSealed.png", 100f);
-        return caveSealedSprite;
+        return chooseSprite(caveSealedSprite);
+    }
+
+    private Sprite chooseSprite(Sprite s){
+        int r = Nebula.NebulaPlugin.rnd.Next(1,11);
+        if(r <= 5) return s;
+        return Helpers.loadSpriteFromResources("Nebula.Resources.BothSealed.png",85f);;
     }
 
     public override void MyPlayerControlUpdate()

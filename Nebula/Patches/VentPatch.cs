@@ -5,9 +5,11 @@ public static class VentEnterPatch
 {
     public static void Postfix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc)
     {
+        Module.VentManager.checkBomb(__instance,pc);
         if (pc != PlayerControl.LocalPlayer) return;
         Game.GameData.data.myData.VentDurationTimer = pc.GetModData().role.VentDurationMaxTimer;
         Helpers.RoleAction(pc, (role) => role.OnEnterVent(__instance));
+        //Debug.Log(__instance.name + Module.VentManager.bombVents.Contains(__instance).ToString());
     }
 }
 
@@ -16,6 +18,7 @@ public static class VentExitPatch
 {
     public static void Postfix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc)
     {
+        Module.VentManager.checkBomb(__instance,pc);
         if (pc != PlayerControl.LocalPlayer) return;
         Game.GameData.data.myData.VentCoolDownTimer = pc.GetModData().role.VentCoolDownMaxTimer;
         Helpers.RoleAction(pc, (role) => role.OnExitVent(__instance));
@@ -226,3 +229,5 @@ class ResetMoveStatePatch
         __instance.myPlayer.Collider.enabled = true;
     }
 }
+
+//Bomb vent patch

@@ -5,23 +5,23 @@ namespace Nebula.Patches;
 [HarmonyPatch]
 class ExileControllerPatch
 {
-    /*
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.Begin))]
     class ExileControllerBeginPatch
     {
 
         public static void Postfix(ExileController __instance, [HarmonyArgument(0)] ref GameData.PlayerInfo exiled, [HarmonyArgument(1)] bool tie)
         {
+            /*
             if (CustomOptionHolder.meetingOptions.getBool() && CustomOptionHolder.showRoleOfExiled.getBool() && GameManager.Instance.LogicOptions.GetConfirmImpostor())
             {
                 var role = exiled.GetModData()?.role;
                 if (role != null) __instance.completeString = Language.Language.GetString("game.exile.roleText").Replace("%PLAYER%", exiled.PlayerName).Replace("%ROLE%", Language.Language.GetString("role." + role.LocalizeName + ".name"));
             }
+            */
 
             OnExiled(exiled);
         }
     }
-    */
 
 
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.ReEnableGameplay))]
@@ -187,20 +187,21 @@ class ExileControllerPatch
                         foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                         {
                             if (p.GetModData().role == Roles.Roles.Bartender && p.GetModData().IsAlive) flag = true;
-                            Debug.LogWarning(string.Format("ExileControllPatch - {0} : {1}", p.name, p.GetModData().role.LocalizeName));
+                            //Debug.LogWarning(string.Format("ExileControllPatch - {0} : {1}", p.name, p.GetModData().role.LocalizeName));
                         }
                         if (flag) __result += "\n" + Language.Language.GetString("text.exile.bartenderAddition");
                     }
                     if (player == null) return;
                     // Exile role text
-                    if (id is StringNames.ExileTextPN or StringNames.ExileTextSN or StringNames.ExileTextPP or StringNames.ExileTextSP)
+                    if ((id is StringNames.ExileTextPN or StringNames.ExileTextSN or StringNames.ExileTextPP or StringNames.ExileTextSP) && 
+                    CustomOptionHolder.meetingOptions.getBool() && CustomOptionHolder.showRoleOfExiled.getBool())
                     {
                         __result = Language.Language.GetString("text.exile.role").Replace("%PLAYER%",player.Data.PlayerName);
                         string roleText = Language.Language.GetString("role." + player.GetModData().role.GetActualRole(player.GetModData()).LocalizeName + ".name");
                         foreach(Roles.ExtraRole extra in player.GetModData().extraRole){
                             roleText += Language.Language.GetString("text.exile.connection") + Language.Language.GetString("role." + extra.LocalizeName + ".name");
                         }
-                        __result.Replace("%ROLE%",roleText);
+                        __result = __result.Replace("%ROLE%",roleText);
                     }
                     // Hide number of remaining impostors on Jester win
                     if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS)

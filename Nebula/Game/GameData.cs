@@ -714,7 +714,8 @@ public class PlayerData
         public static PlayerStatus Misfire = new PlayerStatus("misfire");
         public static PlayerStatus Slapped = new PlayerStatus("slapped");
         public static PlayerStatus Withered = new PlayerStatus("withered");
-        public static PlayerStatus Hemorrhage = new PlayerStatus("Hemorrhage");
+        public static PlayerStatus Hemorrhage = new PlayerStatus("hemorrhage");
+        public static PlayerStatus Killed = new PlayerStatus("killed");
 
         public string Status { get; private set; }
         public byte Id;
