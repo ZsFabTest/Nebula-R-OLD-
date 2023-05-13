@@ -31,6 +31,9 @@ static public class DecideSystem
             ) || !(
             PlayerControl.LocalPlayer.GetModData().HasExtraRole(Roles.SecondaryMadmate) &&
             FDecider.madmateCanKillEveryoneOption.getBool()
+            ) || !(
+            PlayerControl.LocalPlayer.GetModData().HasExtraRole(Roles.SecondaryJackal) &&
+            FDecider.jackalCanKillEveryoneOption.getBool()
             )
         )
         ){
@@ -85,6 +88,7 @@ public class FDecider : Template.HasBilateralness
     public Module.CustomOption decideCountOption;
     public static Module.CustomOption niceDeciderCannotKillCrewmateOption;
     public static Module.CustomOption madmateCanKillEveryoneOption;
+    public static Module.CustomOption jackalCanKillEveryoneOption;
 
     public override void LoadOptionData()
     {
@@ -94,6 +98,7 @@ public class FDecider : Template.HasBilateralness
         decideCountOption = CreateOption(Color.white, "decideCount", 1f, 1f, 3f, 1f);
         niceDeciderCannotKillCrewmateOption = CreateOption(Color.white, "niceDeciderCannotKillCrewmate",true);
         madmateCanKillEveryoneOption = CreateOption(Color.white,"madmateCanKillEveryone",false);
+        jackalCanKillEveryoneOption = CreateOption(Color.white,"jackalCanKillEveryone",true);
 
         FirstRole = Roles.NiceDecider;
         SecondaryRole = Roles.EvilDecider;
@@ -148,12 +153,5 @@ public class Decider : Template.BilateralnessRole
     {
         base.OnMeetingStart();
         DecideSystem.OnMeetingStart();
-    }
-
-    public override void MyPlayerControlUpdate(){
-        if(PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.LastImpostor) || PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryGuesser)){
-            RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,Roles.LastImpostor,false);
-            RPCEventInvoker.UnsetExtraRole(PlayerControl.LocalPlayer,Roles.SecondaryGuesser,false);
-        }
     }
 }

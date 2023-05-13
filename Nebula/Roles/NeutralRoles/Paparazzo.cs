@@ -758,7 +758,10 @@ public class Paparazzo : Role, Template.HasWinTrigger
         IncompleteImageMessage.Initialize();
     }
 
-
+    public override void AfterTeleport(float time)
+    {
+        if(cameraButton.Timer < time) cameraButton.Timer = time;
+    }
 
     public Paparazzo()
         : base("Paparazzo", "paparazzo", RoleColor, RoleCategory.Neutral, Side.Paparazzo, Side.Paparazzo,

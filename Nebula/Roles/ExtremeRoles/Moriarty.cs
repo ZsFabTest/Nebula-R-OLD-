@@ -520,7 +520,5 @@ public class Moran : Role{
 
         sniperButton = null;
         killButton = null;
-        CreateOptionFollowingRelatedRole = true;
-        Allocation = AllocationType.None;
     }
 }

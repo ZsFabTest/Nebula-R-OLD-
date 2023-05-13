@@ -7,7 +7,18 @@ public class LastImpostor : ExtraRole
     public Module.CustomOption canSpawnOption;
     public Module.CustomOption GuessCountOption;
 
-    bool hasGuesserUI = false;
+    private bool canUse(){
+        if(PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryGuesser)) return false;
+        else if(PlayerControl.LocalPlayer.GetModData().role == Roles.NiceDecider ||
+            PlayerControl.LocalPlayer.GetModData().role == Roles.EvilDecider || 
+            PlayerControl.LocalPlayer.GetModData().role == Roles.NiceGuesser ||
+            PlayerControl.LocalPlayer.GetModData().role == Roles.EvilGuesser ||
+            PlayerControl.LocalPlayer.GetModData().role == Roles.NiceTracker ||
+            PlayerControl.LocalPlayer.GetModData().role == Roles.EvilTracker ||
+            PlayerControl.LocalPlayer.GetModData().role == Roles.NiceSwapper ||
+            PlayerControl.LocalPlayer.GetModData().role == Roles.EvilSwapper) return false;
+        return true;
+    }
 
     public override void LoadOptionData()
     {
@@ -17,15 +28,11 @@ public class LastImpostor : ExtraRole
     }
 
     public override void SetupMeetingButton(MeetingHud __instance){
-        ComplexRoles.GuesserSystem.SetupMeetingButton(__instance);
+        if(canUse()) ComplexRoles.GuesserSystem.SetupMeetingButton(__instance);
     }
 
     public override void GlobalInitialize(PlayerControl __instance){
-        hasGuesserUI = false;
         __instance.GetModData().SetExtraRoleData(Roles.SecondaryGuesser.id, (ulong)GuessCountOption.getFloat());
-        if(PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryGuesser)){
-            hasGuesserUI = true;
-        }
     }
 
     public override void EditDisplayName(byte playerId, ref string displayName, bool hideFlag)
@@ -41,7 +48,7 @@ public class LastImpostor : ExtraRole
 
     public override void MeetingUpdate(MeetingHud __instance, TextMeshPro meetingInfo)
     {
-        if(!hasGuesserUI) ComplexRoles.GuesserSystem.MeetingUpdate(__instance, meetingInfo);
+        if(canUse()) ComplexRoles.GuesserSystem.MeetingUpdate(__instance, meetingInfo);
     }
 
     public override bool IsSpawnable()

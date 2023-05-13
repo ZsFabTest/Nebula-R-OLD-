@@ -11,13 +11,13 @@ class ExileControllerPatch
 
         public static void Postfix(ExileController __instance, [HarmonyArgument(0)] ref GameData.PlayerInfo exiled, [HarmonyArgument(1)] bool tie)
         {
-            /*
-            if (CustomOptionHolder.meetingOptions.getBool() && CustomOptionHolder.showRoleOfExiled.getBool() && GameManager.Instance.LogicOptions.GetConfirmImpostor())
-            {
-                var role = exiled.GetModData()?.role;
-                if (role != null) __instance.completeString = Language.Language.GetString("game.exile.roleText").Replace("%PLAYER%", exiled.PlayerName).Replace("%ROLE%", Language.Language.GetString("role." + role.LocalizeName + ".name"));
-            }
-            */
+            try{
+                if (CustomOptionHolder.meetingOptions.getBool() && CustomOptionHolder.showRoleOfExiled.getBool() && GameManager.Instance.LogicOptions.GetConfirmImpostor())
+                {
+                    var role = exiled.GetModData()?.role;
+                    if (role != null) __instance.completeString = Language.Language.GetString("game.exile.roleText").Replace("%PLAYER%", exiled.PlayerName).Replace("%ROLE%", Language.Language.GetString("role." + role.LocalizeName + ".name"));
+                }
+            }catch{ }
 
             OnExiled(exiled);
         }
@@ -176,11 +176,47 @@ class ExileControllerPatch
     {
         static void Postfix(ref string __result, [HarmonyArgument(0)] StringNames id)
         {
+            if(!CustomOptionHolder.useSpecialRoleExiledText.getBool()) return;
             try
             {
                 if (ExileController.Instance != null && ExileController.Instance.exiled != null)
                 {
                     PlayerControl player = Helpers.playerById(ExileController.Instance.exiled.Object.PlayerId);
+                    if (player == null){
+                        if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS){
+                            if(CustomOptionHolder.dontShowImpostorCountIfDidntExile.getBool()) __result = "";
+                        }
+                        return;
+                    }
+                    if((id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS) && 
+                    CustomOptionHolder.meetingOptions.getBool() && CustomOptionHolder.showNumberOfEvilNeutralRoles.getBool()){
+                        int sums = 0;
+                        foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                        {
+                            if (p.GetModData() != null && !p.Data.IsDead && (p.GetModData().role.side == Roles.Side.Jackal || 
+                            p.GetModData().role.side == Roles.Side.Spectre || 
+                            p.GetModData().role.side == Roles.Side.Pavlov || 
+                            p.GetModData().role.side == Roles.Side.Moriarty || 
+                            p.GetModData().role.side == Roles.Side.Arsonist || 
+                            p.GetModData().role.side == Roles.Side.Vulture || 
+                            p.GetModData().role.side == Roles.Side.Madman || 
+                            p.GetModData().role.side == Roles.Side.Cascrubinter
+                            )) sums++;
+                            //Debug.LogWarning(string.Format("ExileControllPatch - {0} : {1}", p.name, p.GetModData().role.LocalizeName));
+                        }
+                        if (player.GetModData() != null && !player.Data.IsDead && (player.GetModData().role.side == Roles.Side.Jackal || 
+                            player.GetModData().role.side == Roles.Side.Spectre || 
+                            player.GetModData().role.side == Roles.Side.Pavlov || 
+                            player.GetModData().role.side == Roles.Side.Moriarty || 
+                            player.GetModData().role.side == Roles.Side.Arsonist || 
+                            player.GetModData().role.side == Roles.Side.Vulture || 
+                            player.GetModData().role.side == Roles.Side.Madman || 
+                            player.GetModData().role.side == Roles.Side.Cascrubinter
+                        )) sums--;
+                        //__result.Remove('.');
+                        //__result.Remove('。');
+                        __result += Language.Language.GetString("text.exile.evilNeutral").Replace("%COUNT%",sums.ToString());
+                    }
                     if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS)
                     {
                         bool flag = false;
@@ -191,15 +227,16 @@ class ExileControllerPatch
                         }
                         if (flag) __result += "\n" + Language.Language.GetString("text.exile.bartenderAddition");
                     }
-                    if (player == null) return;
                     // Exile role text
                     if ((id is StringNames.ExileTextPN or StringNames.ExileTextSN or StringNames.ExileTextPP or StringNames.ExileTextSP) && 
                     CustomOptionHolder.meetingOptions.getBool() && CustomOptionHolder.showRoleOfExiled.getBool())
                     {
                         __result = Language.Language.GetString("text.exile.role").Replace("%PLAYER%",player.Data.PlayerName);
                         string roleText = Language.Language.GetString("role." + player.GetModData().role.GetActualRole(player.GetModData()).LocalizeName + ".name");
-                        foreach(Roles.ExtraRole extra in player.GetModData().extraRole){
-                            roleText += Language.Language.GetString("text.exile.connection") + Language.Language.GetString("role." + extra.LocalizeName + ".name");
+                        if(CustomOptionHolder.showExtraRoles.getBool()){
+                            foreach(Roles.ExtraRole extra in player.GetModData().extraRole){
+                                roleText += Language.Language.GetString("text.exile.connection") + Language.Language.GetString("role." + extra.LocalizeName + ".name");
+                            }
                         }
                         __result = __result.Replace("%ROLE%",roleText);
                     }
@@ -212,6 +249,10 @@ class ExileControllerPatch
                         }
                         else if (player == Roles.NeutralRoles.Cascrubinter.target) __result = Language.Language.GetString("text.exile.cascrubinterAddition");
                     } 
+                }else{
+                    if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS){
+                        if(CustomOptionHolder.dontShowImpostorCountIfDidntExile.getBool()) __result = "";
+                    }
                 }
             }
             catch

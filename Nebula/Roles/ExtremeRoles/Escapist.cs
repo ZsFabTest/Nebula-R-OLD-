@@ -40,6 +40,7 @@ public class Escapist : Role
                     return;
                 }
                 mark = !mark;
+                RPCEventInvoker.ObjectInstantiate(CustomObject.Type.TeleportEvidence,PlayerControl.LocalPlayer.GetTruePosition());
                 PlayerControl.LocalPlayer.transform.position = pos;
                 escape.Timer = escape.MaxTimer;
                 escape.Sprite = MarkSprite.GetSprite();

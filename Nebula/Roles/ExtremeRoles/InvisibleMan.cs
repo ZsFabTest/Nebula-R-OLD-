@@ -3,13 +3,17 @@ namespace Nebula.Roles.ImpostorRoles;
 public class InvisibleMan : Role{
     private Module.CustomOption InvisibleCooldown;
     private Module.CustomOption InvisibleDuringTime;
-    //只是为了重构awa
+    private Module.CustomOption canUseVentOption;
+    //只锟斤拷为锟斤拷锟截癸拷awa
     private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.SpectreButton.png", 115f, "ui.button.invisibleMan.invisible");
 
     public override void LoadOptionData()
     {
         InvisibleCooldown = CreateOption(Color.white,"invisibleCooldown",30f,15f,45f,2.5f);
+        InvisibleCooldown.suffix = "second";
         InvisibleDuringTime = CreateOption(Color.white,"invisibleDuringTime",7.5f,2.5f,15f,2.5f);
+        InvisibleDuringTime.suffix = "second";
+        canUseVentOption = CreateOption(Color.white,"canUseVent",false);
     }
 
     private CustomButton invisible;
@@ -53,10 +57,14 @@ public class InvisibleMan : Role{
         }
     }
 
+    public override void GlobalInitialize(PlayerControl __instance)
+    {
+        VentPermission = canUseVentOption.getBool() ? VentPermission.CanUseUnlimittedVent : VentPermission.CanNotUse;
+    }
+
     public InvisibleMan()
         : base("InvisibleMan","invisibleMan",Palette.ImpostorRed,RoleCategory.Impostor,Side.Impostor,Side.Impostor,
-        Impostor.impostorSideSet,Impostor.impostorSideSet,
-        Impostor.impostorEndSet,true,VentPermission.CanUseUnlimittedVent,true,true,true){
-            CanCallEmergencyMeeting = false;
+        Impostor.impostorSideSet,Impostor.impostorSideSet,Impostor.impostorEndSet,
+        true,VentPermission.CanUseUnlimittedVent,true,true,true){
     }
 }

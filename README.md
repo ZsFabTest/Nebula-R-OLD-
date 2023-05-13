@@ -8,14 +8,15 @@
 ## 下载
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
+| 1.0.2.4 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.4/Nebula-R.1.0.2.4.zip)
 | 1.0.2.3 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.3/Nebula-R.1.0.2.3.zip)
-| 1.0.2.2 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.2/Nebula-R.1.0.2.2.zip)
 
 <details>
 <summary> 更多 </summary>
 
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
+| 1.0.2.2 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.2/Nebula-R.1.0.2.2.zip)
 | 1.0.2.1 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.2/Nebula1021.dll)
 | 1.0.2.0 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.0/Nebula-R.1.0.2.0.zip)
 | 1.0.1.9 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.1.9/Nebula-R.1.0.1.9.zip)
@@ -58,8 +59,8 @@
 | Dictator - 独裁者 | Moda - 摩达石神 | Amnesiac - 失忆者 | |
 | Bartender - 调酒师 | Marksman - 快枪手 | | |
 | Lucky Man - 幸运儿 | Gambler - 赌徒 | | |
-| Superstar - 明星 | | | |
-| Chivalrous Expert - 侠客 | | | |
+| Superstar - 明星 | Chain Killer - 连环杀手 | | |
+| Chivalrous Expert - 侠客 | Terrorist - 恐怖分子 | | |
 | Programmer - 程序员 | | | |
 | Minekeeper - 埋雷兵 | | | |
 
@@ -74,6 +75,8 @@
 3.更改了LastImpostor的效果(变成赌怪)
 
 4.可以选择叛徒警长/叛徒正义裁决的击杀模式
+
+5.更好的狐妖
 
 ## 职业介绍
 <details>
@@ -191,6 +194,8 @@
 | 设置 |
 | ---- |
 | 冷却时间 |
+| 群体技能抑制 |
+| 抑制冷却时间 |
 
 </details>
 
@@ -374,6 +379,7 @@
 | ---- |
 | 冷却时间 |
 | 持续时间 |
+| 可以使用管道 |
 
 </details>
 
@@ -442,6 +448,35 @@
 
 </details>
 
+#### 连环杀手
+<details>
+
+| Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
+| ----------- | --------------------- | -------------- |
+| 伪装者阵营 | 跟随伪装者获胜 | 击杀击杀目标附近的所有人 |
+
+| 设置 |
+| ---- |
+| 冷却时间 |
+| 最大击杀个数(单次) |
+| 连续击杀半径 |
+
+</details>
+
+#### 恐怖分子
+<details>
+
+| Team - 阵营 | Win Trigger - 获胜条件 | Ability - 技能 |
+| ----------- | --------------------- | -------------- |
+| 伪装者阵营 | 跟随伪装者获胜 | 自爆 |
+
+| 设置 |
+| ---- |
+| 冷却时间 |
+| 自爆半径 |
+
+</details>
+
 ### 中立职业
 
 #### 薛定谔的猫
@@ -501,6 +536,9 @@
 | 设置 |
 | ---- |
 | 击杀冷却时间 |
+| 可以使用管道 |
+
+注: 狗的设置在狗主的设置里
 
 </details>
 
@@ -646,10 +684,50 @@
 或邮箱 a1234567890001919@outlook.com
 
 ## 部分更新日志
+
+### 2023.5.13 v1.0.2.4 update
+1.对狐妖进行增强(歌姬狐妖)
+
+2.隐身人代码整理
+
+3.传送师对群体技能的抑制
+
+4.新职业
+
+    1.连环杀手
+
+    2.恐怖分子
+
+5.修无人驱逐时物体贴图没有实化的bug
+
+6.对驱逐显示进行了更细致的区分和更改
+
+7.修复巴浦洛夫之主无法招募的问题(滚回原来的版本awa)
+
+8.新的全体事件: 传送(对应override : AfterTeleport)
+
+9.叛徒/狼化的警察局长/正义的裁决者的特判(可设置)
+
+10.修了传送师按钮汉化的问题
+
+11.修了上一个版本的README.md版本错误的问题(V1.0.2.2写成v2.0.2.2)
+
+12.给刺客添加了目标的箭头
+
+13.修改了LastImpostor的机制(不管什么红狼职业现在都可以拿到LastImpostor附加,但有特殊UI的职业用不了)
+
+14.逃逸者现在使用技能会在原地留下痕迹
+
+15.修了调酒师的小问题
+
+16.叛徒警长可以乱杀(可设置)
+
+17.任何假人(Debug模式)终将绳之以法
+
 <details>
 <summary> 展开 </summary>
 
-### 2023.5.6 v2.0.2.2 update
+### 2023.5.6 v1.0.2.2 update
 1.克服了一些代码上的问题
 
 2.修了一点小问题(屎山代码堆上去)

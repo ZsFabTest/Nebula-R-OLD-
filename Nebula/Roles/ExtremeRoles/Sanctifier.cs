@@ -47,6 +47,9 @@ public class Sanctifier : Role
                 RPCEventInvoker.UnsetExtraRole(target, Roles.Drunk, true);
                 RPCEventInvoker.UnsetExtraRole(target, Roles.Bloody, true);
                 RPCEventInvoker.UnsetExtraRole(target, Roles.Confused, true);
+                RPCEventInvoker.UnsetExtraRole(target, Roles.Flash, true);
+                RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryJackal, true);
+                RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryBait, true);
                 if(canUnsetMadmateOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryMadmate, true);
                 if(canUnsetGuesserOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryGuesser, true);
                 if(canUnsetSidesickOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondarySidekick, true);

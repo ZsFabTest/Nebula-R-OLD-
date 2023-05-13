@@ -1384,6 +1384,10 @@
 "option.canBeFlash" : "可以成为闪电侠"
 "option.canBeSignaller" : "可以成为通讯兵"
 "option.canBeSecondaryJackal" : "可以成为附加豺狼"
+"option.showNumberOfEvilNeutralRoles" : "显示剩余邪恶中立"
+"option.dontShowImpostorCountIfDidntExile" : "没有人被驱逐时不显示剩余伪装者(邪恶中立)数量"
+"option.useSpecialRoleExiledText" : "使用NoS-R的驱逐显示"
+"option.showExtraRoles" : "驱逐显示附加职业"
 
 "role.guesser.canWinAlong" : "可以单独胜利"
 "role.guesser.guessCountToWin" : "单独胜利需要的正确猜测次数"
@@ -1398,6 +1402,7 @@
 "role.madmate.taskPercent" : "得知伪装者所需任务百分比"
 
 "role.sheriff.madmateCanKillEveryone" : "叛徒警长可以任意击杀"
+"role.sheriff.madmateCanKillEveryone" : "豺狼警长可以任意击杀"
 
 "role.bountyHunter.canChangeTarget" : "可以手动更换目标"
 "role.bountyHunter.changeTargetCoolDown" : "手动更换目标冷却"
@@ -1407,6 +1412,9 @@
 "role.jester.isGuessable" : "是否可以被猜测"
 
 "role.paparazzo.isGuessable" : "是否可以被猜测"
+
+"role.chainShifter.cleanTasks" : "(实验性)交换后清除任务"
+"role.chainShifter.canShiftEvenDied" : "在交换前死亡仍可以交换"
 
 "role.lastImpostor.canSpawn" : "是否可以生成"
 "role.lastImpostor.guessCount" : "最多猜测次数"
@@ -1609,6 +1617,8 @@
 "role.transporter.description" : "全体目光向我看齐"
 "role.transporter.info" : "我宣布个事"
 "role.transporter.teleportCooldown" : "传送冷却时间"
+"role.transporter.specialSetCooldownAfterTeleport" : "传送后对群体范围技能进行冷却限制"
+"role.transporter.leastCooldown" : "限制冷却时间"
 
 "role.kotwal.name" : "警察局长"
 "role.kotwal.short" : "局"
@@ -1623,6 +1633,8 @@
 "role.pavlov.description" : "狗子是个好东西"
 "role.pavlov.info" : "舔 狗 之 王"
 "role.pavlov.createDogsCooldown" : "喂食冷却时间"
+"role.pavlov.dogKillCooldown" : "狗的击杀冷却时间"
+"role.pavlov.dogCanUseVent" : "狗可以使用管道"
 
 "role.dog.name" : "巴浦洛夫的狗"
 "role.dog.short" : "巴狗"
@@ -1668,6 +1680,7 @@
 "role.invisible.desciption" : "杀人于无形"
 "role.invisibleMan.invisibleCooldown" : "隐身冷却时间"
 "role.invisibleMan.invisibleDuringTime" : "隐身持续时间"
+"role.invisibleMan.canUseVent" : "可以使用管道"
 
 "role.moriarty.name" : "莫里亚蒂"
 "role.moriarty.short" : "莫"
@@ -1811,12 +1824,29 @@
 "role.minekeeper.setMineCooldown" : "埋雷技能冷却"
 "role.minekeeper.maxMineCount" : "最大埋雷次数"
 
+"role.chainKiller.name" : "连环杀手"
+"role.chainKiller.short" : "连"
+"role.chainKiller.description" : "你看什么看"
+"role.chainKiller.hint" : "快速击杀一定范围内的人"
+"role.chainKiller.info" : "你可以连续杀死在指定击杀范围内的N个人。\n建议你在人多时出刀。"
+"role.chainKiller.killCooldown" : "击杀冷却时间"
+"role.chainKiller.maxKillCountAtOnce" : "一次性最大击杀人数"
+"role.chainKiller.chainKillRange" : "连续击杀半径"
+
+"role.terrorist.name" : "恐怖分子"
+"role.terrorist.short" : "恐"
+"role.terrorist.description" : "自爆流！"
+"role.terrorist.hint" : "艺术就是爆炸！"
+"role.terrorist.info" : "你是一个移动的大规模杀伤性武器。\n趁着人多自爆吧！"
+"role.terrorist.explodeCooldown" : "自爆冷却时间"
+"role.terrorist.explodeRange" : "自爆半径"
+
 "option.display.random" : "随机"
 
 "side.pavlov.name" : "巴普洛夫团队"
 "side.schrodingersCat.name" : "薛定谔的猫"
 "side.madman.name" : "疯子"
-"side.moran.name" : "莫里亚蒂"
+"side.moriarty.name" : "莫里亚蒂"
 "side.cascrubinter.name" : "行刑者"
 "side.amnesiac.name" : "失忆者"
 
@@ -1825,6 +1855,7 @@
 "text.exile.jesterAddition" : "没想到吧awa"
 "text.exile.cascrubinterAddition" : "好像有不好的事情发生..."
 "text.exile.bartenderAddition" : "调酒师正在调酒..."
+"text.exile.evilNeutral" : "剩余%COUNT%个邪恶中立。"
 
 "guess.team.crewmate" : "船员"
 "guess.team.impostor" : "伪装者"
@@ -1850,7 +1881,7 @@
 "button.label.escape" : "逃逸"
 "button.label.hide" : "观察"
 "button.label.snap" : "寻尸"
-"button.lable.teleport" : "传送"
+"button.label.teleport" : "传送"
 "button.label.appoint" : "任命"
 "button.label.feed" : "喂养"
 "button.label.remember" : "回忆"
@@ -1858,3 +1889,4 @@
 "button.label.getShoot" : "取用"
 "button.label.dig" : "挖掘"
 "button.label.set" : "设置"
+"button.label.explode" : "爆炸"

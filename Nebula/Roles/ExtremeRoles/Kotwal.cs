@@ -12,7 +12,16 @@ public class Kotwal : Role
             {
                 PlayerControl player = PlayerControl.LocalPlayer;
                 RPCEventInvoker.UncheckedMurderPlayer(player.PlayerId, player.PlayerId, Game.PlayerData.PlayerStatus.Suicide.Id, true);
-            }else RPCEventInvoker.ImmediatelyChangeRole(target, Roles.Sheriff);
+            }else{
+                RPCEventInvoker.ImmediatelyChangeRole(target, Roles.Sheriff);
+                if(PlayerControl.LocalPlayer.IsMadmate() && !target.IsMadmate()){
+                    RPCEventInvoker.SetExtraRole(target,Roles.SecondaryMadmate,0);
+                }
+                if((PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryJackal) || PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondarySidekick))
+                && !(target.GetModData().extraRole.Contains(Roles.SecondarySidekick) || target.GetModData().extraRole.Contains(Roles.SecondaryJackal))){
+                    RPCEventInvoker.SetExtraRole(target,Roles.SecondaryJackal,0);
+                }
+            }
         }
     }
 

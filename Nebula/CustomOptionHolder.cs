@@ -149,6 +149,10 @@ public class CustomOptionHolder
     public static CustomOption additionalEmergencyCoolDown;
     public static CustomOption additionalEmergencyCoolDownCondition;
     public static CustomOption showRoleOfExiled;
+    public static CustomOption useSpecialRoleExiledText;
+    public static CustomOption showExtraRoles;
+    public static CustomOption showNumberOfEvilNeutralRoles;
+    public static CustomOption dontShowImpostorCountIfDidntExile;
 
     public static CustomOption limiterOptions;
     public static CustomOption timeLimitOption;
@@ -366,6 +370,46 @@ public class CustomOptionHolder
             try
             {
                 return GameOptionsManager.Instance.currentNormalGameOptions.ConfirmImpostor;
+            }
+            catch
+            {
+                return false;
+            }
+        });
+        useSpecialRoleExiledText = CustomOption.Create(Color.white,"option.useSpecialRoleExiledText",true,meetingOptions).AddCustomPrerequisite(() => {
+            try{
+                return showRoleOfExiled.getBool() && GameOptionsManager.Instance.currentNormalGameOptions.ConfirmImpostor;
+            }
+            catch{
+                return false;
+            }
+        });
+        showExtraRoles = CustomOption.Create(Color.white,"option.showExtraRoles",true,meetingOptions).AddCustomPrerequisite(() => {
+            try
+            {
+                return GameOptionsManager.Instance.currentNormalGameOptions.ConfirmImpostor && useSpecialRoleExiledText.getBool();
+            }
+            catch
+            {
+                return false;
+            }
+        });
+        showNumberOfEvilNeutralRoles = CustomOption.Create(Color.white,"option.showNumberOfEvilNeutralRoles",true,meetingOptions).AddCustomPrerequisite(() =>
+        {
+            try
+            {
+                return GameOptionsManager.Instance.currentNormalGameOptions.ConfirmImpostor && useSpecialRoleExiledText.getBool();
+            }
+            catch
+            {
+                return false;
+            }
+        });
+        dontShowImpostorCountIfDidntExile = CustomOption.Create(Color.white,"option.dontShowImpostorCountIfDidntExile",false,meetingOptions).AddCustomPrerequisite(() =>
+        {
+            try
+            {
+                return GameOptionsManager.Instance.currentNormalGameOptions.ConfirmImpostor && useSpecialRoleExiledText.getBool();
             }
             catch
             {

@@ -23,7 +23,7 @@ public class PavlovsCat : Role
                 return true;
             });
 
-        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
+        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Color);
     }
 
     public override void ButtonInitialize(HudManager __instance)

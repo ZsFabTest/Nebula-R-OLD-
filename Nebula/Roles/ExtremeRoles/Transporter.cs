@@ -5,6 +5,8 @@ public class Transporter : Role
     static public Color RoleColor = new Color(0f / 255f, 162f / 255f, 232f / 255f);
 
     static public Module.CustomOption teleportCooldownOption;
+    private Module.CustomOption specialSetCooldownAfterTeleportOption;
+    private Module.CustomOption leastCooldownOption;
 
     private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.ChainShiftButton.png", 115f);
     private SpriteLoader markSprite = new SpriteLoader("Nebula.Resources.AssassinMarkButton.png", 115f);
@@ -16,6 +18,9 @@ public class Transporter : Role
         TopOption.tab = Module.CustomOptionTab.GhostRoles;
         teleportCooldownOption = CreateOption(Color.white, "teleportCooldown", 25f, 15f, 45f, 2.5f);
         teleportCooldownOption.suffix = "second";
+        specialSetCooldownAfterTeleportOption = CreateOption(Color.white,"specialSetCooldownAfterTeleport",true);
+        leastCooldownOption = CreateOption(Color.white,"leastCooldown",7.5f,1.5f,15f,1.5f).AddPrerequisite(specialSetCooldownAfterTeleportOption);
+        leastCooldownOption.suffix = "second";
     }
 
     private CustomButton teleport;
@@ -39,8 +44,13 @@ public class Transporter : Role
                     foreach (PlayerControl player in PlayerControl.AllPlayerControls)
                     {
                         player.transform.position = target.transform.position;
-                        teleport.Timer = teleport.MaxTimer;
+                        if(specialSetCooldownAfterTeleportOption.getBool()){
+                            Helpers.RoleAction(Game.GameData.data.GetPlayerData(player.PlayerId), (role) => {
+                                role.AfterTeleport(leastCooldownOption.getFloat());
+                            });
+                        }
                     }
+                    teleport.Timer = teleport.MaxTimer;
                     teleport.Sprite = markSprite.GetSprite();
                     target = null;
                 }

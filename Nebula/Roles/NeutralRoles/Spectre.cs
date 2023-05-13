@@ -31,6 +31,10 @@ public class Spectre : Role
     private Module.CustomOption ventDurationOption;
 
     private List<Objects.Arrow?> impostorArrows;
+    private List<Objects.Arrow?> jackalArrows;
+    private List<Objects.Arrow?> pavlovArrows;
+    private List<Objects.Arrow?> moriartyArrows;
+    private List<Objects.Arrow?> sheriffArrows;
 
     int clarifyChargeId;
 
@@ -234,7 +238,15 @@ public class Spectre : Role
             spectreButton = null;
         }
         foreach (var a in impostorArrows) if (a != null) GameObject.Destroy(a.arrow);
+        foreach (var a in jackalArrows) if (a != null) GameObject.Destroy(a.arrow);
+        foreach (var a in pavlovArrows) if (a != null) GameObject.Destroy(a.arrow);
+        foreach (var a in moriartyArrows) if (a != null) GameObject.Destroy(a.arrow);
+        foreach (var a in sheriffArrows) if (a != null) GameObject.Destroy(a.arrow);
         impostorArrows.Clear();
+        jackalArrows.Clear();
+        pavlovArrows.Clear();
+        moriartyArrows.Clear();
+        sheriffArrows.Clear();
     }
 
     //道連れ
@@ -608,7 +620,7 @@ public class Spectre : Role
     SpriteLoader arrowSprite = new SpriteLoader("role.spectre.arrow");
     public override void MyPlayerControlUpdate()
     {
-        int i = 0;
+        int i = 0,i1 = 0,i2 = 0,i3 = 0,i4 = 0;
         foreach (var p in PlayerControl.AllPlayerControls.GetFastEnumerator())
         {
             if ((p.Data.Role.IsImpostor || p.GetModData().role.DeceiveImpostorInNameDisplay) && !p.Data.IsDead)
@@ -621,10 +633,80 @@ public class Spectre : Role
 
                 i++;
             }
+            else if ((p.GetModData().role.side == Side.Jackal && p.GetModData().role != Roles.Sidekick) && !p.Data.IsDead){
+                if (jackalArrows.Count >= i1) jackalArrows.Add(null);
+
+                var arrow = jackalArrows[i1];
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Jackal.Color,arrowSprite);
+                jackalArrows[i1] = arrow;
+
+                i1++;
+            }
+            else if ((p.GetModData().role == Roles.Dog) && !p.Data.IsDead){
+                if (pavlovArrows.Count >= i2) pavlovArrows.Add(null);
+
+                var arrow = pavlovArrows[i2];
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Pavlov.Color,arrowSprite);
+                pavlovArrows[i2] = arrow;
+
+                i2++;
+            }
+            else if ((p.GetModData().role.side == Side.Moriarty) && !p.Data.IsDead){
+                if (moriartyArrows.Count >= i3) moriartyArrows.Add(null);
+
+                var arrow = moriartyArrows[i3];
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Moriarty.Color,arrowSprite);
+                moriartyArrows[i3] = arrow;
+
+                i3++;
+            }
+            else if ((p.GetModData().role == Roles.Sheriff) && !p.Data.IsDead){
+                if (sheriffArrows.Count >= i4) sheriffArrows.Add(null);
+
+                var arrow = sheriffArrows[i4];
+                RoleSystem.TrackSystem.PlayerTrack_MyControlUpdate(ref arrow, p, Roles.Sheriff.Color,arrowSprite);
+                sheriffArrows[i4] = arrow;
+
+                i4++;
+            }
         }
         int removed = impostorArrows.Count - i;
         for (; i < impostorArrows.Count; i++) if (impostorArrows[i] != null) GameObject.Destroy(impostorArrows[i].arrow);
         impostorArrows.RemoveRange(impostorArrows.Count - removed, removed);
+        removed = jackalArrows.Count - i1;
+        for (; i1 < jackalArrows.Count; i1++) if (jackalArrows[i1] != null) GameObject.Destroy(jackalArrows[i1].arrow);
+        jackalArrows.RemoveRange(jackalArrows.Count - removed, removed);
+        removed = pavlovArrows.Count - i2;
+        for (; i2 < pavlovArrows.Count; i2++) if (pavlovArrows[i2] != null) GameObject.Destroy(pavlovArrows[i2].arrow);
+        pavlovArrows.RemoveRange(pavlovArrows.Count - removed, removed);
+        removed = moriartyArrows.Count - i3;
+        for (; i3 < moriartyArrows.Count; i3++) if (moriartyArrows[i3] != null) GameObject.Destroy(moriartyArrows[i3].arrow);
+        moriartyArrows.RemoveRange(moriartyArrows.Count - removed, removed);
+        removed = sheriffArrows.Count - i4;
+        for (; i4 < sheriffArrows.Count; i4++) if (sheriffArrows[i4] != null) GameObject.Destroy(sheriffArrows[i4].arrow);
+        sheriffArrows.RemoveRange(sheriffArrows.Count - removed, removed);
+    }
+
+    public override void EditOthersDisplayNameColor(byte playerId, ref Color displayColor)
+    {
+        base.EditOthersDisplayNameColor(playerId, ref displayColor);
+        PlayerControl player = Helpers.playerById(playerId);
+        if (player.GetModData().role.side == Side.Jackal && player.GetModData().role != Roles.Sidekick)
+        {
+            displayColor = Jackal.RoleColor;
+        }
+        else if (player.GetModData().role == Roles.Dog)
+        {
+            displayColor = Pavlov.RoleColor;
+        }
+        else if (player.GetModData().role.side == Side.Moriarty)
+        {
+            displayColor = Moriarty.RoleColor;
+        }
+        else if (player.GetModData().role == Roles.Sheriff)
+        {
+            displayColor = CrewmateRoles.Sheriff.RoleColor;
+        }
     }
 
     //ラストインポスターに推察チャンスを与える
@@ -660,6 +742,9 @@ public class Spectre : Role
         FixedRoleCount = true;
         canReport = false;
         impostorArrows = new List<Arrow?>();
+        jackalArrows = new List<Arrow?>();
+        pavlovArrows = new List<Arrow?>();
+        moriartyArrows = new List<Arrow?>();
 
         spectreFoxAnimationSprites = new ISpriteLoader[25];
         for(int i = 0; i < 25; i++)

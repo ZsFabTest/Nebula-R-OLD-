@@ -15,17 +15,19 @@ public class Pavlov : Role
     static public Color RoleColor = new Color(236f / 255f, 182f / 255f, 91f / 255f);
 
     static public Module.CustomOption createDogsCooldownOption;
+    static public Module.CustomOption dogKillCooldownOption;
+    static public Module.CustomOption dogCanUseVentOption;
 
     private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.AppointButton.png", 115f);
 
     public bool hasDog;
-    public static int leftDogDataId { get; private set; }
-    public static byte pavlovDataId { get; private set; }
+    public static byte leftDogDataId { get; private set; }
+    public static byte myDog { get; private set; }
 
     public override void GlobalInitialize(PlayerControl __instance)
     {
+        RPCEventInvoker.UpdateRoleData(__instance.PlayerId, myDog, -1);
         RPCEventInvoker.UpdateRoleData(__instance.PlayerId, leftDogDataId, 3);
-        __instance.GetModData().SetRoleData(pavlovDataId,__instance.PlayerId);
         hasDog = false;
     }
 
@@ -41,14 +43,14 @@ public class Pavlov : Role
             {
                 PlayerControl target = Game.GameData.data.myData.currentTarget;
                 Events.LocalEvent.Activate(new PavlovEvent(target));
-                target.GetModData().SetRoleData(Dog.myOwner,PlayerControl.LocalPlayer.PlayerId);
-                RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId, leftDogDataId, -1);
+                RPCEventInvoker.UpdateRoleData(PlayerControl.LocalPlayer.PlayerId, myDog, target.PlayerId);
+                RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId,leftDogDataId,-1);
                 hasDog = true;
                 feed.Timer = feed.MaxTimer;
                 feed.UsesText.text = Game.GameData.data.myData.getGlobalData().GetRoleData(leftDogDataId).ToString();
             },
-            () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
-            () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove && !hasDog && Game.GameData.data.myData.getGlobalData().GetRoleData(leftDogDataId) > 0; },
+            () => { return !PlayerControl.LocalPlayer.Data.IsDead && !hasDog && Game.GameData.data.myData.getGlobalData().GetRoleData(leftDogDataId) > 0; },
+            () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
             () => { feed.Timer = feed.MaxTimer; },
             buttonSprite.GetSprite(),
             Expansion.GridArrangeExpansion.GridArrangeParameter.LeftSideContent,
@@ -57,22 +59,24 @@ public class Pavlov : Role
             "button.label.feed"
         ).SetTimer(CustomOptionHolder.InitialForcefulAbilityCoolDownOption.getFloat());
         feed.MaxTimer = createDogsCooldownOption.getFloat();
-        feed.UsesText.text = Game.GameData.data.myData.getGlobalData().GetRoleData(leftDogDataId).ToString();
-        feed.LabelText.outlineColor = RoleColor;
+        feed.UsesText.text = "3";
     }
 
     public override void MyPlayerControlUpdate()
     {
         Game.MyPlayerData data = Game.GameData.data.myData;
-        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget();
-        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, RoleColor);
+        data.currentTarget = Patches.PlayerControlPatch.SetMyTarget(
+            (player) => {
+                if (player.Object.inVent) return false;
+                if(player.GetModData().role.side == Side.Pavlov) return false;
+                return true;
+            }
+        );
+        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Color.yellow);
         if (hasDog)
         {
-            bool flag = true;
-            foreach(PlayerControl player in PlayerControl.AllPlayerControls){
-                if(player.GetModData().role == Roles.Dog && player.GetModData().GetRoleData(Dog.myOwner) == PlayerControl.LocalPlayer.GetModData().GetRoleData(pavlovDataId)) flag = false;
-            }
-            if(flag) hasDog = false;
+            PlayerControl Dog = Helpers.playerById((byte)Game.GameData.data.myData.getGlobalData().GetRoleData(myDog));
+            if(Dog.Data.IsDead || Dog.GetModData().role != Roles.Dog) hasDog = false;
             feed.Timer = feed.MaxTimer;
         }
     }
@@ -89,15 +93,19 @@ public class Pavlov : Role
 
     public override void LoadOptionData()
     {
+        TopOption.tab = Module.CustomOptionTab.GhostRoles;
         createDogsCooldownOption = CreateOption(Color.white, "createDogsCooldown", 30f, 15f, 35f, 5f);
         createDogsCooldownOption.suffix = "second";
+        dogKillCooldownOption = CreateOption(Color.white, "dogKillCooldown", 25f, 5f, 60f, 5f);
+        dogKillCooldownOption.suffix = "second";
+        dogCanUseVentOption = CreateOption(Color.white,"dogCanUseVent",true);
     }
 
     public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
     {
         if (PlayerControl.LocalPlayer.GetModData().role.side == Side.Pavlov)
         {
-                displayColor = RoleColor;
+            displayColor = RoleColor;
         }
     }
 
@@ -113,26 +121,9 @@ public class Pavlov : Role
 
 public class Dog : Role
 {
-    private Module.CustomOption dogKillCooldownOption;
-    private Module.CustomOption canUseVentOption;
-    public override void LoadOptionData()
+    public override bool IsSpawnable()
     {
-        TopOption.AddCustomPrerequisite(() => Roles.Pavlov.IsSpawnable());
-        dogKillCooldownOption = CreateOption(Color.white, "dogKillCooldown", 25f, 5f, 60f, 5f);
-        dogKillCooldownOption.suffix = "second";
-        canUseVentOption = CreateOption(Color.white,"canUseVent",true);
-    }
-
-    public override bool IsSpawnable() => Roles.Pavlov.IsSpawnable();
-
-    public override bool IsUnsuitable { get { return false; } }
-
-    public static byte myOwner { get; private set; }
-
-    public override void GlobalInitialize(PlayerControl __instance)
-    {
-        RPCEventInvoker.UpdateRoleData(__instance.PlayerId, myOwner, -1);
-        VentPermission = canUseVentOption.getBool() ? VentPermission.CanUseUnlimittedVent : VentPermission.CanNotUse;
+        return false;
     }
 
     private CustomButton killButton;
@@ -155,11 +146,11 @@ public class Dog : Role
             __instance.KillButton.graphic.sprite,
             Expansion.GridArrangeExpansion.GridArrangeParameter.AlternativeKillButtonContent,
             __instance,
-            Module.NebulaInputManager.modKillInput.keyCode,
-            "button.label.kill"
+            Module.NebulaInputManager.modKillInput.keyCode
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
-        killButton.MaxTimer = dogKillCooldownOption.getFloat();
+        killButton.MaxTimer = Pavlov.dogKillCooldownOption.getFloat();
         killButton.SetButtonCoolDownOption(true);
+        VentPermission = Pavlov.dogCanUseVentOption.getBool() ? VentPermission.CanUseUnlimittedVent : VentPermission.CanNotUse;
     }
 
     public override void EditDisplayNameColor(byte playerId, ref Color displayColor)
@@ -177,14 +168,14 @@ public class Dog : Role
             (player) =>
             {
                 if (player.Object.inVent) return false;
-                if (player.GetModData().role == Roles.Pavlov || player.GetModData().role == Roles.Dog)
+                if (player.GetModData().role.side == Side.Pavlov)
                 {
                     return false;
                 }
                 return true;
             });
 
-        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Color);
+        Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
     }
 
     public override void CleanUp()
@@ -202,7 +193,6 @@ public class Dog : Role
              new HashSet<Patches.EndCondition>() { Patches.EndCondition.PavlovWin },
              true, VentPermission.CanUseUnlimittedVent, true, true, true)
     {
-        CreateOptionFollowingRelatedRole = true;
-        Allocation = AllocationType.None;
+        IsHideRole = true;
     }
 }

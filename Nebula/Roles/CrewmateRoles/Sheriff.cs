@@ -15,6 +15,7 @@ public class Sheriff : Role
     private Module.CustomOption canKillChainShifterOption;
     private Module.CustomOption numberOfShotsOption;
     private Module.CustomOption madmateCanKillEveryoneOption;
+    private Module.CustomOption jackalCanKillEveryoneOption;
 
     private SpriteLoader killButtonSprite = new SpriteLoader("Nebula.Resources.SheriffKillButton.png", 100f, "ui.button.sheriff.kill");
 
@@ -34,6 +35,10 @@ public class Sheriff : Role
         //Madmateなら確定で自殺する
         if (PlayerControl.LocalPlayer.IsMadmate()){
             if(madmateCanKillEveryoneOption.getBool()) return true;
+            return false;
+        }
+        if (PlayerControl.LocalPlayer.GetModData().extraRole.Contains(Roles.SecondaryJackal)){
+            if(jackalCanKillEveryoneOption.getBool()) return true;
             return false;
         }
 
@@ -126,6 +131,8 @@ public class Sheriff : Role
         numberOfShotsOption = CreateOption(Color.white, "numberOfShots", 3, 1, 15, 1);
 
         madmateCanKillEveryoneOption = CreateOption(Color.white, "madmateCanKillEveryone",false);
+
+        jackalCanKillEveryoneOption = CreateOption(Color.white, "jackalCanKillEveryone",true);
     }
 
     public Sheriff()

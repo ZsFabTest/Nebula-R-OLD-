@@ -8,6 +8,8 @@ public class ChainShifter : Role
     /* オプション */
     private Module.CustomOption isGuessableOption;
     private Module.CustomOption secondaryGuesserShiftOption;
+    private Module.CustomOption cleanTasksOption;
+    private Module.CustomOption canShiftEvenDiedOption;
 
     private PlayerControl? shiftPlayer;
 
@@ -15,6 +17,8 @@ public class ChainShifter : Role
     {
         isGuessableOption = CreateOption(Color.white, "isGuessable", false);
         secondaryGuesserShiftOption = CreateOption(Color.white, "guesserMode", new string[] { "role.chainShifter.guesserMode.dontShift", "role.chainShifter.guesserMode.erase", "role.chainShifter.guesserMode.shift" });
+        cleanTasksOption = CreateOption(Color.white,"cleanTasks",true);
+        canShiftEvenDiedOption = CreateOption(Color.white,"canShiftEvenDied",false);
     }
 
     public override bool IsGuessableRole { get => isGuessableOption.getBool(); protected set => base.IsGuessableRole = value; }
@@ -60,7 +64,7 @@ public class ChainShifter : Role
 
     public override void OnMeetingStart()
     {
-        if (shiftPlayer != null && !PlayerControl.LocalPlayer.Data.IsDead)
+        if (shiftPlayer != null && (!PlayerControl.LocalPlayer.Data.IsDead || canShiftEvenDiedOption.getBool()))
         {
             switch (secondaryGuesserShiftOption.getSelection())
             {
@@ -97,7 +101,7 @@ public class ChainShifter : Role
 
     public override void FinalizeInGame(PlayerControl __instance)
     {
-        RPCEventInvoker.ExemptAllTask(__instance.PlayerId);
+        if(cleanTasksOption.getBool()) RPCEventInvoker.ExemptAllTask(__instance.PlayerId);
     }
 
     public override void CleanUp()

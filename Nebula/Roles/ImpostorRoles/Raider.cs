@@ -321,6 +321,11 @@ public class Raider : Role
 
     }
 
+    public override void AfterTeleport(float time)
+    {
+        if(killButton.Timer < time) killButton.Timer = time;
+    }
+
     public Raider()
         : base("Raider", "raider", Palette.ImpostorRed, RoleCategory.Impostor, Side.Impostor, Side.Impostor,
              Impostor.impostorSideSet, Impostor.impostorSideSet,

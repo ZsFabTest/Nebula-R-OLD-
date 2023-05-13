@@ -3,6 +3,7 @@ namespace Nebula.Roles.CrewmateRoles;
 public class Programmer : Role{
     public byte targetId = Byte.MaxValue;
     private bool isSet;
+    private Arrow? Arrow = null;
 
     private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.RepairButton.png", 115f);
 
@@ -28,6 +29,8 @@ public class Programmer : Role{
                 targetId = Game.GameData.data.myData.currentTarget.PlayerId;
                 Game.GameData.data.myData.currentTarget = null;
                 isSet = true;
+                Arrow = new Arrow(Color);
+                Arrow.arrow.SetActive(true);
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead && !isSet; },
             () => { return Game.GameData.data.myData.currentTarget && PlayerControl.LocalPlayer.CanMove; },
@@ -46,6 +49,10 @@ public class Programmer : Role{
             changeButton.Destroy();
             changeButton = null;
         }
+        if(Arrow != null){
+            UnityEngine.Object.Destroy(Arrow.arrow);
+            Arrow = null;
+        }
     }
 
     public override void MyPlayerControlUpdate()
@@ -53,6 +60,9 @@ public class Programmer : Role{
         Game.MyPlayerData data = Game.GameData.data.myData;
         data.currentTarget = Patches.PlayerControlPatch.SetMyTarget();
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Color);
+        if(Arrow != null){
+            Arrow.Update(Helpers.playerById(targetId).transform.position);
+        }
     }
 
     public override void OnAnyoneGuarded(byte murderId, byte targetId)
@@ -73,5 +83,6 @@ public class Programmer : Role{
                 Crewmate.crewmateSideSet,Crewmate.crewmateSideSet,Crewmate.crewmateEndSet,
                 false,VentPermission.CanNotUse,false,false,false){
         changeButton = null;
+        Arrow = null;
     }
 }

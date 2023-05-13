@@ -16,6 +16,7 @@ public class Assassin : Role
     public static CustomButton chooseTarget;
     public static CustomButton assassinate;
     public PlayerControl assassinateTarget;
+    private Arrow? Arrow = null;
 
     public override void ButtonInitialize(HudManager __instance)
     {
@@ -30,6 +31,8 @@ public class Assassin : Role
                 assassinateTarget = target;
                 chooseTarget.Timer = 5f;
                 Game.GameData.data.myData.currentTarget.ShowFailedMurder();
+                Arrow = new Arrow(Color.black);
+                Arrow.arrow.SetActive(true);
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return PlayerControl.LocalPlayer.CanMove && Game.GameData.data.myData.currentTarget != null; },
@@ -79,6 +82,10 @@ public class Assassin : Role
             assassinate.Destroy();
             assassinate = null;
         }
+        if(Arrow != null){
+            UnityEngine.Object.Destroy(Arrow.arrow);
+            Arrow = null;
+        }
     }
 
     public override void MyPlayerControlUpdate()
@@ -86,6 +93,14 @@ public class Assassin : Role
         Game.MyPlayerData data = Game.GameData.data.myData;
         data.currentTarget = Patches.PlayerControlPatch.SetMyTarget();
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
+        if(Arrow != null){
+            if(assassinateTarget == null){
+                UnityEngine.Object.Destroy(Arrow.arrow);
+                Arrow = null;
+                return;
+            }
+            Arrow.Update(assassinateTarget.transform.position);
+        }
     }
 
     public override void OnMeetingEnd()
@@ -109,5 +124,6 @@ public class Assassin : Role
         HideKillButtonEvenImpostor = true;
         chooseTarget = null;
         assassinate = null;
+        Arrow = null;
     }
 }
