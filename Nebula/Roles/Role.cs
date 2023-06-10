@@ -439,6 +439,13 @@ public abstract class Role : Assignable
                     break;
             }
         }
+<<<<<<< HEAD
+=======
+
+        if(myData.role.introMainDisplaySide.ShowOption == Side.IntroDisplayOption.Yanderes){
+            players.Add(Roles.Yandere.GetLover());
+        }
+>>>>>>> newbranch
     }
     public void ReflectRoleEyesight(RoleBehaviour role)
     {

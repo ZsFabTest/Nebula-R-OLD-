@@ -25,7 +25,11 @@ namespace Nebula.Roles.ImpostorRoles{
                 () => {
                     Vector3 position = PlayerControl.LocalPlayer.GetTruePosition();
                     foreach(PlayerControl p in PlayerControl.AllPlayerControls){
+<<<<<<< HEAD
                         if(p.Data.IsDead || p == PlayerControl.LocalPlayer) return;
+=======
+                        if(p.Data.IsDead || p == PlayerControl.LocalPlayer) continue;
+>>>>>>> newbranch
                         float dis = Vector2.Distance(position,p.GetTruePosition());
                         if(dis <= explodeRangeOption.getFloat() * 1.8f){
                             Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer,p,Game.PlayerData.PlayerStatus.Killed,false,false);

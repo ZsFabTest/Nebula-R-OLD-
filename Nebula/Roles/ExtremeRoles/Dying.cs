@@ -21,6 +21,10 @@ namespace Nebula.Roles.ImpostorRoles{
 	    	if(isMurdered){
 	    		isMurdered = false;
 	    		killButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
+<<<<<<< HEAD
+=======
+				killButton.SetButtonCoolDownOption(false);
+>>>>>>> newbranch
 	    		return;
 	    	}
 	    	Events.LocalEvent.Activate(new dyingEvent(murderId));
@@ -28,6 +32,10 @@ namespace Nebula.Roles.ImpostorRoles{
 	    	RPCEventInvoker.RevivePlayer(PlayerControl.LocalPlayer);
 	    	killButton.MaxTimer = specialKillCooldownOption.getFloat();
 	    	killButton.Timer = 0f;
+<<<<<<< HEAD
+=======
+			killButton.SetButtonCoolDownOption(true);
+>>>>>>> newbranch
 	    }
 
 		public override void LoadOptionData(){

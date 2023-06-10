@@ -438,6 +438,10 @@ public class Lover : ExtraRole
 
     public override Module.CustomOption? RegisterAssignableOption(Role role)
     {
+<<<<<<< HEAD
+=======
+        if(role == Roles.Yandere) return null;
+>>>>>>> newbranch
         Module.CustomOption option = role.CreateOption(new Color(0.8f, 0.95f, 1f), "option.canBeLovers", role.DefaultExtraAssignableFlag(this), true).HiddenOnDisplay(true).SetIdentifier("role." + role.LocalizeName + ".canBeLovers");
         option.AddPrerequisite(CustomOptionHolder.advanceRoleOptions);
         option.AddCustomPrerequisite(() => { return Roles.Lover.IsSpawnable(); });

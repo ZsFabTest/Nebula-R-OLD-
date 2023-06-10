@@ -187,7 +187,15 @@ static public class GuesserSystem
         {
             //撃てないロールを除外する
             if (!role.IsGuessableRole || role.category == RoleCategory.Complex) continue;
+<<<<<<< HEAD
             if (Roles.F_Guesser.spawnableRoleFilter.getBool() && !role.IsSpawnable()) continue;
+=======
+            if ((Roles.F_Guesser.spawnableRoleFilter.getBool() && !role.IsSpawnable()) &&
+                !(role == Roles.Sidekick && Roles.Jackal.IsSpawnable() && NeutralRoles.Sidekick.SidekickTakeOverOriginalRoleOption.getBool()) &&
+                !(role == Roles.Immoralist && Roles.Spectre.IsSpawnable()) && 
+                !(role == Roles.Dog && Roles.Pavlov.IsSpawnable()) &&
+                !(role == Roles.Moran && Roles.Moriarty.IsSpawnable())) continue;
+>>>>>>> newbranch
             if (role == Roles.Player) break;
             if (role.side != Side.Crewmate) continue;
 
@@ -296,7 +304,15 @@ static public class GuesserSystem
                 {
                     //撃てないロールを除外する
                     if (!role.IsGuessableRole || role.category == RoleCategory.Complex) continue;
+<<<<<<< HEAD
                     if (Roles.F_Guesser.spawnableRoleFilter.getBool() && !role.IsSpawnable()) continue;
+=======
+                    if ((Roles.F_Guesser.spawnableRoleFilter.getBool() && !role.IsSpawnable()) &&
+                        !(role == Roles.Sidekick && Roles.Jackal.IsSpawnable() && NeutralRoles.Jackal.CanCreateSidekickOption.getBool() && NeutralRoles.Sidekick.SidekickTakeOverOriginalRoleOption.getBool()) &&
+                        !(role == Roles.Immoralist && Roles.Spectre.IsSpawnable()) && 
+                        !(role == Roles.Dog && Roles.Pavlov.IsSpawnable()) &&
+                        !(role == Roles.Moran && Roles.Moriarty.IsSpawnable())) continue;
+>>>>>>> newbranch
                     if (role == Roles.Player) break;
                     if (copiedIndex is 0 && role.side != Side.Crewmate) continue;
                     else if (copiedIndex is 1 && role.side != Side.Impostor) continue;

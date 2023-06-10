@@ -67,6 +67,7 @@ public class Holmes : Role
         canKnowJobsOption = CreateOption(Color.white, "canKnowJobs", true);
     }
 
+<<<<<<< HEAD
     public void Survey(byte playerId)
     {
         {
@@ -77,6 +78,16 @@ public class Holmes : Role
     }
 
     public Color checkColor(Role operRole)
+=======
+    private void Survey(byte playerId)
+    {
+        PlayerControl p = Helpers.playerById(playerId);
+        var data = p.GetModData();
+        data.RoleInfo = Helpers.cs(checkColor(data.role.GetActualRole(data)),canKnowJobsOption.getBool() ? Language.Language.GetString("role." + data.role.GetActualRole(data).LocalizeName + ".name") : "???");
+    }
+
+    private Color checkColor(Role operRole)
+>>>>>>> newbranch
     {
         if (canKnowJobsOption.getBool()) return operRole.Color;
         if (operRole.side == Side.Impostor) return Palette.ImpostorRed;

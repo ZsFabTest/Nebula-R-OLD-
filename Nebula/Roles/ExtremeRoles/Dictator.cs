@@ -20,6 +20,10 @@ public class Dictator : Role{
             isVoted = true;
             target = targetId;
             //if(MeetingHud.Instance) MeetingHud.Instance.discussionTimer += 600f;
+<<<<<<< HEAD
+=======
+            RPCEventInvoker.SetMeetingTime(300f);
+>>>>>>> newbranch
         }
     }
 

@@ -157,13 +157,21 @@ public class PlayerControlPatch
         float num = range;
         if (!ShipStatus.Instance) return result;
         if (targetingPlayer == null) targetingPlayer = PlayerControl.LocalPlayer;
+<<<<<<< HEAD
         if (targetingPlayer.Data.IsDead || (targetingPlayer.GetModData().role == Roles.Roles.EvilBusker && Roles.Roles.EvilBusker.pseudocideFlag)) return result;
+=======
+        if (targetingPlayer.Data.IsDead && !(targetingPlayer.GetModData().role == Roles.Roles.EvilBusker && Roles.Roles.EvilBusker.pseudocideFlag)) return result;
+>>>>>>> newbranch
 
         Vector2 truePosition = targetingPlayer.GetTruePosition();
         Il2CppSystem.Collections.Generic.List<GameData.PlayerInfo> allPlayers = GameData.Instance.AllPlayers;
         for (int i = 0; i < allPlayers.Count; i++)
         {
+<<<<<<< HEAD
             GameData.PlayerInfo playerInfo = allPlayers[i];
+=======
+            GameData.PlayerInfo playerInfo = allPlayers[i]; 
+>>>>>>> newbranch
 
             if (playerInfo == null || (PlayerControl.LocalPlayer.PlayerId == playerInfo.PlayerId) || (playerInfo.Object == null))
                 continue;

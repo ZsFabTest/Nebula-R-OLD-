@@ -29,6 +29,10 @@ public class Necrophilic : Role
                     return;
                 }
                 DeadBody body = Helpers.AllDeadBodies()[NebulaPlugin.rnd.Next(Helpers.AllDeadBodies().Count())];
+<<<<<<< HEAD
+=======
+                RPCEventInvoker.ObjectInstantiate(CustomObject.Type.TeleportEvidence,PlayerControl.LocalPlayer.GetTruePosition());
+>>>>>>> newbranch
                 Vector3 pos = body.transform.position;
                 PlayerControl.LocalPlayer.transform.position = pos;
                 SnapToBody.Timer = SnapToBody.MaxTimer;
