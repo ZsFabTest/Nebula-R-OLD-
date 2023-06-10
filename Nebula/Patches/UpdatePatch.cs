@@ -457,15 +457,6 @@ public static class UpdatePatch
             Module.Information.UpperInformationManager.Update();
 
             if (Game.GameData.data.Ghost != null) Game.GameData.data.Ghost.Update();
-<<<<<<< HEAD
-
-            if(PlayerControl.LocalPlayer.GetModData().role == Roles.Roles.Plumber && Roles.ImpostorRoles.Plumber.dig){
-                Roles.ImpostorRoles.Plumber.dig = false;
-                Vector3 playerPos = PlayerControl.LocalPlayer.transform.position;
-                RPCEventInvoker.Dig(new Vector3(playerPos.x,playerPos.y,playerPos.z + 1f));
-            }
-=======
->>>>>>> newbranch
         }
         catch (NullReferenceException excep) { UnityEngine.Debug.Log(excep.StackTrace); }
 

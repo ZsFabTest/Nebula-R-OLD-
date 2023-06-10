@@ -197,12 +197,9 @@ static public class Roles
     public static ComplexRoles.Transporter EvilTransporter = new ComplexRoles.Transporter("EvilTransporter","evilTransporter",true);
     public static ComplexRoles.Transporter NiceTransporter = new ComplexRoles.Transporter("NiceTransporter","niceTransporter",false);
     public static ImpostorRoles.Retarder Retarder = new ImpostorRoles.Retarder();
-<<<<<<< HEAD
-=======
     public static NeutralRoles.Yandere Yandere = new NeutralRoles.Yandere();
     public static ExtraRoles.SecretCrush SecretCrush = new ExtraRoles.SecretCrush();
     public static ImpostorRoles.Marker Marker = new ImpostorRoles.Marker();
->>>>>>> newbranch
 
     //全てのロールはこの中に含まれている必要があります
     public static List<Role> AllRoles = new List<Role>()
@@ -217,13 +214,8 @@ static public class Roles
 
             GameMaster,F_Decider,EvilDecider,NiceDecider,F_Swapper,EvilSwapper,NiceSwapper,F_Mover,EvilMover,NiceMover,F_Transporter,EvilTransporter,NiceTransporter,
             Holmes,Kotwal,Necrophilic,Observer,OnlineCelebrity,Sanctifier,/*Transporter,*/Dictator,Bartender,LuckyMan,Superstar,ChivalrousExpert,Programmer,Minekeeper,Locksmith,
-<<<<<<< HEAD
-            Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,
-            Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,
-=======
             Assassin,Demagogue,Escapist,EvilBusker,SerialKiller,Vampire,InvisibleMan,Heretic,Moda,Marksman,Gambler,Plumber,ChainKiller,Terrorist,Dying,Retarder,Marker,
             Madman,Pavlov,Dog,Moriarty,Moran,Cascrubinter,Amnesiac,Yandere,
->>>>>>> newbranch
             JackalMayor,
             SchrodingersCat,RedCat,BlueCat,WhiteCat,PavlovsCat,
 
@@ -240,11 +232,7 @@ static public class Roles
             Bloody,Confused,Drunk,Lover,Trilemma,
             MetaRole,AvengerTarget,
             PerkHolder,
-<<<<<<< HEAD
-            SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater
-=======
             SecondaryBait,Flash,SecondaryJackal,FakeLover,Cheater,SecretCrush
->>>>>>> newbranch
         };
 
     public static List<GhostRole> AllGhostRoles = new List<GhostRole>()

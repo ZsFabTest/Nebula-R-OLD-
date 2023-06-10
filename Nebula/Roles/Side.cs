@@ -9,12 +9,8 @@ public class Side
     {
         STANDARD,
         SHOW_ALL,
-<<<<<<< HEAD
-        SHOW_ONLY_ME
-=======
         SHOW_ONLY_ME,
         Yanderes
->>>>>>> newbranch
     }
 
     public static Side Crewmate = new Side("Crewmate", "crewmate", IntroDisplayOption.SHOW_ALL, Palette.CrewmateBlue, (PlayerStatistics statistics, ShipStatus status) =>
@@ -25,11 +21,7 @@ public class Side
             statistics.GetAlivePlayers(Jackal) == 0 &&
             statistics.GetAlivePlayers(Pavlov) == 0 &&
             statistics.GetAlivePlayers(Moriarty) == 0 &&
-<<<<<<< HEAD
-            !Game.GameData.data.AllPlayers.Values.Any((p) => p.IsAlive && p.extraRole.Contains(Roles.SecondarySidekick)))
-=======
             !Game.GameData.data.AllPlayers.Values.Any((p) => p.IsAlive && (p.extraRole.Contains(Roles.SecondarySidekick) && p.extraRole.Contains(Roles.SecondaryJackal))))
->>>>>>> newbranch
             {
                 return EndCondition.CrewmateWinByVote;
             }
@@ -106,13 +98,8 @@ public class Side
             statistics.AliveJackals == 0 &&
             statistics.AlivePavlov == 0 &&
             statistics.AliveMoriarty == 0 &&
-<<<<<<< HEAD
-            !Game.GameData.data.AllPlayers.Values.Any((p) => p.IsAlive && p.extraRole.Contains(Roles.SecondarySidekick)) &&
-            (statistics.TotalAlive - statistics.AliveSpectre) <= (statistics.AliveImpostors - statistics.AliveInLoveImpostors) * 2 &&
-=======
             !Game.GameData.data.AllPlayers.Values.Any((p) => p.IsAlive && (p.extraRole.Contains(Roles.SecondarySidekick) || p.extraRole.Contains(Roles.SecondaryJackal))) &&
             (statistics.TotalAlive - statistics.AliveSpectre - statistics.AliveMadmate) <= (statistics.AliveImpostors - statistics.AliveInLoveImpostors) * 2 &&
->>>>>>> newbranch
             (statistics.AliveImpostorCouple + statistics.AliveImpostorTrilemma == 0 ||
             statistics.AliveImpostorCouple * 2 + statistics.AliveImpostorTrilemma * 3 >= statistics.AliveCouple * 2 + statistics.AliveTrilemma * 3))
             {
@@ -242,10 +229,7 @@ public class Side
         if (endCondition == EndCondition.VultureWin) return null;
         if (endCondition == EndCondition.AvengerWin) return null;
         if (endCondition == EndCondition.SpectreWin) return null;
-<<<<<<< HEAD
-=======
         if (endCondition == EndCondition.YandereWin) return null;
->>>>>>> newbranch
         if (endCondition == EndCondition.MoriartyWin || endCondition == EndCondition.MoriartyWinByKillHolmes) return null;
 
         foreach (var player in Game.GameData.data.AllPlayers.Values)
@@ -307,8 +291,6 @@ public class Side
         return null;
     });
 
-<<<<<<< HEAD
-=======
     public static Side Yandere = new Side("Yandere","yandere",IntroDisplayOption.Yanderes,NeutralRoles.Yandere.RoleColor,(PlayerStatistics statistics,ShipStatus status) => {
         return null;
     },(EndCondition endCondition, PlayerStatistics statistics, ShipStatus status) => {
@@ -333,7 +315,6 @@ public class Side
         return null;
     });
 
->>>>>>> newbranch
     /*
     public static Side SantaClaus = new Side("SantaClaus", "santaClaus", IntroDisplayOption.STANDARD, NeutralRoles.SantaClaus.RoleColor, (PlayerStatistics statistics, ShipStatus status) =>
     {
@@ -420,11 +401,7 @@ public class Side
             GamePlayer,
             Extra,VOID,
             RitualCrewmate,
-<<<<<<< HEAD
-            Madman,SchrodingersCat,Pavlov,Moriarty,Cascrubinter,Amnesiac
-=======
             Madman,SchrodingersCat,Pavlov,Moriarty,Cascrubinter,Amnesiac,Guesser,Yandere
->>>>>>> newbranch
         };
 
     public IntroDisplayOption ShowOption { get; }

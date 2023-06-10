@@ -15,10 +15,7 @@ public class Madmate : Role
     private Module.CustomOption[] NumOfTasksRequiredToKnowImpostorsOption;
     public Module.CustomOption SecondoryRoleOption;
     public Module.CustomOption SecondaryMadmateKnowImpostorsTasksPercentOption;
-<<<<<<< HEAD
-=======
     public Module.CustomOption IgnoringNumOfMadmateOption;
->>>>>>> newbranch
 
     //Local
     private HashSet<byte> knownImpostors = new HashSet<byte>();
@@ -123,11 +120,8 @@ public class Madmate : Role
             NumOfTasksRequiredToKnowImpostorsOption[i].isHidden = true;
         }
 
-<<<<<<< HEAD
-=======
         IgnoringNumOfMadmateOption = CreateOption(Color.white,"IgnoringMadmate",false);
 
->>>>>>> newbranch
         CanBeGuesserOption?.AddInvPrerequisite(SecondoryRoleOption);
         CanBeDrunkOption?.AddInvPrerequisite(SecondoryRoleOption);
         CanBeBloodyOption?.AddInvPrerequisite(SecondoryRoleOption);
@@ -296,15 +290,11 @@ public class SecondaryMadmate : ExtraRole
             if (chance <= NebulaPlugin.rnd.Next(10)) continue;
 
             playerId = players[NebulaPlugin.rnd.Next(players.Count)];
-<<<<<<< HEAD
-            if (Helpers.playerById(playerId).GetModData().HasExtraRole(Roles.SecondaryJackal)) continue;
-=======
             if (Helpers.playerById(playerId).GetModData().HasExtraRole(Roles.SecondaryJackal)){
                 i--;
                 players.Remove(playerId);
                 continue;
             }
->>>>>>> newbranch
             assignMap.AssignExtraRole(playerId, id, 0);
             players.Remove(playerId);
         }

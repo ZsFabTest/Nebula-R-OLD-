@@ -97,13 +97,10 @@ public enum CustomRPC
     Guess,
     Dig,
     SetConsoleStatus,
-<<<<<<< HEAD
-=======
     SetMeetingTime,
     AddMeetingTime,
     SetRoleInfo,
     AfterTeleportEvent
->>>>>>> newbranch
 }
 
 //RPCを受け取ったときのイベント
@@ -383,8 +380,6 @@ class RPCHandlerPatch
             case (byte)CustomRPC.SetConsoleStatus:
                 RPCEvents.SetConsoleStatus(reader.ReadString(),reader.ReadBoolean(),new Vector3(reader.ReadSingle(),reader.ReadSingle(),reader.ReadSingle()),new Vector3(reader.ReadSingle(),reader.ReadSingle(),reader.ReadSingle()));
                 break;
-<<<<<<< HEAD
-=======
             case (byte)CustomRPC.SetMeetingTime:
                 RPCEvents.SetMeetingTime(reader.ReadSingle());
                 break;
@@ -397,7 +392,6 @@ class RPCHandlerPatch
             case (byte)CustomRPC.AfterTeleportEvent:
                 RPCEvents.AfterTeleportEvent(reader.ReadSingle());
                 break;
->>>>>>> newbranch
         }
     }
 }
@@ -739,11 +733,7 @@ static class RPCEvents
                 Helpers.RoleAction(target, (role) => { role.OnDied(); });
 
 
-<<<<<<< HEAD
-                Events.Schedule.RegisterPreMeetingAction(() =>
-=======
                 Events.Schedule.RegisterPostMeetingAction(() =>
->>>>>>> newbranch
                 {
                     if (!PlayerControl.LocalPlayer.GetModData().IsAlive)
                         Game.GameData.data.myData.CanSeeEveryoneInfo = true;
@@ -1631,10 +1621,6 @@ static class RPCEvents
         Console target =  ShipStatus.Instance.AllConsoles.FirstOrDefault(x => x.gameObject.name == consoleId && Vector2.Distance(x.transform.position,fixPos) <= 0.01f);
         if(target == null) return;
         //Debug.LogWarning(target.ConsoleId.ToString());
-<<<<<<< HEAD
-        target.gameObject.SetActive(status);
-        target.transform.position = pos;
-=======
         if(target.GetComponent<Collider2D>() != null){
             target.GetComponent<Collider2D>().enabled = status;
             target.GetComponent<Collider2D>().isTrigger = true;
@@ -1673,7 +1659,6 @@ static class RPCEvents
 
     public static void AfterTeleportEvent(float time){
         PlayerControl.LocalPlayer.GetModData().role.AfterTeleport(time);
->>>>>>> newbranch
     }
 }
 
@@ -2622,8 +2607,6 @@ public class RPCEventInvoker
         AmongUsClient.Instance.FinishRpcImmediately(writer);
         RPCEvents.SetConsoleStatus(target.gameObject.name,status,pos,fixPos);
     }
-<<<<<<< HEAD
-=======
 
     public static void SetMeetingTime(float time){
         MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.SetMeetingTime,Hazel.SendOption.Reliable,-1);
@@ -2654,5 +2637,4 @@ public class RPCEventInvoker
         AmongUsClient.Instance.FinishRpcImmediately(writer);
         RPCEvents.AfterTeleportEvent(time);
     }
->>>>>>> newbranch
 }
