@@ -41,6 +41,7 @@ public class EndCondition
     public static EndCondition MoriartyWinByKillHolmes = new EndCondition(130, Roles.NeutralRoles.Moriarty.RoleColor, "holmesIsKilled", 1, Module.CustomGameMode.Standard);
     public static EndCondition CascrubinterWin = new EndCondition(131,Roles.NeutralRoles.Cascrubinter.RoleColor,"cascrubinter",1,Module.CustomGameMode.Standard);
     public static EndCondition GuesserWin = new EndCondition(132,Roles.ComplexRoles.FGuesser.RoleColor,"guesser",0,Module.CustomGameMode.Standard);
+    public static EndCondition YandereWin = new EndCondition(133,Roles.NeutralRoles.Yandere.RoleColor,"yandere",1,Module.CustomGameMode.Standard);
 
 
 
@@ -52,7 +53,7 @@ public class EndCondition
             JesterWin,JackalWin,ArsonistWin,EmpiricWin,PaparazzoWin,VultureWin,SpectreWin,/*SantaWin,*/
             LoversWin,TrilemmaWin,AvengerWin,
             NoGame,NobodyWin,NobodySkeldWin,NobodyMiraWin,NobodyPolusWin,NobodyAirshipWin,
-            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin
+            PavlovWin,MoriartyWin,MoriartyWinByKillHolmes,CascrubinterWin,GuesserWin,YandereWin
         };
 
     public static EndCondition GetEndCondition(GameOverReason gameOverReason)
@@ -700,6 +701,9 @@ public class PlayerStatistics
     public int AliveMoriartyTrilemma;
     public int AliveInLoveMoriarty;
 
+    public int AliveYandere;
+    public int AliveMadmate;
+
     public bool IsValid;
 
     //
@@ -736,6 +740,7 @@ public class PlayerStatistics
         AliveMoriartyTrilemma = 0;
         AliveInLoveMoriarty = 0;
         AliveSpectre = 0;
+        AliveMadmate = 0;
 
         Roles.Side side;
         
@@ -757,9 +762,9 @@ public class PlayerStatistics
 
                 TotalAlive++;
 
-
                 var data = Game.GameData.data.playersArray[playerInfo.PlayerId];
 
+                if(data.role == Roles.Roles.Madmate || data.HasExtraRole(Roles.Roles.SecondaryMadmate)) AliveMadmate++;
 
                 side = data.role.side;
 
@@ -897,6 +902,7 @@ public class PlayerStatistics
         AliveJackals = GetAlivePlayers(Roles.Side.Jackal);
         AlivePavlov = GetAlivePlayers(Roles.Side.Pavlov);
         AliveMoriarty = GetAlivePlayers(Roles.Side.Moriarty);
+        AliveYandere = GetAlivePlayers(Roles.Side.Yandere);
 
         if (!Roles.Roles.Lover.loversAsIndependentSideOption.getBool())
         {
@@ -905,5 +911,6 @@ public class PlayerStatistics
             AliveInLovePavlov = 0;
             AliveInLoveMoriarty = 0;
         }
+        if(!Roles.Roles.Madmate.IgnoringNumOfMadmateOption.getBool()) AliveMadmate = 0;
     }
 }

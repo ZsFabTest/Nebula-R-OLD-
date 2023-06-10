@@ -144,5 +144,6 @@ public class Jester : Template.Draggable, Template.HasWinTrigger
              true, VentPermission.CanUseLimittedVent, true, false, false)
     {
         Patches.EndCondition.JesterWin.TriggerRole = this;
+        CanCallEmergencyMeeting = false;
     }
 }

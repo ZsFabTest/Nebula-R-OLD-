@@ -117,7 +117,7 @@ public static class EmergencyPatch
 
             if (isInSpecialEmergency)
             {
-                __instance.StatusText.text = "Special Emergency Button";
+                __instance.StatusText.text = Language.Language.GetString("meeting.seb");
                 __instance.NumberText.text = string.Empty;
                 __instance.ClosedLid.gameObject.SetActive(false);
                 __instance.OpenLid.gameObject.SetActive(true);
@@ -127,7 +127,7 @@ public static class EmergencyPatch
 
             if (!PlayerControl.LocalPlayer.GetModData().role.CanCallEmergencyMeeting)
             {
-                __instance.StatusText.text = "You can't start an emergency meeting due to your role.";
+                __instance.StatusText.text = Language.Language.GetString("meeting.forbid");
                 __instance.NumberText.text = string.Empty;
                 __instance.ClosedLid.gameObject.SetActive(true);
                 __instance.OpenLid.gameObject.SetActive(false);
@@ -158,7 +158,7 @@ public static class EmergencyPatch
             }
             if (score < require)
             {
-                __instance.StatusText.text = "Emergency button has been locked.";
+                __instance.StatusText.text = Language.Language.GetString("meeting.locked");
                 __instance.NumberText.text = string.Empty;
                 __instance.ClosedLid.gameObject.SetActive(true);
                 __instance.OpenLid.gameObject.SetActive(false);
@@ -172,7 +172,8 @@ public static class EmergencyPatch
             {
                 int localRemaining = PlayerControl.LocalPlayer.RemainingEmergencies;
                 int teamRemaining = Mathf.Max(0, EmergencyPatch.maxMeetingsCount - EmergencyPatch.meetingsCount);
-                __instance.NumberText.text = $"{localRemaining.ToString()} (Total: {teamRemaining.ToString()})";
+                string total = Language.Language.GetString("meeting.total");
+                __instance.NumberText.text = $"{localRemaining.ToString()} ({total}: {teamRemaining.ToString()})";
                 __instance.ButtonActive = localRemaining > 0 && teamRemaining > 0;
                 __instance.ClosedLid.gameObject.SetActive(!__instance.ButtonActive);
                 __instance.OpenLid.gameObject.SetActive(__instance.ButtonActive);

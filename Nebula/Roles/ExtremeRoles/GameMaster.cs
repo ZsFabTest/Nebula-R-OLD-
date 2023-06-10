@@ -11,14 +11,14 @@ public class GameMaster : Role
         public GMEvent(PlayerControl target) : base(0.2f) { this.target = target; }
         public override void OnTerminal()
         {
-            RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Superstar);
+            RPCEventInvoker.SetExtraRole(target,Roles.SecretCrush,0);
         }
     }
 
     public override void Initialize(PlayerControl __instance)
     {
         //RPCEventInvoker.AddExtraRole(PlayerControl.LocalPlayer, Roles.SecondaryGuesser, 0);
-        RPCEventInvoker.AddExtraRole(PlayerControl.LocalPlayer, Roles.Cheater, 0);
+        //RPCEventInvoker.AddExtraRole(PlayerControl.LocalPlayer, Roles.Cheater, 0);
     }
 
     private CustomButton testButton;

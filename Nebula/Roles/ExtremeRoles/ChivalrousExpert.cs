@@ -41,7 +41,6 @@ public class ChivalrousExpert : Role{
             "button.label.kill"
         );
         killButton.MaxTimer = killButton.Timer = 0;
-        killButton.SetButtonCoolDownOption(true);
 
         killButton.UsesText.text = "1";
     }

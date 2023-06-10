@@ -8,15 +8,16 @@
 ## 下载
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
+| 1.0.2.6 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.6/Nebula-R.1.0.2.6.zip)
 | 1.0.2.5 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.5/Nebula-R.1.0.2.5.zip)
 | 1.0.2.4 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.4/Nebula-R.1.0.2.4.zip)
-| 1.0.2.3 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.3/Nebula-R.1.0.2.3.zip)
 
 <details>
 <summary> 更多 </summary>
 
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
+| 1.0.2.3 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.3/Nebula-R.1.0.2.3.zip)
 | 1.0.2.2 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.2/Nebula-R.1.0.2.2.zip)
 | 1.0.2.1 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.2/Nebula1021.dll)
 | 1.0.2.0 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.0/Nebula-R.1.0.2.0.zip)
@@ -54,11 +55,11 @@
 | Online Celebrity - 网红 | Demagogue - 反叛者 | Pavlov's Dog - 巴浦洛夫的狗 | Secondary Jackal - 附加豺狼  |
 | Nice Decider - 正义的裁决者 | Evil Decider - 邪恶的裁决者 | Jackal Mayor - 狼族市长 | Cheater - 海王 |
 | Nice Swapper - 正义的换票师 | Evil Swapper - 邪恶的换票师 | Moriarty - 莫里亚蒂 | (Fake)Lover - 假恋人 |
-| Necrophilic - 寻尸者 | Escapist - 逃逸者 | Moran - 莫兰上校 | |
+| Necrophilic - 寻尸者 | Escapist - 逃逸者 | Moran - 莫兰上校 | SecretCrush - 附加胜利检查 |
 | Nice Transporter - 正义的传送师 | Evil Busker - 灵界杀手 | Cascrubinter - 代行刑者 | |
 | Kotwal - 警察局长 | Invisible Man - 隐身人 | Heretic - 异教徒 | |
 | Dictator - 独裁者 | Moda - 摩达石神 | Amnesiac - 失忆者 | |
-| Bartender - 调酒师 | Marksman - 快枪手 | | |
+| Bartender - 调酒师 | Marksman - 快枪手 | Yandere - 病娇 | |
 | Lucky Man - 幸运儿 | Gambler - 赌徒 | | |
 | Superstar - 明星 | Chain Killer - 连环杀手 | | |
 | Chivalrous Expert - 侠客 | Terrorist - 恐怖分子 | | |
@@ -66,6 +67,7 @@
 | Minekeeper - 埋雷兵 | Evil Transporter - 邪恶的传送师 | | |
 | Locksmith - 锁匠 | Evil Mover - 邪恶的搬运工 | | |
 | Nice Mover - 正义的搬运工 | Retarder - 缓速者 | | |
+| | Marker - 情报师 | | |
 
 | Others - 其他 | Ghost - 灵魂职业 |
 | ------------- | --------------- |
@@ -86,6 +88,13 @@
 或邮箱 a1234567890001919@outlook.com
 
 ## 部分更新日志
+
+### 2023.6.10 v1.0.2.6 update
+1.修了一些以前堆积的bug,模组新职业基本稳定了
+
+2.新职业 病娇 情报师(情报师为LI时技能失效)
+
+3.对以前的职业进行了小修改(不影响游玩)
 
 ### 2023.5.28 v1.0.2.5 update
 1.新职业 搬运工 缓速者

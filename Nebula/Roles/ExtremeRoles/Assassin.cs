@@ -7,7 +7,7 @@ public class Assassin : Role
     private Module.CustomOption showMurderColorDuringTimeOption;
     private Module.CustomOption maxExistenceTimeOption;
 
-    private SpriteLoader AssassinMarkButtonSprite = new SpriteLoader("Nebula.Resources.AssassinMarkButton.png", 100f);
+    private SpriteLoader AssassinMarkButtonSprite = new SpriteLoader("Nebula.Resources.AssassinMarkButton.png", 115f);
     private SpriteLoader AssassinateButtonSprite = new SpriteLoader("Nebula.Resources.AssassinateButton.png", 115f);
 
     public override void LoadOptionData()

@@ -97,6 +97,10 @@ public enum CustomRPC
     Guess,
     Dig,
     SetConsoleStatus,
+    SetMeetingTime,
+    AddMeetingTime,
+    SetRoleInfo,
+    AfterTeleportEvent
 }
 
 //RPCを受け取ったときのイベント
@@ -375,6 +379,18 @@ class RPCHandlerPatch
                 break;
             case (byte)CustomRPC.SetConsoleStatus:
                 RPCEvents.SetConsoleStatus(reader.ReadString(),reader.ReadBoolean(),new Vector3(reader.ReadSingle(),reader.ReadSingle(),reader.ReadSingle()),new Vector3(reader.ReadSingle(),reader.ReadSingle(),reader.ReadSingle()));
+                break;
+            case (byte)CustomRPC.SetMeetingTime:
+                RPCEvents.SetMeetingTime(reader.ReadSingle());
+                break;
+            case (byte)CustomRPC.AddMeetingTime:
+                RPCEvents.AddMeetingTime(reader.ReadSingle());
+                break;
+            case (byte)CustomRPC.SetRoleInfo:
+                RPCEvents.SetRoleInfo(reader.ReadByte(),reader.ReadString(),reader.ReadBoolean());
+                break;
+            case (byte)CustomRPC.AfterTeleportEvent:
+                RPCEvents.AfterTeleportEvent(reader.ReadSingle());
                 break;
         }
     }
@@ -717,7 +733,7 @@ static class RPCEvents
                 Helpers.RoleAction(target, (role) => { role.OnDied(); });
 
 
-                Events.Schedule.RegisterPreMeetingAction(() =>
+                Events.Schedule.RegisterPostMeetingAction(() =>
                 {
                     if (!PlayerControl.LocalPlayer.GetModData().IsAlive)
                         Game.GameData.data.myData.CanSeeEveryoneInfo = true;
@@ -1605,8 +1621,44 @@ static class RPCEvents
         Console target =  ShipStatus.Instance.AllConsoles.FirstOrDefault(x => x.gameObject.name == consoleId && Vector2.Distance(x.transform.position,fixPos) <= 0.01f);
         if(target == null) return;
         //Debug.LogWarning(target.ConsoleId.ToString());
+        if(target.GetComponent<Collider2D>() != null){
+            target.GetComponent<Collider2D>().enabled = status;
+            target.GetComponent<Collider2D>().isTrigger = true;
+        }
+        if(target.GetComponent<PolygonCollider2D>() != null){
+            target.GetComponent<PolygonCollider2D>().enabled = status;
+            target.GetComponent<PolygonCollider2D>().isTrigger = true;
+        }
+        if(target.GetComponent<BoxCollider2D>() != null){
+            target.GetComponent<BoxCollider2D>().enabled = status;
+            target.GetComponent<BoxCollider2D>().isTrigger = true;
+        }
+        if(target.GetComponent<CircleCollider2D>() != null){
+            target.GetComponent<CircleCollider2D>().enabled = status;
+            target.GetComponent<CircleCollider2D>().isTrigger = true;
+        }
+        if(target.GetComponent<HoverAnimBehaviour>() != null){
+            target.GetComponent<HoverAnimBehaviour>().enabled = false;
+        }
         target.gameObject.SetActive(status);
-        target.transform.position = pos;
+        target.transform.position = new Vector3(pos.x,pos.y,pos.z + 0.1f);
+    }
+
+    public static void SetMeetingTime(float time){
+        if(MeetingHud.Instance != null) MeetingHud.Instance.discussionTimer = time;
+    }
+
+    public static void AddMeetingTime(float time){
+        if(MeetingHud.Instance != null) MeetingHud.Instance.discussionTimer -= time;
+    }
+
+    public static void SetRoleInfo(byte playerId,string info,bool onlyImp){
+        if(Helpers.playerById(playerId).GetModData() == null || (onlyImp && PlayerControl.LocalPlayer.GetModData().role.category != RoleCategory.Impostor)) return;
+        Helpers.playerById(playerId).GetModData().RoleInfo = info;
+    }
+
+    public static void AfterTeleportEvent(float time){
+        PlayerControl.LocalPlayer.GetModData().role.AfterTeleport(time);
     }
 }
 
@@ -2554,5 +2606,35 @@ public class RPCEventInvoker
         writer.Write(fixPos.z);
         AmongUsClient.Instance.FinishRpcImmediately(writer);
         RPCEvents.SetConsoleStatus(target.gameObject.name,status,pos,fixPos);
+    }
+
+    public static void SetMeetingTime(float time){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.SetMeetingTime,Hazel.SendOption.Reliable,-1);
+        writer.Write(time);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.SetMeetingTime(time);
+    }
+
+    public static void AddMeetingTime(float time){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.AddMeetingTime,Hazel.SendOption.Reliable,-1);
+        writer.Write(time);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.AddMeetingTime(time);
+    }
+
+    public static void SetRoleInfo(PlayerControl player,string info,bool onlyImpostor = true){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.SetRoleInfo,Hazel.SendOption.Reliable,-1);
+        writer.Write(player.PlayerId);
+        writer.Write(info);
+        writer.Write(onlyImpostor);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.SetRoleInfo(player.PlayerId,info,onlyImpostor);
+    }
+
+    public static void AfterTeleportEvent(float time){
+        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId,(byte)CustomRPC.AfterTeleportEvent,Hazel.SendOption.Reliable,-1);
+        writer.Write(time);
+        AmongUsClient.Instance.FinishRpcImmediately(writer);
+        RPCEvents.AfterTeleportEvent(time);
     }
 }

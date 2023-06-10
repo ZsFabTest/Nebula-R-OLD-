@@ -139,6 +139,7 @@ public class EvilBusker : Role
             "button.label.kill"
         ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
         killButton.MaxTimer = killCoolDownOption.getFloat();
+        killButton.SetButtonCoolDownOption(true);
     }
 
     public override void EditCoolDown(CoolDownType type, float count)

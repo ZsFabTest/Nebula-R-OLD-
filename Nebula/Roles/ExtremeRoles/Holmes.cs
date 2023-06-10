@@ -67,16 +67,14 @@ public class Holmes : Role
         canKnowJobsOption = CreateOption(Color.white, "canKnowJobs", true);
     }
 
-    public void Survey(byte playerId)
+    private void Survey(byte playerId)
     {
-        {
-            PlayerControl p = Helpers.playerById(playerId);
-            var data = p.GetModData();
-            data.RoleInfo = Helpers.cs(checkColor(data.role.GetActualRole(data)),canKnowJobsOption.getBool() ? Language.Language.GetString("role." + data.role.GetActualRole(data).LocalizeName + ".name") : "???");
-        }
+        PlayerControl p = Helpers.playerById(playerId);
+        var data = p.GetModData();
+        data.RoleInfo = Helpers.cs(checkColor(data.role.GetActualRole(data)),canKnowJobsOption.getBool() ? Language.Language.GetString("role." + data.role.GetActualRole(data).LocalizeName + ".name") : "???");
     }
 
-    public Color checkColor(Role operRole)
+    private Color checkColor(Role operRole)
     {
         if (canKnowJobsOption.getBool()) return operRole.Color;
         if (operRole.side == Side.Impostor) return Palette.ImpostorRed;

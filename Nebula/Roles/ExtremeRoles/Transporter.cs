@@ -64,9 +64,7 @@ public class Transporter : Template.BilateralnessRole{
                     {
                         player.transform.position = target.transform.position;
                         if(Roles.F_Transporter.specialSetCooldownAfterTeleportOption.getBool()){
-                            Helpers.RoleAction(Game.GameData.data.GetPlayerData(player.PlayerId), (role) => {
-                                role.AfterTeleport(Roles.F_Transporter.leastCooldownOption.getFloat());
-                            });
+                            RPCEventInvoker.AfterTeleportEvent(Roles.F_Transporter.leastCooldownOption.getFloat());
                         }
                     }
                     teleport.Timer = teleport.MaxTimer;
@@ -99,6 +97,11 @@ public class Transporter : Template.BilateralnessRole{
     public override void GlobalInitialize(PlayerControl __instance)
     {
         target = null;
+    }
+
+    public override void AfterTeleport(float time)
+    {
+        if(teleport.Timer < time) teleport.Timer = time;
     }
 
     public override void MyPlayerControlUpdate()

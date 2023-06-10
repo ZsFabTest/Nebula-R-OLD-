@@ -20,6 +20,7 @@ public class Dictator : Role{
             isVoted = true;
             target = targetId;
             //if(MeetingHud.Instance) MeetingHud.Instance.discussionTimer += 600f;
+            RPCEventInvoker.SetMeetingTime(300f);
         }
     }
 

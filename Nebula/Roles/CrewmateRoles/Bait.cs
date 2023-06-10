@@ -60,7 +60,7 @@ public class Bait : Role
 
     public override void LoadOptionData()
     {
-        TopOption.tab = Module.CustomOptionTab.CrewmateRoles | Module.CustomOptionTab.Modifiers | Module.CustomOptionTab.GhostRoles;
+        TopOption.tab = Module.CustomOptionTab.CrewmateRoles | Module.CustomOptionTab.Modifiers;
         killerCanKnowBaitKillByFlash = CreateOption(Color.white, "killerCanKnowBaitKillByFlash", true);
         canBeExtraRole = CreateOption(Color.white, "canBeExtraRole", false);
     }
@@ -182,11 +182,10 @@ public class SecondaryBait : ExtraRole
 
     public override Module.CustomOption? RegisterAssignableOption(Role role)
     {
+        if (role.category == RoleCategory.Impostor || role.category == RoleCategory.Neutral) return null;
         Module.CustomOption option = role.CreateOption(new Color(0.8f, 0.95f, 1f), "option.canBeBait", role.DefaultExtraAssignableFlag(this), true).HiddenOnDisplay(true).SetIdentifier("role." + role.LocalizeName + ".canBeBait");
         option.AddPrerequisite(CustomOptionHolder.advanceRoleOptions);
         option.AddCustomPrerequisite(() => { return Roles.SecondaryBait.IsSpawnable(); });
-        if (role.category == RoleCategory.Impostor || role.category == RoleCategory.Neutral)
-            option.AddCustomPrerequisite(() => { return false; });
         return option;
     }
 }

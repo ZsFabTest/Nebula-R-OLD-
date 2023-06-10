@@ -2,9 +2,11 @@ namespace Nebula.Roles.ExtraRoles;
 
 public class SecondaryJackal : ExtraRole{
     private Module.CustomOption impostorCanBeSecondaryJackalOption;
+    //public Module.CustomOption IgnoringNumOfJackalOption;
 
     public override void LoadOptionData(){
         impostorCanBeSecondaryJackalOption = CreateOption(Color.white,"impostorCanBeSecondaryJackal",false);
+        //IgnoringNumOfJackalOption = CreateOption(Color.white,"IgnoringJackal",false);
     }
 
     public override void EditDisplayRoleName(byte playerId, ref string roleName, bool isIntro)
@@ -69,7 +71,11 @@ public class SecondaryJackal : ExtraRole{
             if (chance <= NebulaPlugin.rnd.Next(10)) continue;
 
             playerId = players[NebulaPlugin.rnd.Next(players.Count)];
-            if (Helpers.playerById(playerId).GetModData().HasExtraRole(Roles.SecondaryMadmate)) continue;
+            if (Helpers.playerById(playerId).GetModData().HasExtraRole(Roles.SecondaryMadmate)){
+                i--;
+                players.Remove(playerId);
+                continue;
+            }
             assignMap.AssignExtraRole(playerId, id, 0);
             players.Remove(playerId);
         }

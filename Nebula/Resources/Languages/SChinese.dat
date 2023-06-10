@@ -1401,6 +1401,7 @@
 "role.bait.canBeExtraRole" : "生成为附加职业"
 
 "role.madmate.taskPercent" : "得知伪装者所需任务百分比"
+"role.madmate.IgnoringMadmate" : "忽略叛徒人数"
 
 "role.sheriff.madmateCanKillEveryone" : "叛徒警长可以任意击杀"
 "role.sheriff.jackalCanKillEveryone" : "豺狼警长可以任意击杀"
@@ -1684,8 +1685,8 @@
 
 "role.invisibleMan.name" : "隐身人"
 "role.invisibleMan.short" : "隐"
-"role.invisible.hint" : "杀人于无形"
-"role.invisible.desciption" : "杀人于无形"
+"role.invisibleMan.hint" : "杀人于无形"
+"role.invisibleMan.desciption" : "杀人于无形"
 "role.invisibleMan.invisibleCooldown" : "隐身冷却时间"
 "role.invisibleMan.invisibleDuringTime" : "隐身持续时间"
 "role.invisibleMan.canUseVent" : "可以使用管道"
@@ -1755,6 +1756,7 @@
 "role.secondaryJackal.info" : "豺狼阵营啊啊啊啊"
 "role.secondaryJackal.prefix" : "狼化的"
 "role.secondaryJackal.impostorCanBeSecondaryJackal" : "伪装者可以成为附加豺狼"
+"role.secondaryJackal.IgnoringJackal" : "忽略附加豺狼人数"
 
 "role.luckyMan.name" : "幸运儿"
 "role.luckyMan.short" : "幸"
@@ -1807,7 +1809,7 @@
 "role.chivalrousExpert.name" : "侠客"
 "role.chivalrousExpert.short" : "侠"
 "role.chivalrousExpert.description" : "一击必杀！"
-"role.chivalrousExpert.hint" : "击杀 <color=#ff1919ff>伪装者</color>"
+"role.chivalrousExpert.hint" : "击杀<color=#ff1919ff>伪装者</color>"
 "role.chivalrousExpert.info" : "你可以随意击杀一人"
 
 "role.programmer.name" : "程序员"
@@ -1913,6 +1915,22 @@
 "role.retarder.cooldown" : "缓速冷却时间"
 "role.retarder.duringTime" : "缓速持续时间"
 
+"role.yandere.name" : "病娇"
+"role.yandere.short" : "病"
+"role.yandere.description" : "啊~不要动我的心上人！"
+"role.yandere.hint" : "将一切可能的阻碍杀死"
+"role.yandere.info" : "当有人在你的暗恋目标附近停留一段时间后，他将被视为情敌，可以击杀。\n注：不是情敌的话无法击杀。"
+"role.yandere.killCooldown" : "击杀冷却时间"
+"role.yandere.stayDuringTime" : "最大滞留时间"
+"role.yandere.stayRangeTime" : "最大滞留半径"
+
+"role.marker.name" : "情报师"
+"role.marker.short" : "报"
+"role.marker.description" : "让我告诉你"
+"role.marker.hint" : "分享你的信息"
+"role.marker.info" : "在会议中可以通过类似赌怪界面标记他人职业。"
+"role.marker.onlyImpCanSee" : "只有伪装者才能看见信息"
+
 "option.display.random" : "随机"
 
 "side.pavlov.name" : "巴普洛夫团队"
@@ -1921,6 +1939,7 @@
 "side.moriarty.name" : "莫里亚蒂"
 "side.cascrubinter.name" : "行刑者"
 "side.amnesiac.name" : "失忆者"
+"side.yandere.name" : "病娇"
 
 "text.exile.role" : "%PLAYER% 的职业是 %ROLE%"
 "text.exile.connection" : " "
@@ -1937,7 +1956,8 @@
 "game.endText.moriarty" : "莫里亚蒂与莫兰胜利"
 "game.endText.holmesIsKilled" : "福尔摩斯失踪了..."
 "game.endText.cascrubinter" : "行刑者胜利"
-"game.endText.guesser" : "赌怪们获胜"
+"game.endText.guesser" : "赌怪们胜利"
+"game.endText.yandere" : "病娇及其暗恋对象胜利"
 
 "status.hemorrhage" : "失血"
 "status.killed" : "爆炸"
@@ -1966,3 +1986,9 @@
 "button.label.mover.move" : "移动"
 "button.label.mover.put" : "放下"
 "button.label.tardiness" : "减速"
+"button.label.madmate" : "策反"
+
+"meeting.seb" : "特殊会议"
+"meeting.forbid" : "你不能召开经济会议"
+"meeting.locked" : "紧急会议锁定"
+"meeting.total" : "剩余"

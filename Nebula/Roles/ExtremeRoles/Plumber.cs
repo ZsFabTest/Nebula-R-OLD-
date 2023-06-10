@@ -12,13 +12,11 @@ namespace Nebula.Roles.ImpostorRoles{
         }
 
         public int ventDataId { get; private set; }
-        static public bool dig;
         private CustomButton createVent;
 
         public override void GlobalInitialize(PlayerControl __instance)
         {
             __instance.GetModData().SetRoleData(ventDataId,0);
-            dig = false;
         }
 
         /*
@@ -54,7 +52,8 @@ namespace Nebula.Roles.ImpostorRoles{
             }
             createVent = new CustomButton(
                 () => {
-                    dig = true;
+                    Vector3 playerPos = PlayerControl.LocalPlayer.transform.position;
+                    RPCEventInvoker.Dig(new Vector3(playerPos.x,playerPos.y,playerPos.z + 1f));
                     createVent.Timer = createVent.MaxTimer;
                     RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId,ventDataId,1);
                     //Debug.Log(Game.GameData.data.myData.getGlobalData().GetRoleData(ventDataId).ToString());
