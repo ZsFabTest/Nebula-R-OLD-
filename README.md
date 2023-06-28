@@ -5,9 +5,12 @@
 
 部分贴图取自TheOtherRoles-GM-Haoming和SuperNewRoles
 
+本模组于1.0.2.7版本停止更新
+
 ## 下载
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
+| 1.0.2.7 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.7/Nebula-R.1.0.2.7.zip)
 | 1.0.2.6 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.6/Nebula-R.1.0.2.6.zip)
 | 1.0.2.5 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.5/Nebula-R.1.0.2.5.zip)
 | 1.0.2.4 | 2022.3.28s | [Download](https://github.com/ZsFabTest/Nebula-R/releases/download/Nebula-R-Release-1.0.2.4/Nebula-R.1.0.2.4.zip)
@@ -84,10 +87,18 @@
 5.更好的狐妖
 
 ## 联系作者
-[点击这里](https://www.bilibili.com/video/BV1GJ411x7h7/?spm_id_from=333.337.search-card.all.click&vd_source=b92e3eb8c1017c11449afa8236373b01)
-或邮箱 a1234567890001919@outlook.com
+email:a1234567890001919@outlook.com
+
+discord:zjy090820#9247
+
+QQ:3419987538
 
 ## 部分更新日志
+
+### 2023.6.28 v1.0.2.7 update
+最后一次更新
+
+1.修复了反馈的bug
 
 ### 2023.6.10 v1.0.2.6 update
 1.修了一些以前堆积的bug,模组新职业基本稳定了
@@ -96,13 +107,13 @@
 
 3.对以前的职业进行了小修改(不影响游玩)
 
+<details>
+<summary> 展开 </summary>
+
 ### 2023.5.28 v1.0.2.5 update
 1.新职业 搬运工 缓速者
 
 2.将传送师拆分为正义和邪恶的传送师
-
-<details>
-<summary> 展开 </summary>
 
 ### 2023.5.20 v1.0.2.5 update
 1.新职业
