@@ -1,6 +1,4 @@
-﻿using static UnityEngine.GraphicsBuffer;
-
-namespace Nebula.Roles.ImpostorRoles;
+﻿namespace Nebula.Roles.ImpostorRoles;
 
 public class SerialKiller : Role
 {
@@ -8,19 +6,20 @@ public class SerialKiller : Role
     public static Module.CustomOption suicideMaxTimeOption;
 
     private static CustomButton killButton;
-    private static CustomButton suicideButton;
+    public static CustomButton suicideButton;
 
-    private double lasttime;
-    private bool firstKill;
+    private bool hasKilled = false;
 
     private SpriteLoader SuicideButtonSprite = new SpriteLoader("Nebula.Resources.SuicideButton.png", 115f);
-
-    private System.Timers.Timer Mytimer;
 
     public override void LoadOptionData()
     {
         killCooldownOption = CreateOption(Color.white, "killCooldown", 20f, 10f, 30f, 2.5f);
         suicideMaxTimeOption = CreateOption(Color.white, "suicideMaxTime", 40f, 20f, 60f, 5f);
+    }
+
+    public override void GlobalInitialize(PlayerControl __instance){
+        hasKilled = false;
     }
 
     public override void ButtonInitialize(HudManager __instance)
@@ -33,13 +32,11 @@ public class SerialKiller : Role
             () =>
             {
                 PlayerControl target = Game.GameData.data.myData.currentTarget;
-
                 var res = Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, target, Game.PlayerData.PlayerStatus.Dead, false, true);
-                if (res != Helpers.MurderAttemptResult.SuppressKill)
-                    killButton.Timer = killButton.MaxTimer;
+                killButton.Timer = killButton.MaxTimer;
                 Game.GameData.data.myData.currentTarget = null;
-                lasttime = suicideMaxTimeOption.getFloat();
-                firstKill = true;
+                hasKilled = true;
+                suicideButton.Timer = suicideButton.MaxTimer;
             },
             () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
             () => { return PlayerControl.LocalPlayer.CanMove && Game.GameData.data.myData.currentTarget != null; },
@@ -53,30 +50,26 @@ public class SerialKiller : Role
         killButton.MaxTimer = killCooldownOption.getFloat();
         killButton.SetButtonCoolDownOption(true);
 
-        firstKill = false;
-        lasttime = 114514f;
-        int interval = 1000;
-        Mytimer = new System.Timers.Timer(interval);
-        Mytimer.AutoReset = true;
-        Mytimer.Elapsed += new System.Timers.ElapsedEventHandler(TimeCheck);
-        Mytimer.Start();
         if (suicideButton != null)
         {
             suicideButton.Destroy();
         }
         suicideButton = new CustomButton(
-            () => { Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, PlayerControl.LocalPlayer, Game.PlayerData.PlayerStatus.Suicide, false, true); },
-            () => { return !PlayerControl.LocalPlayer.Data.IsDead; },
+            () => { },
+            () => { return !PlayerControl.LocalPlayer.Data.IsDead && hasKilled; },
             () => { return true; },
-            () => { suicideButton.Timer = suicideButton.MaxTimer; },
+            () => { 
+                if(hasKilled) suicideButton.Timer = suicideButton.MaxTimer;
+                else suicideButton.Timer = 114514f;
+            },
             SuicideButtonSprite.GetSprite(),
             Expansion.GridArrangeExpansion.GridArrangeParameter.None,
             __instance,
-            Module.NebulaInputManager.abilityInput.keyCode,
+            Module.NebulaInputManager.noGameInput.keyCode,
             "button.label.suicide"
         ).SetTimer(114514f);
         suicideButton.MaxTimer = suicideMaxTimeOption.getFloat();
-        suicideButton.isEffectActive = true;
+        suicideButton.timeInVent = true;
     }
 
     public override void EditCoolDown(CoolDownType type, float count)
@@ -92,18 +85,9 @@ public class SerialKiller : Role
         Patches.PlayerControlPatch.SetPlayerOutline(data.currentTarget, Palette.ImpostorRed);
         if(suicideButton.Timer <= 0)
         {
-            Helpers.checkMuderAttemptAndKill(PlayerControl.LocalPlayer, PlayerControl.LocalPlayer, Game.PlayerData.PlayerStatus.Suicide, false, true);
+            RPCEventInvoker.UncheckedMurderPlayer(PlayerControl.LocalPlayer.PlayerId, PlayerControl.LocalPlayer.PlayerId, Game.PlayerData.PlayerStatus.Suicide.Id,true);
             suicideButton.Timer = 114514f;
-        }
-    }
-
-    private void TimeCheck(object sender, System.Timers.ElapsedEventArgs e)
-    {
-        lasttime -= 1f;
-        suicideButton.Timer = lasttime >= 0f ? (float)lasttime : 1f;
-        if (lasttime <= 0 && PlayerControl.LocalPlayer.CanMove && firstKill && !PlayerControl.LocalPlayer.Data.IsDead)
-        {
-            Mytimer.Stop();
+            hasKilled = false;
         }
     }
 
@@ -120,7 +104,7 @@ public class SerialKiller : Role
             suicideButton.Destroy();
             suicideButton = null;
         }
-        Mytimer.Stop();
+        hasKilled = false;
     }
 
     public SerialKiller()
@@ -131,5 +115,6 @@ public class SerialKiller : Role
         killButton = null;
         suicideButton = null;
         HideKillButtonEvenImpostor = true;
+        hasKilled = false;
     }
 }

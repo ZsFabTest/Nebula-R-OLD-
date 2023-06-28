@@ -14,17 +14,21 @@ public class Cascrubinter : Role,Template.HasWinTrigger{
     public override void OnAnyoneDied(byte playerId){
         if(playerId == target.PlayerId){
             switch(changeRoleAfterTargetDiedOption.getSelection()){
-                case 2:
+                case 1:
                     RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,Roles.Opportunist);
                     break;
-                case 3:
+                case 2:
                     RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,Roles.Amnesiac);
                     break;
             }
         }
     }
 
-    public override void GlobalInitialize(PlayerControl __instance)
+    public override void GlobalInitialize(PlayerControl __instance){
+        WinTrigger = false;
+    }
+
+    public override void Initialize(PlayerControl __instance)
     {
         List<PlayerControl> players = PlayerControl.AllPlayerControls.ToArray().ToList();
         for (int i = players.Count - 1; i >= 0; i--)
@@ -38,7 +42,6 @@ public class Cascrubinter : Role,Template.HasWinTrigger{
             return;
         }
         target = players[NebulaPlugin.rnd.Next(0,players.Count)];
-        WinTrigger = false;
     }
 
     /*

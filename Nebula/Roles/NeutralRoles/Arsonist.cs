@@ -83,7 +83,7 @@ public class Arsonist : Template.HasAlignedHologram, Template.HasWinTrigger
         foreach (var entry in PlayerIcons)
         {
             if (!entry.Value.gameObject.active) continue;
-            if (activePlayers.Contains(entry.Key)) continue;
+            if (activePlayers.Contains(entry.Key) || (Helpers.playerById(entry.Key).Data.IsDead || Helpers.playerById(entry.Key).gameObject.active)) continue;
 
             cannotIgnite = true; break;
         }

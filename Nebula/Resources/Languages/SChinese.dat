@@ -1442,6 +1442,7 @@
 "role.sanctifier.canUnsetGuesser" : "可以消除赌怪"
 "role.sanctifier.canUnsetSidekick" : "可以消除跟班"
 "role.sanctifier.maxUnsetNumber" : "技能最大使用次数"
+"role.sanctifier.cooldown" : "净化冷却时间"
 
 "role.schrodingersCat.name" : "薛定谔的猫"
 "role.schrodingersCat.short" : "猫"

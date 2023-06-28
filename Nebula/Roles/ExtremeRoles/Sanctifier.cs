@@ -11,6 +11,7 @@ public class Sanctifier : Role
     public static Module.CustomOption canUnsetGuesserOption;
     public static Module.CustomOption canUnsetSidesickOption;
     public static Module.CustomOption maxUnsetNumberOption;
+    private Module.CustomOption cooldown;
 
     private SpriteLoader buttonSprite = new SpriteLoader("Nebula.Resources.EraseButton.png", 115f);
 
@@ -32,6 +33,8 @@ public class Sanctifier : Role
         canUnsetGuesserOption = CreateOption(Roles.NiceGuesser.Color, "canUnsetGuesser", true).AddPrerequisite(Roles.F_Guesser.secondoryRoleOption);
         canUnsetSidesickOption = CreateOption(Roles.Jackal.Color, "canUnsetSidekick", true).AddInvPrerequisite(Sidekick.SidekickTakeOverOriginalRoleOption);
         maxUnsetNumberOption = CreateOption(Color.white, "maxUnsetNumber", 1f, 1f, 5f, 1f);
+        cooldown = CreateOption(Color.white,"cooldown",25f,2.5f,50f,2.5f);
+        cooldown.suffix = "second";
     }
 
     public override void ButtonInitialize(HudManager __instance)
@@ -44,16 +47,19 @@ public class Sanctifier : Role
             () =>
             {
                 PlayerControl target = Game.GameData.data.myData.currentTarget;
-                RPCEventInvoker.UnsetExtraRole(target, Roles.Drunk, true);
-                RPCEventInvoker.UnsetExtraRole(target, Roles.Bloody, true);
-                RPCEventInvoker.UnsetExtraRole(target, Roles.Confused, true);
-                RPCEventInvoker.UnsetExtraRole(target, Roles.Flash, true);
-                RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryJackal, true);
-                RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryBait, true);
-                if(canUnsetMadmateOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryMadmate, true);
-                if(canUnsetGuesserOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryGuesser, true);
-                if(canUnsetSidesickOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondarySidekick, true);
-                if(canUnsetMadmateOption.getBool() && target.GetModData().role == Roles.Madmate) RPCEventInvoker.ChangeRole(target, Roles.F_Crewmate);
+                try{
+                    RPCEventInvoker.UnsetExtraRole(target, Roles.Drunk, true);
+                    RPCEventInvoker.UnsetExtraRole(target, Roles.Bloody, true);
+                    RPCEventInvoker.UnsetExtraRole(target, Roles.Confused, true);
+                    RPCEventInvoker.UnsetExtraRole(target, Roles.Flash, true);
+                    RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryJackal, true);
+                    RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryBait, true);
+                    RPCEventInvoker.UnsetExtraRole(target,Roles.Cheater,true);
+                    if(canUnsetMadmateOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryMadmate, true);
+                    if(canUnsetGuesserOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondaryGuesser, true);
+                    if(canUnsetSidesickOption.getBool()) RPCEventInvoker.UnsetExtraRole(target, Roles.SecondarySidekick, true);
+                    if(canUnsetMadmateOption.getBool() && target.GetModData().role == Roles.Madmate) RPCEventInvoker.ChangeRole(target, Roles.Crewmate);
+                }catch(Exception e){ Debug.LogError(e.StackTrace); }
                 RPCEventInvoker.AddAndUpdateRoleData(PlayerControl.LocalPlayer.PlayerId, cleanDataId, 1);
                 cleanButton.Timer = cleanButton.MaxTimer;
             },
@@ -66,7 +72,7 @@ public class Sanctifier : Role
             Module.NebulaInputManager.abilityInput.keyCode,
             "button.label.sanctify"
         ).SetTimer(CustomOptionHolder.InitialForcefulAbilityCoolDownOption.getFloat());
-        cleanButton.MaxTimer = 25f;
+        cleanButton.MaxTimer = cooldown.getFloat();
     }
 
     public override void CleanUp()

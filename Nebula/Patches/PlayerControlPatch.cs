@@ -754,11 +754,19 @@ class PlayerCanMovePatch
 {
     public static void Postfix(PlayerControl __instance, ref bool __result)
     {
+        /*
+        if(PlayerControl.LocalPlayer.GetModData() != null && PlayerControl.LocalPlayer.GetModData().role == Roles.Roles.SerialKiller){
+            try{
+                Roles.ImpostorRoles.SerialKiller.suicideButton.Update();
+            }catch(Exception e){ Debug.LogError(e.StackTrace); }
+        }
+        */
+
         if (__instance != PlayerControl.LocalPlayer) return;
         if (!__result) return;
 
         __result &= !TextInputField.ValidField;
-        __result &= HudManager.Instance.PlayerCam.Target == PlayerControl.LocalPlayer;
+        //__result &= HudManager.Instance.PlayerCam.Target == PlayerControl.LocalPlayer;
     }
 }
 

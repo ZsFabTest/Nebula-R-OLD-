@@ -99,6 +99,7 @@ public class CustomButton
 
     public bool IsValid { get { return activeFlag; } }
     public bool IsShown { get { return activeFlag && !hideFlag; } }
+    public bool timeInVent = false;
 
     private static Sprite spriteKeyBindBackGround;
     private static Sprite spriteKeyBindOption;
@@ -357,6 +358,7 @@ public class CustomButton
         {
             try
             {
+                //if(buttons[i].timeInVent) continue;
                 buttons[i].Update();
             }
             catch (NullReferenceException)
@@ -457,7 +459,7 @@ public class CustomButton
         return Mathf.Sqrt(x * x + y * y) < 280;
     }
 
-    private void Update()
+    public void Update()
     {
         if (actionButton.cooldownTimerText.color.a != 1f)
         {
@@ -467,7 +469,7 @@ public class CustomButton
 
         if (Timer >= 0)
         {
-            if (HasEffect && isEffectActive)
+            if ((HasEffect && isEffectActive) || timeInVent)
                 Timer -= Time.deltaTime;
             else if (Helpers.ProceedTimer(isImpostorKillButton))
                 Timer -= Time.deltaTime;

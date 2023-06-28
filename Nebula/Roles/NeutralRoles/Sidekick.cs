@@ -91,6 +91,7 @@ public class Sidekick : Role
             ).SetTimer(CustomOptionHolder.InitialKillCoolDownOption.getFloat());
             killButton.MaxTimer = SidekickKillCoolDownOption.getFloat();
         }
+        GlobalIntroInitialize(PlayerControl.LocalPlayer);
     }
     public override void CleanUp()
     {

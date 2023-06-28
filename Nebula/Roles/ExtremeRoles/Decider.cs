@@ -28,10 +28,10 @@ static public class DecideSystem
             FDecider.niceDeciderCannotKillCrewmateOption.getBool() && 
             target.GetModData().role.side == Side.Crewmate && 
             target.GetModData().role != Roles.Madmate && !target.GetModData().extraRole.Contains(Roles.SecondaryMadmate)
-            ) || !(
+            ) && !(
             PlayerControl.LocalPlayer.GetModData().HasExtraRole(Roles.SecondaryMadmate) &&
             FDecider.madmateCanKillEveryoneOption.getBool()
-            ) || !(
+            ) && !(
             PlayerControl.LocalPlayer.GetModData().HasExtraRole(Roles.SecondaryJackal) &&
             FDecider.jackalCanKillEveryoneOption.getBool()
             )

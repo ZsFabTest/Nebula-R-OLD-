@@ -24,7 +24,7 @@ public class Yandere : Role{
         stayRangeOption.suffix = "cross";
     }
 
-    public override void GlobalInitialize(PlayerControl __instance)
+    public override void Initialize(PlayerControl __instance)
     {
         List<PlayerControl> players = PlayerControl.AllPlayerControls.ToArray().ToList();
         for(int i = 0;i < players.Count;i++){
@@ -34,6 +34,10 @@ public class Yandere : Role{
             }
         }
         myLover = players[NebulaPlugin.rnd.Next(players.Count)];
+    }
+
+    public override void GlobalInitialize(PlayerControl __instance)
+    {
         progress = new();
         activePlayer = new();
         arrows = new();

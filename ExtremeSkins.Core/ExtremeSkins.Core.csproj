@@ -14,5 +14,19 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DebugType>none</DebugType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="D:\WorkSpace\Among Us BepInEx\BepInEx\core\*.dll" />
+    <Reference Include="D:\WorkSpace\Among Us BepInEx\BepInEx\interop\*.dll" />
+    <Reference Include="D:\WorkSpace\Among Us BepInEx\dotnet\*.dll" />
+  </ItemGroup>
+
+  <Target Name="CopyCustomContent" AfterTargets="AfterBuild">
+  <Message Text="Second occurrence" />
+  <Copy SourceFiles="bin\Debug\netstandard2.1\Nebula.dll" DestinationFolder="$(AmongUsPlugins)\" />
+  <Copy SourceFiles="bin\Debug\netstandard2.1\Nebula.dll" DestinationFolder="$(AmongUsRelease)\" />
+  <Copy SourceFiles="bin\Debug\netstandard2.1\Nebula.dll" DestinationFolder="$(AmongUsRelease)\Nebula\BepInEx\plugins\" />
+  <Copy SourceFiles="bin\Debug\netstandard2.1\Nebula.dll" DestinationFolder="D:\WorkSpace\" />
+  </Target>
   
 </Project>

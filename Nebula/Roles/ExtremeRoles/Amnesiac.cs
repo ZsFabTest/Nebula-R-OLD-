@@ -7,19 +7,19 @@ public class Amnesiac : Role{
         public override void OnActivate()
         {
             switch (Amnesiac.targetsRoleModeOption.getSelection()){
-                case 1:
+                case 0:
                     RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,target.GetModData().role);
                     break;
-                case 2:
+                case 1:
                     RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,target.GetModData().role);
-                    if(target.GetModData().role.side == Side.Crewmate) RPCEventInvoker.ImmediatelyChangeRole(target,Roles.CrewmateWithoutTasks);
+                    if(target.GetModData().role.side == Side.Crewmate) RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Crewmate);
                     else if(target.GetModData().role.side == Side.Impostor) RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Impostor);
                     else RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Opportunist);
                     break;
-                case 3:
+                case 2:
                     RPCEventInvoker.SwapRole(PlayerControl.LocalPlayer,target);
                     break;
-                case 4:
+                case 3:
                     RPCEventInvoker.ImmediatelyChangeRole(PlayerControl.LocalPlayer,target.GetModData().role);
                     RPCEventInvoker.ImmediatelyChangeRole(target,Roles.Opportunist);
                     break;
