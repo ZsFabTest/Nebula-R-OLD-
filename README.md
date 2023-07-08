@@ -7,6 +7,8 @@
 
 本模组于1.0.2.7版本停止更新
 
+下载模组请移步至[LTS仓库](https://github.com/ZsFabTest/Nebula-R-LTS)
+
 ## 下载
 | Version | Among Us Version | Download |
 | ---------- | ---------- | ---------- |
